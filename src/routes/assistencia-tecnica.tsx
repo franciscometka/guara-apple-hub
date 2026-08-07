@@ -56,8 +56,8 @@ function AssistenciaPage() {
         aria-labelledby="assistencia-title"
         className="relative overflow-hidden bg-ink pt-32 pb-20 md:pt-40 md:pb-24"
       >
-        <AnimatedGlow className="h-[50vh]" />
         <Container className="relative">
+
           <p className="type-caption text-violet-glow">Assistência técnica</p>
           <h1
             id="assistencia-title"
