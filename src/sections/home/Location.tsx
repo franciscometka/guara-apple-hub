@@ -67,7 +67,7 @@ export function Location() {
             </Button>
           </div>
         </Reveal>
-        <Reveal delay={0.1} className="space-y-6">
+        <Reveal delay={0.1}>
           <img
             src={fachada.url}
             alt="Fachada da loja Guara iPhones com letreiro, Instagram e telefone"
@@ -75,8 +75,8 @@ export function Location() {
             decoding="async"
             className="aspect-4/5 w-full rounded-lg bg-muted object-cover"
           />
-          <MapEmbed />
         </Reveal>
+
       </div>
     </Section>
   );
