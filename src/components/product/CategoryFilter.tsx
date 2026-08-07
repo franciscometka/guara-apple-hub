@@ -32,7 +32,7 @@ export function CategoryFilter({
               "relative min-h-11 rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors",
               selected
                 ? "border-transparent grad-cta text-white"
-                : "border-border bg-background text-foreground hover:border-pink hover:text-pink-deep",
+                : "border-border bg-background text-foreground hover:border-violet hover:text-violet-deep",
             )}
           >
             {op}

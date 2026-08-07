@@ -27,7 +27,7 @@ export function PathCard({
   return (
     <RevealItem>
       <motion.article
-        className="group h-full overflow-hidden rounded-lg border border-border bg-background shadow-soft transition-[box-shadow,border-color] duration-300 hover:border-pink-glow hover:shadow-card"
+        className="group h-full overflow-hidden rounded-lg border border-border bg-background shadow-soft transition-[box-shadow,border-color] duration-300 hover:border-violet-glow hover:shadow-card"
         {...(reduce ? {} : { whileHover: { y: -6 } })}
       >
         <div className="aspect-16/10 overflow-hidden bg-muted">

@@ -57,7 +57,7 @@ function ProdutosPage() {
         />
         <AnimatedGlow className="h-[45vh]" />
         <Container className="relative">
-          <p className="type-caption text-pink-glow">Loja</p>
+          <p className="type-caption text-violet-glow">Loja</p>
           <h1 id="produtos-title" className="type-h1 mt-4 max-w-[720px] text-white">
             Produtos Apple com procedência
           </h1>

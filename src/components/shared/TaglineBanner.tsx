@@ -11,7 +11,7 @@ export function TaglineBanner() {
   return (
     <section
       aria-labelledby="tagline-banner"
-      className="relative isolate overflow-hidden bg-plum-dark"
+      className="relative isolate overflow-hidden bg-ink"
     >
       <img
         src={letreiro.url}

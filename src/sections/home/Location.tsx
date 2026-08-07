@@ -25,7 +25,7 @@ export function Location() {
               <MapPin
                 size={22}
                 strokeWidth={1.5}
-                className="mt-0.5 shrink-0 text-pink"
+                className="mt-0.5 shrink-0 text-violet"
                 aria-hidden="true"
               />
               <div>
@@ -37,7 +37,7 @@ export function Location() {
               <Clock
                 size={22}
                 strokeWidth={1.5}
-                className="mt-0.5 shrink-0 text-pink"
+                className="mt-0.5 shrink-0 text-violet"
                 aria-hidden="true"
               />
               <div>
@@ -58,7 +58,7 @@ export function Location() {
               <Phone
                 size={22}
                 strokeWidth={1.5}
-                className="mt-0.5 shrink-0 text-pink"
+                className="mt-0.5 shrink-0 text-violet"
                 aria-hidden="true"
               />
               <div>
@@ -69,7 +69,7 @@ export function Location() {
               </div>
             </li>
           </ul>
-          <p className="mt-8 rounded-md bg-pink-tint px-5 py-4 text-sm text-pink-deep">
+          <p className="mt-8 rounded-md bg-violet-tint px-5 py-4 text-sm text-violet-deep">
             Retirada na loja ou entrega combinada — fale com a gente pelo
             WhatsApp.
           </p>
