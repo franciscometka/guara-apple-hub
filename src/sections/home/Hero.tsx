@@ -30,7 +30,7 @@ export function Hero() {
       <Container className="relative">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10">
           <motion.div
-            style={reduce ? undefined : { opacity: fade }}
+            {...(reduce ? {} : { style: { opacity: fade } })}
             initial="hidden"
             animate="show"
             variants={{
@@ -100,7 +100,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            style={reduce ? undefined : { y }}
+            {...(reduce ? {} : { style: { y } })}
             initial={{ opacity: 0, scale: reduce ? 1 : 1.06 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease }}
