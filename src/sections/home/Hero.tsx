@@ -1,11 +1,11 @@
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { Link } from "@tanstack/react-router";
-import heroImg from "@/assets/images/hero-iphone.jpg";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/GuaraButton";
 import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
+import HeroDevice from "@/components/shared/HeroDevice";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -13,11 +13,6 @@ const ease = [0.22, 1, 0.36, 1] as const;
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
 
   return (
     <section
@@ -98,21 +93,16 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            {...(reduce ? {} : { style: { y } })}
-            initial={{ opacity: 0, scale: reduce ? 1 : 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease }}
+            initial={
+              reduce
+                ? { opacity: 0 }
+                : { opacity: 0, y: 60, scale: 0.9, rotateZ: -6 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1, rotateZ: 0 }}
+            transition={{ duration: 1.1, ease, delay: 0.45 }}
             className="relative"
           >
-            <img
-              src={heroImg}
-              alt="iPhone em destaque sobre fundo escuro na Guara iPhones"
-              width={1024}
-              height={1024}
-              fetchPriority="high"
-              decoding="async"
-              className="mx-auto w-full max-w-[520px] rounded-2xl object-cover"
-            />
+            <HeroDevice />
           </motion.div>
         </div>
       </Container>
