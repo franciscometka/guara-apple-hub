@@ -3,16 +3,21 @@ import { Hero } from "@/sections/home/Hero";
 import { TrustBar } from "@/components/shared/TrustBar";
 import { TwoPaths } from "@/sections/home/TwoPaths";
 import { ProductsPreview } from "@/sections/home/ProductsPreview";
+import { TradeIn } from "@/sections/home/TradeIn";
+import { TaglineBanner } from "@/components/shared/TaglineBanner";
 import { ServicesPreview } from "@/sections/home/ServicesPreview";
+import { WhyGuara } from "@/sections/home/WhyGuara";
 import { Testimonials } from "@/sections/home/Testimonials";
 import { Location } from "@/sections/home/Location";
 import { FAQ } from "@/sections/home/FAQ";
 import { CTASection } from "@/components/shared/CTASection";
 import { CONTATO, WHATSAPP } from "@/lib/whatsapp";
+import fachada from "@/assets/images/fachada.webp.asset.json";
 
 const title = "Guara iPhones — Loja Apple e Assistência Técnica em Guarapuava";
 const description =
-  "iPhone, iPad, Apple Watch, AirPods e Mac em Guarapuava/PR. Produtos originais com garantia e assistência técnica com orçamento no WhatsApp.";
+  "Somos apaixonados pela Apple. iPhone, iPad, Apple Watch, AirPods e Mac em Guarapuava/PR, com atendimento premiado nas avaliações e assistência técnica no WhatsApp.";
+const ogImage = `https://guara-apple-hub.lovable.app${fachada.url}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,7 +28,9 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
+      { property: "og:image", content: ogImage },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: ogImage },
     ],
     links: [{ rel: "canonical", href: "/" }],
     scripts: [
@@ -35,6 +42,8 @@ export const Route = createFileRoute("/")({
           name: "Guara iPhones",
           description,
           telephone: `+${WHATSAPP}`,
+          image: ogImage,
+          sameAs: [CONTATO.instagram],
           address: {
             "@type": "PostalAddress",
             streetAddress: "Av. Manoel Ribas, 1945, Sala 7",
@@ -58,7 +67,10 @@ function HomePage() {
       <TrustBar />
       <TwoPaths />
       <ProductsPreview />
+      <TradeIn />
+      <TaglineBanner />
       <ServicesPreview />
+      <WhyGuara />
       <Testimonials />
       <Location />
       <FAQ />
