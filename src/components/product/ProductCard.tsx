@@ -20,7 +20,7 @@ export function ProductCard({ produto }: { produto: Produto }) {
       transition={{ type: "spring", stiffness: 260, damping: 26 }}
       {...(reduce ? {} : { whileHover: { y: -6 } })}
     >
-      <div className="relative aspect-square overflow-hidden bg-muted">
+      <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-background p-6">
         {!loaded && <div className="shimmer absolute inset-0" aria-hidden="true" />}
         <img
           src={produto.imagem}
@@ -29,7 +29,7 @@ export function ProductCard({ produto }: { produto: Produto }) {
           width={800}
           height={800}
           onLoad={() => setLoaded(true)}
-          className="h-full w-full object-cover transition-transform duration-400 group-hover:scale-105"
+          className="h-full w-full object-contain transition-transform duration-400 group-hover:scale-105"
         />
         <div className="absolute top-4 left-4">
           <GuaraBadge>{produto.condicao}</GuaraBadge>

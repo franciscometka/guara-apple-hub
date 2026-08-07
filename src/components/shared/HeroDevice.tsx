@@ -32,11 +32,6 @@ export default function HeroDevice() {
   const translateX = useTransform(sx, [-0.5, 0.5], [-14, 14]);
   const translateY = useTransform(sy, [-0.5, 0.5], [-10, 10]);
 
-  // Glow atrás acompanha o cursor, mas com metade da amplitude
-  const glowX = useTransform(sx, [-0.5, 0.5], [-40, 40]);
-  const glowY = useTransform(sy, [-0.5, 0.5], [-30, 30]);
-  const glowScale = useTransform(sy, [-0.5, 0.5], [1.06, 0.94]);
-
   // Reflexo especular varre a tela conforme a inclinação
   const shineX = useTransform(sx, [-0.5, 0.5], ["-40%", "140%"]);
   const shineOpacity = useTransform(sx, [-0.5, 0, 0.5], [0.14, 0.05, 0.14]);
@@ -62,7 +57,7 @@ export default function HeroDevice() {
 
   if (reduced) {
     return (
-      <div className="mx-auto w-[min(78vw,320px)] md:w-[min(38vw,460px)]">
+      <div className="mx-auto w-[min(78vw,460px)]">
         <img
           src={deviceImg}
           alt="iPhone em destaque na Guara iPhones"
@@ -70,7 +65,7 @@ export default function HeroDevice() {
           height={651}
           fetchPriority="high"
           decoding="async"
-          className="block h-auto w-full select-none"
+          className="block h-auto w-full object-contain select-none"
         />
       </div>
     );
@@ -81,15 +76,8 @@ export default function HeroDevice() {
       ref={wrapRef}
       onPointerMove={handlePointerMove}
       onPointerLeave={reset}
-      className="relative mx-auto flex w-[min(78vw,320px)] items-center justify-center [perspective:1200px] md:w-[min(38vw,460px)]"
+      className="relative mx-auto flex w-[min(78vw,460px)] items-center justify-center [perspective:1200px]"
     >
-      {/* Halo volumétrico extra — reforça o glow embutido na imagem */}
-      <motion.div
-        aria-hidden="true"
-        style={{ x: glowX, y: glowY, scale: glowScale, opacity: scrollFade }}
-        className="pointer-events-none absolute inset-[-18%] -z-10 rounded-full bg-[radial-gradient(circle_at_50%_45%,color-mix(in_oklab,var(--color-violet)_45%,transparent),transparent_68%)] blur-3xl"
-      />
-
       {/* Aparelho */}
       <motion.div
         style={{ y: scrollLift, opacity: scrollFade }}
@@ -121,7 +109,7 @@ export default function HeroDevice() {
             fetchPriority="high"
             decoding="async"
             draggable={false}
-            className="pointer-events-none block h-auto w-full select-none"
+            className="pointer-events-none block h-auto w-full object-contain select-none"
           />
 
           {/* Reflexo especular sobre a tela */}
