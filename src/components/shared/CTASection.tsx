@@ -1,4 +1,5 @@
-import { MessageCircle } from "lucide-react";
+import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
+
 import { Section } from "@/components/layout/Section";
 import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
 import { Button } from "@/components/ui/GuaraButton";
@@ -30,7 +31,7 @@ export function CTASection() {
             external
             onClick={() => trackWhatsApp("cta_final")}
           >
-            <MessageCircle size={20} strokeWidth={1.5} aria-hidden="true" />
+            <WhatsAppIcon size={20} />
             Falar no WhatsApp agora
           </Button>
         </div>

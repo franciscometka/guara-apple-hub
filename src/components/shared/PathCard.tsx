@@ -12,6 +12,7 @@ export function PathCard({
   alt,
   external,
   onClick,
+  imagemClara,
 }: {
   titulo: string;
   texto: string;
@@ -21,6 +22,8 @@ export function PathCard({
   alt: string;
   external?: boolean | undefined;
   onClick?: (() => void) | undefined;
+  /** Render em fundo claro com padding, para imagens de produto sem sangria. */
+  imagemClara?: boolean | undefined;
 }) {
   const reduce = useReducedMotion();
 
@@ -30,17 +33,30 @@ export function PathCard({
         className="group h-full overflow-hidden rounded-lg border border-border bg-background shadow-soft transition-[box-shadow,border-color] duration-300 hover:border-violet-glow hover:shadow-card"
         {...(reduce ? {} : { whileHover: { y: -6 } })}
       >
-        <div className="aspect-16/10 overflow-hidden bg-muted">
-          <img
-            src={imagem}
-            alt={alt}
-            loading="lazy"
-            width={800}
-            height={500}
-            className="h-full w-full object-cover transition-transform duration-400 group-hover:scale-105"
-          />
-        </div>
-        <div className="p-6 md:p-8">
+        {imagemClara ? (
+          <div className="flex aspect-16/10 items-center justify-center bg-background p-8 md:p-10">
+            <img
+              src={imagem}
+              alt={alt}
+              loading="lazy"
+              width={800}
+              height={500}
+              className="h-full w-full object-contain transition-transform duration-400 group-hover:scale-105"
+            />
+          </div>
+        ) : (
+          <div className="aspect-16/10 overflow-hidden bg-muted">
+            <img
+              src={imagem}
+              alt={alt}
+              loading="lazy"
+              width={800}
+              height={500}
+              className="h-full w-full object-cover transition-transform duration-400 group-hover:scale-105"
+            />
+          </div>
+        )}
+        <div className="border-t border-border p-6 md:p-8">
           <h3 className="type-h3 text-foreground">{titulo}</h3>
           <p className="mt-3 text-muted-foreground">{texto}</p>
           <div className="mt-7">

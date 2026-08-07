@@ -1,5 +1,6 @@
+import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { motion, useReducedMotion } from "motion/react";
-import { MessageCircle, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { Link } from "@tanstack/react-router";
 import { Container } from "@/components/layout/Container";
@@ -80,7 +81,7 @@ export function Hero() {
                 external
                 onClick={() => trackWhatsApp("hero")}
               >
-                <MessageCircle size={20} strokeWidth={1.5} aria-hidden="true" />
+                <WhatsAppIcon size={20} />
                 Falar no WhatsApp
               </Button>
               <Link to="/produtos" className="contents">

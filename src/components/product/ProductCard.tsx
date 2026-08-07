@@ -1,6 +1,7 @@
+import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { motion, useReducedMotion } from "motion/react";
-import { MessageCircle } from "lucide-react";
-import { useState } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import type { Produto } from "@/data/products";
 import { GuaraBadge } from "@/components/ui/GuaraBadge";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
@@ -8,6 +9,12 @@ import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 export function ProductCard({ produto }: { produto: Produto }) {
   const reduce = useReducedMotion();
   const [loaded, setLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // Imagem em cache já pode estar completa antes do onLoad ser anexado.
+  useEffect(() => {
+    if (imgRef.current?.complete) setLoaded(true);
+  }, []);
 
   return (
     <motion.article
@@ -19,16 +26,19 @@ export function ProductCard({ produto }: { produto: Produto }) {
       transition={{ type: "spring", stiffness: 260, damping: 26 }}
       {...(reduce ? {} : { whileHover: { y: -6 } })}
     >
-      <div className="relative aspect-square overflow-hidden bg-muted">
-        {!loaded && <div className="shimmer absolute inset-0" aria-hidden="true" />}
+      <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-background p-6">
+        {!loaded && (
+          <div className="shimmer absolute inset-0 -z-10" aria-hidden="true" />
+        )}
         <img
+          ref={imgRef}
           src={produto.imagem}
           alt={`${produto.nome} disponível na Guara iPhones, Guarapuava`}
           loading="lazy"
           width={800}
           height={800}
           onLoad={() => setLoaded(true)}
-          className="h-full w-full object-cover transition-transform duration-400 group-hover:scale-105"
+          className="h-full w-full object-contain transition-transform duration-400 group-hover:scale-105"
         />
         <div className="absolute top-4 left-4">
           <GuaraBadge>{produto.condicao}</GuaraBadge>
@@ -49,7 +59,7 @@ export function ProductCard({ produto }: { produto: Produto }) {
           onClick={() => trackWhatsApp("produto")}
           className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-violet-deep transition-colors hover:text-violet"
         >
-          <MessageCircle size={18} strokeWidth={1.5} aria-hidden="true" />
+          <WhatsAppIcon size={18} />
           Consultar valor no WhatsApp
         </a>
       </div>

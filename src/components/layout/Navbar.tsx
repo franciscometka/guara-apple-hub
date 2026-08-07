@@ -1,6 +1,7 @@
+import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Link } from "@tanstack/react-router";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/data/navigation";
 import { useScrolledPast } from "@/hooks/useScrollPosition";
@@ -76,7 +77,7 @@ export function Navbar() {
               external
               onClick={() => trackWhatsApp("navbar")}
             >
-              <MessageCircle size={18} strokeWidth={1.5} aria-hidden="true" />
+              <WhatsAppIcon size={18} />
               WhatsApp
             </Button>
           </div>
@@ -137,11 +138,7 @@ export function Navbar() {
                       setOpen(false);
                     }}
                   >
-                    <MessageCircle
-                      size={20}
-                      strokeWidth={1.5}
-                      aria-hidden="true"
-                    />
+                    <WhatsAppIcon size={20} />
                     Falar no WhatsApp
                   </Button>
                 </div>

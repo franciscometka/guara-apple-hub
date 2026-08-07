@@ -1,5 +1,6 @@
+import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { motion, useReducedMotion } from "motion/react";
-import { MessageCircle } from "lucide-react";
+
 import type { Servico } from "@/data/services";
 import { RevealItem } from "@/components/ui/Reveal";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
@@ -70,7 +71,7 @@ export function ServiceCard({
               : "text-violet-deep hover:text-violet",
           )}
         >
-          <MessageCircle size={18} strokeWidth={1.5} aria-hidden="true" />
+          <WhatsAppIcon size={18} />
           Pedir orçamento
         </a>
       </motion.article>

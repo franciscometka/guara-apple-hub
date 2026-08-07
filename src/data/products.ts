@@ -1,8 +1,11 @@
-import imgIphone from "@/assets/images/cat-iphone.jpg";
-import imgIpad from "@/assets/images/cat-ipad.jpg";
 import imgWatch from "@/assets/images/cat-watch.jpg";
 import imgAirpods from "@/assets/images/cat-airpods.jpg";
 import showroom from "@/assets/images/showroom.webp.asset.json";
+import iphone15 from "@/assets/images/produtos/iphone-15-256gb-azul.webp.asset.json";
+import iphone14pro from "@/assets/images/produtos/iphone-14-pro-256gb-preto-espacial-seminovo.webp.asset.json";
+import iphone13pro from "@/assets/images/produtos/iphone-13-pro-azul-sierra.jpg.asset.json";
+import iphone13 from "@/assets/images/produtos/iphone-13-128gb-preto.webp.asset.json";
+import ipad10 from "@/assets/images/produtos/ipad-10-wifi-cellular-64gb-silver.webp.asset.json";
 
 export type Categoria =
   | "iPhone"
@@ -33,59 +36,51 @@ export const CATEGORIAS: Categoria[] = [
   "Acessórios",
 ];
 
-// TODO: substituir por fotos reais do cliente
 export const produtos: Produto[] = [
   {
-    id: "iphone-15",
-    nome: "iPhone 15",
+    id: "iphone-15-256gb-azul",
+    nome: "iPhone 15 256GB Azul",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "128GB · Caixa lacrada com nota fiscal",
-    imagem: imgIphone,
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
+    imagem: iphone15.url,
     destaque: true,
   },
   {
-    id: "iphone-14-pro",
-    nome: "iPhone 14 Pro",
+    id: "iphone-14-pro-256gb-preto-espacial",
+    nome: "iPhone 14 Pro 256GB Preto Espacial",
     categoria: "iPhone",
     condicao: "Seminovo",
     detalhe: "Revisado peça por peça · saúde de bateria informada",
-    imagem: imgIphone,
+    imagem: iphone14pro.url,
     destaque: true,
   },
   {
-    id: "iphone-13",
-    nome: "iPhone 13",
+    id: "iphone-13-pro-azul-sierra",
+    nome: "iPhone 13 Pro Azul Sierra",
     categoria: "iPhone",
     condicao: "Seminovo",
     detalhe: "Checagem completa de tela, bateria e câmeras",
-    imagem: imgIphone,
+    imagem: iphone13pro.url,
     destaque: true,
   },
   {
-    id: "iphone-12",
-    nome: "iPhone 12",
+    id: "iphone-13-128gb-preto",
+    nome: "iPhone 13 128GB Preto",
     categoria: "iPhone",
-    condicao: "Vitrine",
-    detalhe: "Aparelho de mostruário, sem uso pessoal",
-    imagem: imgIphone,
+    condicao: "Seminovo",
+    detalhe: "128GB · condição real informada antes da compra",
+    imagem: iphone13.url,
+    destaque: true,
   },
   {
-    id: "ipad-10",
-    nome: "iPad 10ª geração",
+    id: "ipad-10-wifi-cellular-64gb-silver",
+    nome: "iPad (10ª geração) Wi-Fi + Cellular 64GB Prateado",
     categoria: "iPad",
     condicao: "Lacrado",
-    detalhe: "64GB Wi-Fi · lacrado",
-    imagem: imgIpad,
+    detalhe: "64GB Wi-Fi + Cellular · lacrado",
+    imagem: ipad10.url,
     destaque: true,
-  },
-  {
-    id: "ipad-air",
-    nome: "iPad Air",
-    categoria: "iPad",
-    condicao: "Seminovo",
-    detalhe: "Tela revisada · acompanha carregador",
-    imagem: imgIpad,
   },
   {
     id: "watch-se",
@@ -93,7 +88,7 @@ export const produtos: Produto[] = [
     categoria: "Apple Watch",
     condicao: "Lacrado",
     detalhe: "40mm GPS · lacrado com garantia",
-    imagem: imgWatch,
+    imagem: imgWatch, // TODO: foto real do produto
     destaque: true,
   },
   {
@@ -102,7 +97,7 @@ export const produtos: Produto[] = [
     categoria: "Apple Watch",
     condicao: "Seminovo",
     detalhe: "Pulseira original · bateria checada",
-    imagem: imgWatch,
+    imagem: imgWatch, // TODO: foto real do produto
   },
   {
     id: "airpods-pro",
@@ -110,7 +105,7 @@ export const produtos: Produto[] = [
     categoria: "AirPods",
     condicao: "Lacrado",
     detalhe: "Cancelamento de ruído · estojo MagSafe",
-    imagem: imgAirpods,
+    imagem: imgAirpods, // TODO: foto real do produto
     destaque: true,
   },
   {
@@ -119,7 +114,7 @@ export const produtos: Produto[] = [
     categoria: "AirPods",
     condicao: "Seminovo",
     detalhe: "Testado par a par antes de entregar",
-    imagem: imgAirpods,
+    imagem: imgAirpods, // TODO: foto real do produto
   },
   {
     id: "macbook-air",
@@ -127,7 +122,7 @@ export const produtos: Produto[] = [
     categoria: "Mac",
     condicao: "Seminovo",
     detalhe: "Ciclos de bateria informados na hora",
-    imagem: showroom.url,
+    imagem: showroom.url, // TODO: foto real do produto
   },
   {
     id: "carregador-20w",
@@ -135,7 +130,7 @@ export const produtos: Produto[] = [
     categoria: "Acessórios",
     condicao: "Lacrado",
     detalhe: "Original Apple · com nota fiscal",
-    imagem: showroom.url,
+    imagem: showroom.url, // TODO: foto real do produto
   },
   {
     id: "capa-magsafe",
@@ -143,7 +138,7 @@ export const produtos: Produto[] = [
     categoria: "Acessórios",
     condicao: "Lacrado",
     detalhe: "Modelos para iPhone 12 ao 16",
-    imagem: showroom.url,
+    imagem: showroom.url, // TODO: foto real do produto
   },
 ];
 
