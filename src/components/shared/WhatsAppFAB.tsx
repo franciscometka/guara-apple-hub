@@ -14,7 +14,7 @@ export function WhatsAppFAB() {
       rel="noopener noreferrer"
       onClick={() => trackWhatsApp("fab")}
       aria-label="Falar no WhatsApp"
-      className="fixed right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-ink shadow-pink"
+      className="fixed right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-ink shadow-violet"
       style={{ bottom: "calc(1.25rem + env(safe-area-inset-bottom))" }}
       initial={{ scale: 0, opacity: 0 }}
       animate={
