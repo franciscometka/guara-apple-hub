@@ -11,6 +11,7 @@ export function TradeIn() {
     <Section variant="tint" labelledBy="troca" id="troca" narrow>
       <SectionHeading
         id="troca"
+        align="center"
         eyebrow="Troca com desconto"
         title="Seu iPhone atual vale desconto no próximo."
         subtitle="A gente avalia o seu aparelho e abate no valor do novo. Manda o modelo e o estado no WhatsApp que te passamos quanto vale."
@@ -22,7 +23,7 @@ export function TradeIn() {
           external
           onClick={() => trackWhatsApp("produto")}
         >
-          <WhatsAppIcon size={18} />
+          <WhatsAppIcon size={18} variant="white" />
           Avaliar meu aparelho
         </Button>
       </Reveal>

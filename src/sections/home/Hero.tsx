@@ -1,13 +1,14 @@
 import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import { useRef } from "react";
+import { lazy, Suspense, useRef } from "react";
 import { Link } from "@tanstack/react-router";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/GuaraButton";
 import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
-import HeroDevice from "@/components/shared/HeroDevice";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
+
+const Hero3DDevice = lazy(() => import("@/components/shared/Hero3DDevice"));
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -81,7 +82,7 @@ export function Hero() {
                 external
                 onClick={() => trackWhatsApp("hero")}
               >
-                <WhatsAppIcon size={20} />
+                <WhatsAppIcon size={20} variant="white" />
                 Falar no WhatsApp
               </Button>
               <Link to="/produtos" className="contents">
@@ -103,7 +104,13 @@ export function Hero() {
             transition={{ duration: 1.1, ease, delay: 0.45 }}
             className="relative"
           >
-            <HeroDevice />
+            <Suspense
+              fallback={
+                <div className="h-[440px] w-full sm:h-[560px] md:h-[680px]" />
+              }
+            >
+              <Hero3DDevice />
+            </Suspense>
           </motion.div>
         </div>
       </Container>

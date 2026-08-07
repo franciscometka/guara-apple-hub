@@ -6,7 +6,7 @@ import iphone15 from "@/assets/images/produtos/iphone-15-256gb-azul-norm.webp";
 import iphone14pro from "@/assets/images/produtos/iphone-14-pro-256gb-preto-espacial-seminovo-norm.webp";
 import iphone13pro from "@/assets/images/produtos/iphone-13-pro-azul-sierra-norm.webp";
 import iphone13 from "@/assets/images/produtos/iphone-13-128gb-preto-norm.webp";
-import ipad10 from "@/assets/images/produtos/ipad-10-wifi-cellular-64gb-silver.webp.asset.json";
+import ipad10 from "@/assets/images/produtos/ipad-10-wifi-cellular-64gb-silver.webp";
 
 export type Categoria =
   | "iPhone"
@@ -80,7 +80,7 @@ export const produtos: Produto[] = [
     categoria: "iPad",
     condicao: "Lacrado",
     detalhe: "64GB Wi-Fi + Cellular · lacrado",
-    imagem: ipad10.url,
+    imagem: ipad10,
     destaque: true,
   },
   {

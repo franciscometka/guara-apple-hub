@@ -5,7 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { OpenNowBadge } from "@/components/shared/OpenNowBadge";
 import { Button } from "@/components/ui/GuaraButton";
 import { CONTATO, mapsRoute, trackWhatsApp } from "@/lib/whatsapp";
-import fachada from "@/assets/images/fachada.webp.asset.json";
+import fachada from "@/assets/images/fachada.webp";
 
 export function Location() {
   return (
@@ -68,7 +68,7 @@ export function Location() {
         </Reveal>
         <Reveal delay={0.1}>
           <img
-            src={fachada.url}
+            src={fachada}
             alt="Fachada da loja Guara iPhones com letreiro, Instagram e telefone"
             loading="lazy"
             decoding="async"

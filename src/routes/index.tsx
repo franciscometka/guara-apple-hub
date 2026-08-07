@@ -6,18 +6,17 @@ import { ProductsPreview } from "@/sections/home/ProductsPreview";
 import { TradeIn } from "@/sections/home/TradeIn";
 import { TaglineBanner } from "@/components/shared/TaglineBanner";
 import { ServicesPreview } from "@/sections/home/ServicesPreview";
-import { WhyGuara } from "@/sections/home/WhyGuara";
 import { Testimonials } from "@/sections/home/Testimonials";
 import { Location } from "@/sections/home/Location";
 import { FAQ } from "@/sections/home/FAQ";
 import { CTASection } from "@/components/shared/CTASection";
 import { CONTATO, WHATSAPP } from "@/lib/whatsapp";
-import fachada from "@/assets/images/fachada.webp.asset.json";
+import fachada from "@/assets/images/fachada.webp";
 
 const title = "Guara iPhones — Loja Apple e Assistência Técnica em Guarapuava";
 const description =
-  "Somos apaixonados pela Apple. iPhone, iPad, Apple Watch, AirPods e Mac em Guarapuava/PR, com atendimento premiado nas avaliações e assistência técnica no WhatsApp.";
-const ogImage = `https://guara-apple-hub.lovable.app${fachada.url}`;
+  "Somos apaixonados pela Apple. iPhone, iPad, Apple Watch, AirPods e Mac em Guarapuava/PR, com atendimento que vira comentário nas avaliações e assistência técnica no WhatsApp.";
+const ogImage = `https://guara-apple-hub.lovable.app${fachada}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,7 +69,6 @@ function HomePage() {
       <TradeIn />
       <TaglineBanner />
       <ServicesPreview />
-      <WhyGuara />
       <Testimonials />
       <Location />
       <FAQ />

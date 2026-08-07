@@ -31,7 +31,11 @@ export function WhatsAppFAB() {
           transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
         />
       )}
-      <WhatsAppIcon size={40} className="relative rounded-full" />
+      <WhatsAppIcon
+        size={40}
+        variant="white"
+        className="relative rounded-full"
+      />
     </motion.a>
   );
 }

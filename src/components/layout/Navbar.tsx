@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/GuaraButton";
 import { Container } from "@/components/layout/Container";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
+import markBlack from "@/assets/images/logo/guara-mark-black.png";
+import markWhite from "@/assets/images/logo/guara-mark-white.png";
 
 export function Navbar() {
   const scrolled = useScrolledPast(24);
@@ -36,13 +38,22 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between md:h-18">
           <Link
             to="/"
-            className={cn(
-              "font-display text-lg font-bold tracking-tight",
-              solid ? "text-foreground" : "text-white",
-            )}
+            className="flex items-center gap-2"
             onClick={() => setOpen(false)}
           >
-            Guara<span className="text-violet">iPhones</span>
+            <img
+              src={solid ? markBlack : markWhite}
+              alt="Guara iPhones"
+              className="h-7 w-auto object-contain"
+            />
+            <span
+              className={cn(
+                "font-display text-lg font-bold tracking-tight",
+                solid ? "text-foreground" : "text-white",
+              )}
+            >
+              Guara<span className="text-violet">iPhones</span>
+            </span>
           </Link>
 
           <nav aria-label="Navegação principal" className="hidden md:block">
@@ -77,7 +88,7 @@ export function Navbar() {
               external
               onClick={() => trackWhatsApp("navbar")}
             >
-              <WhatsAppIcon size={18} />
+              <WhatsAppIcon size={18} variant="white" />
               WhatsApp
             </Button>
           </div>
@@ -138,7 +149,7 @@ export function Navbar() {
                       setOpen(false);
                     }}
                   >
-                    <WhatsAppIcon size={20} />
+                    <WhatsAppIcon size={20} variant="white" />
                     Falar no WhatsApp
                   </Button>
                 </div>

@@ -31,7 +31,7 @@ export function CTASection() {
             external
             onClick={() => trackWhatsApp("cta_final")}
           >
-            <WhatsAppIcon size={20} />
+            <WhatsAppIcon size={20} variant="white" />
             Falar no WhatsApp agora
           </Button>
         </div>

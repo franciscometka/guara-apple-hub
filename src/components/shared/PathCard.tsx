@@ -30,7 +30,7 @@ export function PathCard({
   return (
     <RevealItem>
       <motion.article
-        className="group h-full overflow-hidden rounded-lg border border-border bg-background shadow-soft transition-[box-shadow,border-color] duration-300 hover:border-violet-glow hover:shadow-card"
+        className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-background shadow-soft transition-[box-shadow,border-color] duration-300 hover:border-violet-glow hover:shadow-card"
         {...(reduce ? {} : { whileHover: { y: -6 } })}
       >
         {imagemClara ? (
@@ -56,9 +56,9 @@ export function PathCard({
             />
           </div>
         )}
-        <div className="border-t border-border p-6 md:p-8">
+        <div className="flex flex-1 flex-col border-t border-border p-6 md:p-8">
           <h3 className="type-h3 text-foreground">{titulo}</h3>
-          <p className="mt-3 text-muted-foreground">{texto}</p>
+          <p className="mt-3 flex-1 text-muted-foreground">{texto}</p>
           <div className="mt-7">
             <Button
               variant="secondary"

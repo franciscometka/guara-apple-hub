@@ -79,7 +79,7 @@ function AssistenciaPage() {
               external
               onClick={() => trackWhatsApp("hero")}
             >
-              <WhatsAppIcon size={20} />
+              <WhatsAppIcon size={20} variant="white" />
               Pedir orçamento no WhatsApp
             </Button>
           </div>

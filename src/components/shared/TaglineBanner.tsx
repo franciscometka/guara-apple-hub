@@ -11,7 +11,7 @@ export function TaglineBanner() {
         aria-hidden="true"
         className="pointer-events-none absolute top-1/2 left-1/2 h-[60%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--color-violet)_55%,transparent),transparent_70%)] opacity-25 blur-3xl"
       />
-      <Reveal className="relative mx-auto max-w-[1000px] px-6 py-24 text-center md:py-28">
+      <Reveal className="relative mx-auto max-w-[1000px] px-6 py-20 text-center md:py-28 lg:py-36">
         <p className="type-caption text-violet-glow">Guara iPhones</p>
         <h2
           id="tagline-banner"

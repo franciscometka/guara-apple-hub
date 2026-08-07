@@ -16,6 +16,7 @@ import {
   trackWhatsApp,
   waLink,
 } from "@/lib/whatsapp";
+import logoWhite from "@/assets/images/logo/guara-logo-white.png";
 
 export function Footer() {
   const ano = new Date().getFullYear();
@@ -25,9 +26,11 @@ export function Footer() {
       <Container>
         <div className="grid gap-12 py-16 md:grid-cols-4 md:py-20">
           <div className="md:col-span-1">
-            <span className="font-display text-lg font-bold tracking-tight text-white">
-              Guara<span className="text-violet-soft">iPhones</span>
-            </span>
+            <img
+              src={logoWhite}
+              alt="Guara iPhones"
+              className="h-auto w-[190px] object-contain"
+            />
             <p className="type-caption mt-3 text-violet-soft">
               Somos apaixonados pela Apple
             </p>
