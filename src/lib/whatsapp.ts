@@ -1,3 +1,5 @@
+// TODO: [CONFIRMAR: NÚMERO WHATSAPP] — o formulário informou 42 99122-0341,
+// a fachada da loja mostra 42 9 9162-1683. Mantido o do formulário até confirmar.
 export const WHATSAPP = "5542991220341";
 
 export const waLink = (msg: string) =>
@@ -9,6 +11,8 @@ export const WA_MESSAGES = {
     `Olá! Vi o ${produto} no site e quero saber a disponibilidade e o valor.`,
   assistencia: (servico: string) =>
     `Olá! Preciso de um orçamento para ${servico} no meu iPhone.`,
+  troca:
+    "Olá! Quero saber quanto meu iPhone vale de entrada na troca. Modelo: ",
   ctaFinal: "Olá! Vim pelo site e quero falar com um atendente.",
 };
 
@@ -38,7 +42,10 @@ export function trackWhatsApp(origem: WaOrigem) {
   w.fbq?.("track", "Contact", { origem });
 }
 
+export const TAGLINE = "Somos apaixonados pela Apple";
+
 export const CONTATO = {
+  // TODO: [CONFIRMAR: NÚMERO WHATSAPP]
   telefoneExibicao: "(42) 99122-0341",
   // TODO: [CONFIRMAR: e-mail comercial no domínio próprio]
   email: "adrianom.dacruz2@gmail.com",
@@ -51,8 +58,9 @@ export const CONTATO = {
     "Domingo: fechado",
   ],
   horarioResumo: "Seg a Sex 09h–19h · Sáb 09h–15h",
-  // TODO: [CONFIRMAR: @handles exatos das redes sociais]
-  instagram: "https://instagram.com/",
+  instagram: "https://instagram.com/guaraiphones",
+  instagramHandle: "@guaraiphones",
+  // TODO: [CONFIRMAR: página exata no Facebook]
   facebook: "https://facebook.com/",
   tiktok: "https://tiktok.com/",
 };
