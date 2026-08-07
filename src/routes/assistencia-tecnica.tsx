@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MessageCircle, ShieldCheck } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
-import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+
 import { Button } from "@/components/ui/GuaraButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { ServiceCard } from "@/components/service/ServiceCard";
