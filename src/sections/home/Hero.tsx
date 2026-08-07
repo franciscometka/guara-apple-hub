@@ -1,11 +1,11 @@
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { Link } from "@tanstack/react-router";
-import heroImg from "@/assets/images/hero-iphone.jpg";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/GuaraButton";
 import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
+import HeroDevice from "@/components/shared/HeroDevice";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -13,11 +13,6 @@ const ease = [0.22, 1, 0.36, 1] as const;
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
 
   return (
     <section
