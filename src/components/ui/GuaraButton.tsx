@@ -33,6 +33,7 @@ export interface ButtonProps extends VariantProps<typeof buttonVariants> {
   href?: string | undefined;
   external?: boolean | undefined;
   magnetic?: boolean | undefined;
+  full?: boolean | undefined;
   onClick?: ((e: MouseEvent<HTMLElement>) => void) | undefined;
   
   type?: "button" | "submit" | undefined;
@@ -50,6 +51,7 @@ export function Button({
   href,
   external,
   magnetic,
+  full,
   onClick,
   type = "button",
   disabled,
@@ -83,7 +85,7 @@ export function Button({
     ? {}
     : { whileHover: { y: -2 }, whileTap: { scale: 0.97 } };
 
-  const classes = cn(buttonVariants({ variant, size }), className);
+  const classes = cn(buttonVariants({ variant, size }), full && "w-full", className);
   const ariaProps = {
     "aria-label": ariaLabel,
     "aria-expanded": ariaExpanded,
