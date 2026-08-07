@@ -28,6 +28,9 @@ export function Footer() {
             <span className="font-display text-lg font-bold tracking-tight text-white">
               Guara<span className="text-pink-bright">iPhones</span>
             </span>
+            <p className="type-caption mt-3 text-pink-bright">
+              Somos apaixonados pela Apple
+            </p>
             <p className="mt-4 text-sm leading-relaxed">
               Loja Apple e assistência técnica em Guarapuava. Produto original,
               conserto com garantia e atendimento direto no WhatsApp.
@@ -37,7 +40,7 @@ export function Footer() {
                 href={CONTATO.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram da Guara iPhones"
+                aria-label="Instagram @guaraiphones"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 transition-colors hover:border-pink-bright hover:text-white"
               >
                 <Instagram size={18} strokeWidth={1.5} />

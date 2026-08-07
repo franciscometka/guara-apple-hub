@@ -7,7 +7,9 @@ import {
   useScroll,
   useReducedMotion,
 } from "motion/react";
-import deviceImg from "@/assets/images/iphone-hero.png";
+import deviceAsset from "@/assets/images/iphone-hero-rosa.png.asset.json";
+
+const deviceImg = deviceAsset.url;
 
 const SPRING = { stiffness: 150, damping: 18, mass: 0.6 };
 
