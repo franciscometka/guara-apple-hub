@@ -98,21 +98,16 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            {...(reduce ? {} : { style: { y } })}
-            initial={{ opacity: 0, scale: reduce ? 1 : 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease }}
+            initial={
+              reduce
+                ? { opacity: 0 }
+                : { opacity: 0, y: 60, scale: 0.9, rotateZ: -6 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1, rotateZ: 0 }}
+            transition={{ duration: 1.1, ease, delay: 0.45 }}
             className="relative"
           >
-            <img
-              src={heroImg}
-              alt="iPhone em destaque sobre fundo escuro na Guara iPhones"
-              width={1024}
-              height={1024}
-              fetchPriority="high"
-              decoding="async"
-              className="mx-auto w-full max-w-[520px] rounded-2xl object-cover"
-            />
+            <HeroDevice />
           </motion.div>
         </div>
       </Container>
