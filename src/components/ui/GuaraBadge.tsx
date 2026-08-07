@@ -20,7 +20,7 @@ export function GuaraBadge({
   return (
     <span
       className={cn(
-        "text-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-semibold",
+        "type-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-semibold",
         tones[tone],
         className,
       )}

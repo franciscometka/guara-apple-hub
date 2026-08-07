@@ -52,7 +52,7 @@ export function ServiceCard({
         {/* TODO: [CONFIRMAR: PRAZOS REAIS] */}
         <p
           className={cn(
-            "text-caption mt-5",
+            "type-caption mt-5",
             dark ? "text-violet-glow" : "text-violet-deep",
           )}
         >

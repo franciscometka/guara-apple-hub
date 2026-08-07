@@ -41,7 +41,7 @@ export function PathCard({
           />
         </div>
         <div className="p-6 md:p-8">
-          <h3 className="text-h3 text-foreground">{titulo}</h3>
+          <h3 className="type-h3 text-foreground">{titulo}</h3>
           <p className="mt-3 text-muted-foreground">{texto}</p>
           <div className="mt-7">
             <Button

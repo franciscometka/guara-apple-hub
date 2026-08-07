@@ -31,7 +31,7 @@ export function SectionHeading({
       {eyebrow && (
         <p
           className={cn(
-            "text-caption mb-4",
+            "type-caption mb-4",
             tone === "dark" ? "text-violet-soft" : "text-violet-deep",
           )}
         >
@@ -41,7 +41,7 @@ export function SectionHeading({
       <h2
         id={id}
         className={cn(
-          "text-h2",
+          "type-h2",
           tone === "dark" ? "text-white" : "text-foreground",
         )}
       >
@@ -50,7 +50,7 @@ export function SectionHeading({
       {subtitle && (
         <p
           className={cn(
-            "text-body-lg mt-5",
+            "type-body-lg mt-5",
             tone === "dark" ? "text-white/65" : "text-muted-foreground",
           )}
         >

@@ -7,7 +7,7 @@ export function OpenNowBadge() {
 
   if (open === null) {
     return (
-      <span className="text-caption inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-muted-foreground">
+      <span className="type-caption inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-muted-foreground">
         Carregando...
       </span>
     );
@@ -18,8 +18,8 @@ export function OpenNowBadge() {
       aria-live="polite"
       className={
         open
-          ? "text-caption inline-flex items-center gap-2 rounded-full bg-success/12 px-3 py-1 text-success"
-          : "text-caption inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-muted-foreground"
+          ? "type-caption inline-flex items-center gap-2 rounded-full bg-success/12 px-3 py-1 text-success"
+          : "type-caption inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-muted-foreground"
       }
     >
       {open && !reduce ? (

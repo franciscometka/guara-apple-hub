@@ -58,14 +58,14 @@ function AssistenciaPage() {
       >
         <AnimatedGlow className="h-[50vh]" />
         <Container className="relative">
-          <p className="text-caption text-violet-glow">Assistência técnica</p>
+          <p className="type-caption text-violet-glow">Assistência técnica</p>
           <h1
             id="assistencia-title"
-            className="text-h1 mt-4 max-w-[760px] text-white"
+            className="type-h1 mt-4 max-w-[760px] text-white"
           >
             Seu iPhone consertado por quem abre, testa e explica
           </h1>
-          <p className="text-body-lg mt-5 max-w-[560px] text-white/65">
+          <p className="type-body-lg mt-5 max-w-[560px] text-white/65">
             Diagnóstico antes do serviço, orçamento por escrito no WhatsApp e
             nada feito sem a sua aprovação.
           </p>

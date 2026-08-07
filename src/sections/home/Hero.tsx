@@ -41,7 +41,7 @@ export function Hero() {
                 hidden: { opacity: 0, y: reduce ? 0 : 20 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
               }}
-              className="text-caption text-violet-glow"
+              className="type-caption text-violet-glow"
             >
               Guarapuava · Paraná
             </motion.p>
@@ -52,7 +52,7 @@ export function Hero() {
                 hidden: { opacity: 0, y: reduce ? 0 : 24 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
               }}
-              className="text-display mt-5 text-white"
+              className="type-display mt-5 text-white"
             >
               O iPhone que você quer.{" "}
               <span className="text-gradient-violet">Do jeito certo.</span>
@@ -63,7 +63,7 @@ export function Hero() {
                 hidden: { opacity: 0, y: reduce ? 0 : 20 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
               }}
-              className="text-body-lg mt-6 max-w-[520px] text-white/65"
+              className="type-body-lg mt-6 max-w-[520px] text-white/65"
             >
               Loja Apple e assistência técnica em Guarapuava. Produto original,
               conserto com garantia e atendimento direto no WhatsApp — sem fila,

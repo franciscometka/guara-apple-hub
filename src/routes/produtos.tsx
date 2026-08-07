@@ -46,11 +46,11 @@ function ProdutosPage() {
       >
         <AnimatedGlow className="h-[45vh]" />
         <Container className="relative">
-          <p className="text-caption text-violet-glow">Loja</p>
-          <h1 id="produtos-title" className="text-h1 mt-4 max-w-[720px] text-white">
+          <p className="type-caption text-violet-glow">Loja</p>
+          <h1 id="produtos-title" className="type-h1 mt-4 max-w-[720px] text-white">
             Produtos Apple com procedência
           </h1>
-          <p className="text-body-lg mt-5 max-w-[560px] text-white/65">
+          <p className="type-body-lg mt-5 max-w-[560px] text-white/65">
             Aparelhos lacrados e seminovos revisados. A condição real vem
             descrita antes da compra e o valor você consulta no WhatsApp.
           </p>

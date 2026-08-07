@@ -67,7 +67,7 @@ export function Footer() {
           <nav aria-labelledby="footer-nav">
             <h2
               id="footer-nav"
-              className="text-caption font-semibold text-white"
+              className="type-caption font-semibold text-white"
             >
               Navegação
             </h2>
@@ -86,7 +86,7 @@ export function Footer() {
           </nav>
 
           <div>
-            <h2 className="text-caption font-semibold text-white">Serviços</h2>
+            <h2 className="type-caption font-semibold text-white">Serviços</h2>
             <ul className="mt-5 space-y-3 text-sm">
               {footerServicos.map((s) => (
                 <li key={s}>
@@ -102,7 +102,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="text-caption font-semibold text-white">Contato</h2>
+            <h2 className="type-caption font-semibold text-white">Contato</h2>
             <ul className="mt-5 space-y-4 text-sm">
               <li className="flex gap-3">
                 <MapPin

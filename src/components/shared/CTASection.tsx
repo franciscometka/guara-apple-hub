@@ -15,10 +15,10 @@ export function CTASection() {
     <Section variant="dark" labelledBy="cta-final" className="text-center">
       <AnimatedGlow className="top-auto -bottom-20 h-[70vh]" animate={false} />
       <Reveal className="relative mx-auto max-w-[720px]">
-        <h2 id="cta-final" className="text-h2 text-white">
+        <h2 id="cta-final" className="type-h2 text-white">
           Chama no WhatsApp. A resposta vem rápido.
         </h2>
-        <p className="text-body-lg mx-auto mt-5 text-white/65">
+        <p className="type-body-lg mx-auto mt-5 text-white/65">
           Dúvida sobre modelo, valor, disponibilidade ou conserto — manda
           mensagem que a gente te responde no horário comercial.
         </p>

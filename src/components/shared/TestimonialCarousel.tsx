@@ -52,7 +52,7 @@ export function TestimonialCarousel() {
             transition={{ duration: reduce ? 0.2 : 0.4 }}
             className="mt-5"
           >
-            <p className="text-body-lg text-foreground">{atual.texto}</p>
+            <p className="type-body-lg text-foreground">{atual.texto}</p>
             <footer className="mt-6 flex items-center gap-3">
               <span
                 aria-hidden="true"
