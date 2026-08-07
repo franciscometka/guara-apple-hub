@@ -64,14 +64,14 @@ export function WhyGuara() {
           </RevealGroup>
         </div>
 
-        <Reveal delay={0.1} className="space-y-8">
+        <Reveal delay={0.1} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <figure>
             <img
               src={recepcao.url}
               alt="Balcão de atendimento da Guara iPhones em ripado de madeira"
               loading="lazy"
               decoding="async"
-              className="aspect-4/5 w-full rounded-lg bg-muted object-cover"
+              className="aspect-3/4 w-full rounded-lg bg-muted object-cover"
             />
             <figcaption className="mt-3 text-xs text-muted-foreground">
               Nosso balcão de atendimento na loja.
@@ -83,13 +83,14 @@ export function WhyGuara() {
               alt="Espaço de espera da loja com a maçã iluminada na parede e poltronas"
               loading="lazy"
               decoding="async"
-              className="aspect-4/5 w-full rounded-lg bg-muted object-cover"
+              className="aspect-3/4 w-full rounded-lg bg-muted object-cover"
             />
             <figcaption className="mt-3 text-xs text-muted-foreground">
               Espaço de espera para quem está sendo atendido.
             </figcaption>
           </figure>
         </Reveal>
+
       </div>
     </Section>
   );

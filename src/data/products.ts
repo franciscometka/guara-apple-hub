@@ -1,3 +1,4 @@
+import watchSE from "@/assets/images/produtos/apple-watch-se-40mm-midnight-norm.webp";
 import imgWatch from "@/assets/images/cat-watch.jpg";
 import imgAirpods from "@/assets/images/cat-airpods.jpg";
 import showroom from "@/assets/images/showroom.webp.asset.json";
@@ -88,7 +89,7 @@ export const produtos: Produto[] = [
     categoria: "Apple Watch",
     condicao: "Lacrado",
     detalhe: "40mm GPS · lacrado com garantia",
-    imagem: imgWatch, // TODO: foto real do produto
+    imagem: watchSE,
     destaque: true,
   },
   {

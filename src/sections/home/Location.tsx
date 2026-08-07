@@ -2,7 +2,6 @@ import { Truck, Navigation } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { MapEmbed } from "@/components/shared/MapEmbed";
 import { OpenNowBadge } from "@/components/shared/OpenNowBadge";
 import { Button } from "@/components/ui/GuaraButton";
 import { CONTATO, mapsRoute, trackWhatsApp } from "@/lib/whatsapp";
@@ -67,7 +66,7 @@ export function Location() {
             </Button>
           </div>
         </Reveal>
-        <Reveal delay={0.1} className="space-y-6">
+        <Reveal delay={0.1}>
           <img
             src={fachada.url}
             alt="Fachada da loja Guara iPhones com letreiro, Instagram e telefone"
@@ -75,8 +74,8 @@ export function Location() {
             decoding="async"
             className="aspect-4/5 w-full rounded-lg bg-muted object-cover"
           />
-          <MapEmbed />
         </Reveal>
+
       </div>
     </Section>
   );
