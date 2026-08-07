@@ -3,6 +3,29 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { depoimentos } from "@/data/testimonials";
 
+function GoogleMark() {
+  return (
+    <svg viewBox="0 0 48 48" width="16" height="16" aria-hidden="true">
+      <path
+        fill="#4285F4"
+        d="M45.1 24.5c0-1.6-.1-2.8-.4-4H24v7.6h11.9c-.2 2-1.5 5-4.4 7l6.7 5.2c4-3.7 6.9-9.1 6.9-15.8z"
+      />
+      <path
+        fill="#34A853"
+        d="M24 46c6 0 11-2 14.7-5.4l-6.7-5.2c-1.8 1.3-4.3 2.2-8 2.2-5.8 0-10.7-3.8-12.4-9.1l-7 5.4C8.2 41.1 15.5 46 24 46z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M11.6 28.5A13.6 13.6 0 0 1 10.9 24c0-1.6.3-3.1.7-4.5l-7-5.4A22 22 0 0 0 2 24c0 3.5.9 6.9 2.6 9.9l7-5.4z"
+      />
+      <path
+        fill="#EA4335"
+        d="M24 10.2c4.1 0 7 1.8 8.6 3.3l6.3-6.1C35 3.8 30 2 24 2 15.5 2 8.2 6.9 4.6 14.1l7 5.4C13.3 14.1 18.2 10.2 24 10.2z"
+      />
+    </svg>
+  );
+}
+
 export function TestimonialCarousel() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -34,9 +57,9 @@ export function TestimonialCarousel() {
       }}
       role="group"
       aria-roledescription="carrossel"
-      aria-label="Depoimentos de clientes"
+      aria-label="Avaliações de clientes no Google"
     >
-      <div className="relative min-h-[260px] rounded-lg border border-border bg-background p-7 shadow-soft md:min-h-[220px] md:p-10">
+      <div className="relative min-h-[280px] rounded-lg border border-border bg-background p-7 shadow-soft md:min-h-[240px] md:p-10">
         <Quote
           size={24}
           strokeWidth={1.5}
@@ -64,17 +87,12 @@ export function TestimonialCarousel() {
                 <span className="block font-semibold text-foreground">
                   {atual.nome}
                 </span>
-                <span className="block text-muted-foreground">
-                  {atual.cidade}
+                <span className="mt-1 inline-flex items-center gap-1.5 text-muted-foreground">
+                  <GoogleMark />
+                  Avaliação no Google
                 </span>
               </span>
             </footer>
-            {atual.placeholder && (
-              <p className="mt-5 text-xs text-muted-foreground">
-                Conteúdo provisório — aguardando as avaliações reais dos
-                clientes.
-              </p>
-            )}
           </motion.blockquote>
         </AnimatePresence>
       </div>
