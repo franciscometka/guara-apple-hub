@@ -18,7 +18,6 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
     <section
@@ -30,7 +29,6 @@ export function Hero() {
       <Container className="relative">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10">
           <motion.div
-            {...(reduce ? {} : { style: { opacity: fade } })}
             initial="hidden"
             animate="show"
             variants={{

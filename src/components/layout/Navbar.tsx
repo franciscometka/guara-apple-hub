@@ -13,6 +13,7 @@ export function Navbar() {
   const scrolled = useScrolledPast(24);
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
+  const solid = scrolled || open;
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -25,7 +26,7 @@ export function Navbar() {
     <header
       className={cn(
         "fixed top-0 right-0 left-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300",
-        scrolled || open
+        solid
           ? "border-b border-border bg-background/80 backdrop-blur-xl"
           : "border-b border-transparent bg-transparent",
       )}
@@ -34,7 +35,10 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between md:h-18">
           <Link
             to="/"
-            className="font-display text-lg font-bold tracking-tight text-foreground"
+            className={cn(
+              "font-display text-lg font-bold tracking-tight",
+              solid ? "text-foreground" : "text-white",
+            )}
             onClick={() => setOpen(false)}
           >
             Guara<span className="text-violet">iPhones</span>
@@ -46,8 +50,15 @@ export function Navbar() {
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="link-underline text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                    activeProps={{ className: "text-foreground" }}
+                    className={cn(
+                      "link-underline text-sm font-medium transition-colors",
+                      solid
+                        ? "text-muted-foreground hover:text-foreground"
+                        : "text-white/70 hover:text-white",
+                    )}
+                    activeProps={{
+                      className: solid ? "text-foreground" : "text-white",
+                    }}
                     activeOptions={{ exact: link.to === "/" }}
                   >
                     {link.label}
@@ -76,7 +87,10 @@ export function Navbar() {
             aria-expanded={open}
             aria-controls="menu-mobile"
             aria-label={open ? "Fechar menu" : "Abrir menu"}
-            className="flex h-11 w-11 items-center justify-center rounded-md text-foreground md:hidden"
+            className={cn(
+              "flex h-11 w-11 items-center justify-center rounded-md md:hidden",
+              solid ? "text-foreground" : "text-white",
+            )}
           >
             {open ? (
               <X size={24} strokeWidth={1.5} />
