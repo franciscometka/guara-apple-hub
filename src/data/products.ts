@@ -1,3 +1,9 @@
+import imgIphone from "@/assets/images/cat-iphone.jpg";
+import imgIpad from "@/assets/images/cat-ipad.jpg";
+import imgWatch from "@/assets/images/cat-watch.jpg";
+import imgAirpods from "@/assets/images/cat-airpods.jpg";
+import imgLoja from "@/assets/images/loja-vitrine.jpg";
+
 export type Categoria =
   | "iPhone"
   | "iPad"
@@ -27,7 +33,7 @@ export const CATEGORIAS: Categoria[] = [
   "Acessórios",
 ];
 
-// TODO: substituir por fotos reais do cliente (imagens Unsplash provisórias)
+// TODO: substituir por fotos reais do cliente
 export const produtos: Produto[] = [
   {
     id: "iphone-15",
@@ -35,8 +41,7 @@ export const produtos: Produto[] = [
     categoria: "iPhone",
     condicao: "Lacrado",
     detalhe: "128GB · Caixa lacrada com nota fiscal",
-    imagem:
-      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=800&q=80",
+    imagem: imgIphone,
     destaque: true,
   },
   {
@@ -45,8 +50,7 @@ export const produtos: Produto[] = [
     categoria: "iPhone",
     condicao: "Seminovo",
     detalhe: "Revisado peça por peça · saúde de bateria informada",
-    imagem:
-      "https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?auto=format&fit=crop&w=800&q=80",
+    imagem: imgIphone,
     destaque: true,
   },
   {
@@ -55,8 +59,7 @@ export const produtos: Produto[] = [
     categoria: "iPhone",
     condicao: "Seminovo",
     detalhe: "Checagem completa de tela, bateria e câmeras",
-    imagem:
-      "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&w=800&q=80",
+    imagem: imgIphone,
     destaque: true,
   },
   {
@@ -65,8 +68,7 @@ export const produtos: Produto[] = [
     categoria: "iPhone",
     condicao: "Vitrine",
     detalhe: "Aparelho de mostruário, sem uso pessoal",
-    imagem:
-      "https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=800&q=80",
+    imagem: imgIphone,
   },
   {
     id: "ipad-10",
@@ -74,8 +76,7 @@ export const produtos: Produto[] = [
     categoria: "iPad",
     condicao: "Lacrado",
     detalhe: "64GB Wi-Fi · lacrado",
-    imagem:
-      "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80",
+    imagem: imgIpad,
     destaque: true,
   },
   {
@@ -84,8 +85,7 @@ export const produtos: Produto[] = [
     categoria: "iPad",
     condicao: "Seminovo",
     detalhe: "Tela revisada · acompanha carregador",
-    imagem:
-      "https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=800&q=80",
+    imagem: imgIpad,
   },
   {
     id: "watch-se",
@@ -93,8 +93,7 @@ export const produtos: Produto[] = [
     categoria: "Apple Watch",
     condicao: "Lacrado",
     detalhe: "40mm GPS · lacrado com garantia",
-    imagem:
-      "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=800&q=80",
+    imagem: imgWatch,
     destaque: true,
   },
   {
@@ -103,8 +102,7 @@ export const produtos: Produto[] = [
     categoria: "Apple Watch",
     condicao: "Seminovo",
     detalhe: "Pulseira original · bateria checada",
-    imagem:
-      "https://images.unsplash.com/photo-1551816230-ef5deaed4a26?auto=format&fit=crop&w=800&q=80",
+    imagem: imgWatch,
   },
   {
     id: "airpods-pro",
@@ -112,8 +110,7 @@ export const produtos: Produto[] = [
     categoria: "AirPods",
     condicao: "Lacrado",
     detalhe: "Cancelamento de ruído · estojo MagSafe",
-    imagem:
-      "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=800&q=80",
+    imagem: imgAirpods,
     destaque: true,
   },
   {
@@ -122,8 +119,7 @@ export const produtos: Produto[] = [
     categoria: "AirPods",
     condicao: "Seminovo",
     detalhe: "Testado par a par antes de entregar",
-    imagem:
-      "https://images.unsplash.com/photo-1610438235354-a6ae5528385c?auto=format&fit=crop&w=800&q=80",
+    imagem: imgAirpods,
   },
   {
     id: "macbook-air",
@@ -131,8 +127,7 @@ export const produtos: Produto[] = [
     categoria: "Mac",
     condicao: "Seminovo",
     detalhe: "Ciclos de bateria informados na hora",
-    imagem:
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80",
+    imagem: imgLoja,
   },
   {
     id: "carregador-20w",
@@ -140,8 +135,7 @@ export const produtos: Produto[] = [
     categoria: "Acessórios",
     condicao: "Lacrado",
     detalhe: "Original Apple · com nota fiscal",
-    imagem:
-      "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=800&q=80",
+    imagem: imgLoja,
   },
   {
     id: "capa-magsafe",
@@ -149,8 +143,7 @@ export const produtos: Produto[] = [
     categoria: "Acessórios",
     condicao: "Lacrado",
     detalhe: "Modelos para iPhone 12 ao 16",
-    imagem:
-      "https://images.unsplash.com/photo-1592286927505-1def25115558?auto=format&fit=crop&w=800&q=80",
+    imagem: imgLoja,
   },
 ];
 
