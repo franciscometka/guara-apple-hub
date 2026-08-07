@@ -2,7 +2,7 @@ import imgIphone from "@/assets/images/cat-iphone.jpg";
 import imgIpad from "@/assets/images/cat-ipad.jpg";
 import imgWatch from "@/assets/images/cat-watch.jpg";
 import imgAirpods from "@/assets/images/cat-airpods.jpg";
-import imgLoja from "@/assets/images/loja-vitrine.jpg";
+import showroom from "@/assets/images/showroom.webp.asset.json";
 
 export type Categoria =
   | "iPhone"
@@ -127,7 +127,7 @@ export const produtos: Produto[] = [
     categoria: "Mac",
     condicao: "Seminovo",
     detalhe: "Ciclos de bateria informados na hora",
-    imagem: imgLoja,
+    imagem: showroom.url,
   },
   {
     id: "carregador-20w",
@@ -135,7 +135,7 @@ export const produtos: Produto[] = [
     categoria: "Acessórios",
     condicao: "Lacrado",
     detalhe: "Original Apple · com nota fiscal",
-    imagem: imgLoja,
+    imagem: showroom.url,
   },
   {
     id: "capa-magsafe",
@@ -143,7 +143,7 @@ export const produtos: Produto[] = [
     categoria: "Acessórios",
     condicao: "Lacrado",
     detalhe: "Modelos para iPhone 12 ao 16",
-    imagem: imgLoja,
+    imagem: showroom.url,
   },
 ];
 
