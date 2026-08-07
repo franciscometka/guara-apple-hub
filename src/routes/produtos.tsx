@@ -10,6 +10,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { CTASection } from "@/components/shared/CTASection";
 import { TrustBar } from "@/components/shared/TrustBar";
 import { produtos, type Categoria } from "@/data/products";
+import showroom from "@/assets/images/showroom.webp.asset.json";
 
 const title = "Produtos Apple em Guarapuava — Guara iPhones";
 const description =
@@ -44,6 +45,16 @@ function ProdutosPage() {
         aria-labelledby="produtos-title"
         className="relative overflow-hidden bg-ink pt-32 pb-16 md:pt-40 md:pb-20"
       >
+        <img
+          src={showroom.url}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover opacity-25"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[linear-gradient(to_top,rgba(10,9,12,0.92),rgba(10,9,12,0.7))]"
+        />
         <AnimatedGlow className="h-[45vh]" />
         <Container className="relative">
           <p className="type-caption text-pink-glow">Loja</p>

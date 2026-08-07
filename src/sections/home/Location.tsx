@@ -6,6 +6,7 @@ import { MapEmbed } from "@/components/shared/MapEmbed";
 import { OpenNowBadge } from "@/components/shared/OpenNowBadge";
 import { Button } from "@/components/ui/GuaraButton";
 import { CONTATO, mapsRoute, trackWhatsApp } from "@/lib/whatsapp";
+import fachada from "@/assets/images/fachada.webp.asset.json";
 
 export function Location() {
   return (
@@ -15,7 +16,7 @@ export function Location() {
         align="left"
         eyebrow="Onde estamos"
         title="No centro de Guarapuava"
-        subtitle="Passe na loja pra ver o aparelho de perto ou deixar o seu pra diagnóstico."
+        subtitle="Loja com vitrine na Av. Manoel Ribas, em galeria comercial. Passe pra ver o aparelho de perto ou deixar o seu pra diagnóstico."
       />
       <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:items-start">
         <Reveal>
@@ -68,6 +69,10 @@ export function Location() {
               </div>
             </li>
           </ul>
+          <p className="mt-8 rounded-md bg-pink-tint px-5 py-4 text-sm text-pink-deep">
+            Retirada na loja ou entrega combinada — fale com a gente pelo
+            WhatsApp.
+          </p>
           <div className="mt-9">
             <Button
               variant="secondary"
@@ -80,7 +85,16 @@ export function Location() {
             </Button>
           </div>
         </Reveal>
-        <Reveal delay={0.1}>
+        <Reveal delay={0.1} className="space-y-6">
+          <figure className="overflow-hidden rounded-lg bg-muted">
+            <img
+              src={fachada.url}
+              alt="Fachada da loja Guara iPhones com letreiro, Instagram e telefone"
+              loading="lazy"
+              decoding="async"
+              className="aspect-3/4 w-full object-cover md:aspect-4/5"
+            />
+          </figure>
           <MapEmbed />
         </Reveal>
       </div>
