@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "motion/react";
-import { MessageCircle } from "lucide-react";
 import { useScrolledPast } from "@/hooks/useScrollPosition";
 import { waLink, WA_MESSAGES, trackWhatsApp } from "@/lib/whatsapp";
+import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 
 export function WhatsAppFAB() {
   const visible = useScrolledPast(400);
@@ -14,7 +14,7 @@ export function WhatsAppFAB() {
       rel="noopener noreferrer"
       onClick={() => trackWhatsApp("fab")}
       aria-label="Falar no WhatsApp"
-      className="fixed right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-ink shadow-violet"
+      className="fixed right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp shadow-violet"
       style={{ bottom: "calc(1.25rem + env(safe-area-inset-bottom))" }}
       initial={{ scale: 0, opacity: 0 }}
       animate={
@@ -31,7 +31,7 @@ export function WhatsAppFAB() {
           transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
         />
       )}
-      <MessageCircle size={24} strokeWidth={1.5} className="relative" />
+      <WhatsAppIcon size={40} className="relative rounded-full" />
     </motion.a>
   );
 }
