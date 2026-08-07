@@ -3,7 +3,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { RevealGroup } from "@/components/ui/Reveal";
 import { PathCard } from "@/components/shared/PathCard";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
-import imgLoja from "@/assets/images/loja-vitrine.jpg";
+import showroom from "@/assets/images/showroom.webp.asset.json";
 import imgBancada from "@/assets/images/bancada-reparo.jpg";
 
 export function TwoPaths() {
@@ -21,8 +21,8 @@ export function TwoPaths() {
           texto="iPhone, iPad, Apple Watch, AirPods, Mac e acessórios. Lacrados e seminovos revisados, com nota fiscal e garantia."
           cta="Ver produtos"
           href="/produtos"
-          imagem={imgLoja}
-          alt="Vitrine com iPhones e acessórios Apple"
+          imagem={showroom.url}
+          alt="Salão da loja com prateleiras iluminadas de acessórios Apple e mesas de atendimento"
         />
         <PathCard
           titulo="Meu iPhone deu problema"

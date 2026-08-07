@@ -12,7 +12,7 @@ export function ProductCard({ produto }: { produto: Produto }) {
   return (
     <motion.article
       layout
-      className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-background shadow-soft transition-[box-shadow,border-color] duration-300 hover:border-violet-glow hover:shadow-card"
+      className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-background shadow-soft transition-[box-shadow,border-color] duration-300 hover:border-pink-glow hover:shadow-card"
       initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
@@ -47,7 +47,7 @@ export function ProductCard({ produto }: { produto: Produto }) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackWhatsApp("produto")}
-          className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-violet-deep transition-colors hover:text-violet"
+          className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-pink-deep transition-colors hover:text-pink"
         >
           <MessageCircle size={18} strokeWidth={1.5} aria-hidden="true" />
           Consultar valor no WhatsApp

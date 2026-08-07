@@ -8,14 +8,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "grad-cta text-white hover:shadow-violet",
-        whatsapp: "bg-whatsapp text-ink hover:shadow-violet",
+        primary: "grad-cta text-white hover:shadow-pink",
+        whatsapp: "bg-whatsapp text-ink hover:shadow-pink",
         secondary:
-          "border border-border bg-transparent text-foreground hover:border-violet hover:text-violet-deep",
+          "border border-border bg-transparent text-foreground hover:border-pink hover:text-pink-deep",
         outlineDark:
-          "border border-white/20 bg-transparent text-white hover:border-violet-glow hover:text-violet-glow",
+          "border border-white/20 bg-transparent text-white hover:border-pink-glow hover:text-pink-glow",
         ghost:
-          "link-underline bg-transparent px-0 text-violet-deep hover:text-violet",
+          "link-underline bg-transparent px-0 text-pink-deep hover:text-pink",
       },
       size: {
         sm: "px-5 py-2.5 text-sm",

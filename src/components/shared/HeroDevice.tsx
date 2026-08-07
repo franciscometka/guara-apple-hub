@@ -7,7 +7,9 @@ import {
   useScroll,
   useReducedMotion,
 } from "motion/react";
-import deviceImg from "@/assets/images/iphone-hero.png";
+import deviceAsset from "@/assets/images/iphone-hero-rosa.png.asset.json";
+
+const deviceImg = deviceAsset.url;
 
 const SPRING = { stiffness: 150, damping: 18, mass: 0.6 };
 
@@ -85,7 +87,7 @@ export default function HeroDevice() {
       <motion.div
         aria-hidden="true"
         style={{ x: glowX, y: glowY, scale: glowScale, opacity: scrollFade }}
-        className="pointer-events-none absolute inset-[-18%] -z-10 rounded-full bg-[radial-gradient(circle_at_50%_45%,color-mix(in_oklab,var(--color-violet)_45%,transparent),transparent_68%)] blur-3xl"
+        className="pointer-events-none absolute inset-[-18%] -z-10 rounded-full bg-[radial-gradient(circle_at_50%_45%,color-mix(in_oklab,var(--color-pink)_45%,transparent),transparent_68%)] blur-3xl"
       />
 
       {/* Aparelho */}

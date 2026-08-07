@@ -26,8 +26,11 @@ export function Footer() {
         <div className="grid gap-12 py-16 md:grid-cols-4 md:py-20">
           <div className="md:col-span-1">
             <span className="font-display text-lg font-bold tracking-tight text-white">
-              Guara<span className="text-violet-soft">iPhones</span>
+              Guara<span className="text-pink-bright">iPhones</span>
             </span>
+            <p className="type-caption mt-3 text-pink-bright">
+              Somos apaixonados pela Apple
+            </p>
             <p className="mt-4 text-sm leading-relaxed">
               Loja Apple e assistência técnica em Guarapuava. Produto original,
               conserto com garantia e atendimento direto no WhatsApp.
@@ -37,8 +40,8 @@ export function Footer() {
                 href={CONTATO.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram da Guara iPhones"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 transition-colors hover:border-violet-soft hover:text-white"
+                aria-label="Instagram @guaraiphones"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 transition-colors hover:border-pink-bright hover:text-white"
               >
                 <Instagram size={18} strokeWidth={1.5} />
               </a>
@@ -47,7 +50,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook da Guara iPhones"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 transition-colors hover:border-violet-soft hover:text-white"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 transition-colors hover:border-pink-bright hover:text-white"
               >
                 <Facebook size={18} strokeWidth={1.5} />
               </a>
@@ -57,7 +60,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsApp("rodape")}
                 aria-label="WhatsApp da Guara iPhones"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 transition-colors hover:border-violet-soft hover:text-white"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 transition-colors hover:border-pink-bright hover:text-white"
               >
                 <MessageCircle size={18} strokeWidth={1.5} />
               </a>
@@ -108,7 +111,7 @@ export function Footer() {
                 <MapPin
                   size={18}
                   strokeWidth={1.5}
-                  className="mt-0.5 shrink-0 text-violet-soft"
+                  className="mt-0.5 shrink-0 text-pink-bright"
                   aria-hidden="true"
                 />
                 <span>{CONTATO.endereco}</span>
@@ -117,7 +120,7 @@ export function Footer() {
                 <Phone
                   size={18}
                   strokeWidth={1.5}
-                  className="mt-0.5 shrink-0 text-violet-soft"
+                  className="mt-0.5 shrink-0 text-pink-bright"
                   aria-hidden="true"
                 />
                 <a
@@ -134,7 +137,7 @@ export function Footer() {
                 <Clock
                   size={18}
                   strokeWidth={1.5}
-                  className="mt-0.5 shrink-0 text-violet-soft"
+                  className="mt-0.5 shrink-0 text-pink-bright"
                   aria-hidden="true"
                 />
                 <span>

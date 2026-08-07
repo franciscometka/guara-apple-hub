@@ -132,7 +132,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <a
         href="#conteudo"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-violet focus:px-4 focus:py-2 focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-pink focus:px-4 focus:py-2 focus:text-white"
       >
         Ir para o conteúdo
       </a>
