@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { CONTATO } from "@/lib/whatsapp";
 
 /** Mapa carregado só quando entra na viewport, pra não bloquear o LCP. */
 export function MapEmbed() {
@@ -22,14 +21,12 @@ export function MapEmbed() {
     return () => obs.disconnect();
   }, []);
 
-  const src = `https://www.google.com/maps?q=${encodeURIComponent(
-    CONTATO.enderecoMaps,
-  )}&output=embed`;
+  const src = "https://www.google.com/maps?ll=-25.3888545,-51.4615658&z=17&output=embed";
 
   return (
     <div
       ref={ref}
-      className="relative aspect-4/3 w-full overflow-hidden rounded-lg border border-border bg-muted"
+      className="relative aspect-4/3 w-full overflow-hidden rounded-lg bg-muted"
     >
       {show ? (
         <iframe
