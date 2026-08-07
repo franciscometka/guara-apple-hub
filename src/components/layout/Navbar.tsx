@@ -1,0 +1,155 @@
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { Link } from "@tanstack/react-router";
+import { Menu, X, MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { navLinks } from "@/data/navigation";
+import { useScrolledPast } from "@/hooks/useScrollPosition";
+import { Button } from "@/components/ui/GuaraButton";
+import { Container } from "@/components/layout/Container";
+import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
+import { cn } from "@/lib/utils";
+
+export function Navbar() {
+  const scrolled = useScrolledPast(24);
+  const [open, setOpen] = useState(false);
+  const reduce = useReducedMotion();
+  const solid = scrolled || open;
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  return (
+    <header
+      className={cn(
+        "fixed top-0 right-0 left-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300",
+        solid
+          ? "border-b border-border bg-background/80 backdrop-blur-xl"
+          : "border-b border-transparent bg-transparent",
+      )}
+    >
+      <Container>
+        <div className="flex h-16 items-center justify-between md:h-18">
+          <Link
+            to="/"
+            className={cn(
+              "font-display text-lg font-bold tracking-tight",
+              solid ? "text-foreground" : "text-white",
+            )}
+            onClick={() => setOpen(false)}
+          >
+            Guara<span className="text-violet">iPhones</span>
+          </Link>
+
+          <nav aria-label="Navegação principal" className="hidden md:block">
+            <ul className="flex items-center gap-9">
+              {navLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className={cn(
+                      "link-underline text-sm font-medium transition-colors",
+                      solid
+                        ? "text-muted-foreground hover:text-foreground"
+                        : "text-white/70 hover:text-white",
+                    )}
+                    activeProps={{
+                      className: solid ? "text-foreground" : "text-white",
+                    }}
+                    activeOptions={{ exact: link.to === "/" }}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="hidden md:block">
+            <Button
+              variant="whatsapp"
+              size="sm"
+              href={waLink(WA_MESSAGES.generico)}
+              external
+              onClick={() => trackWhatsApp("navbar")}
+            >
+              <MessageCircle size={18} strokeWidth={1.5} aria-hidden="true" />
+              WhatsApp
+            </Button>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="menu-mobile"
+            aria-label={open ? "Fechar menu" : "Abrir menu"}
+            className={cn(
+              "flex h-11 w-11 items-center justify-center rounded-md md:hidden",
+              solid ? "text-foreground" : "text-white",
+            )}
+          >
+            {open ? (
+              <X size={24} strokeWidth={1.5} />
+            ) : (
+              <Menu size={24} strokeWidth={1.5} />
+            )}
+          </button>
+        </div>
+      </Container>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="menu-mobile"
+            initial={{ opacity: 0, y: reduce ? 0 : -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: reduce ? 0 : -12 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="border-t border-border bg-background md:hidden"
+          >
+            <Container>
+              <nav aria-label="Navegação principal" className="py-6">
+                <ul className="flex flex-col">
+                  {navLinks.map((link) => (
+                    <li key={link.to}>
+                      <Link
+                        to={link.to}
+                        onClick={() => setOpen(false)}
+                        className="flex min-h-12 items-center border-b border-border text-base font-medium text-foreground"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6">
+                  <Button
+                    variant="whatsapp"
+                    href={waLink(WA_MESSAGES.generico)}
+                    external
+                    full
+                    onClick={() => {
+                      trackWhatsApp("navbar");
+                      setOpen(false);
+                    }}
+                  >
+                    <MessageCircle
+                      size={20}
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    Falar no WhatsApp
+                  </Button>
+                </div>
+              </nav>
+            </Container>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}
