@@ -25,7 +25,7 @@ export function ProductsPreview() {
       <Reveal className="mt-12 flex justify-center">
         <Link
           to="/produtos"
-          className="link-underline inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-pink-deep"
+          className="link-underline inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-violet-deep"
         >
           Ver todos os produtos
           <ArrowRight size={18} strokeWidth={1.5} aria-hidden="true" />

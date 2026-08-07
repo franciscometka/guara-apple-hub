@@ -27,7 +27,7 @@ export function TrustBar() {
                   <Icon
                     size={20}
                     strokeWidth={1.5}
-                    className="shrink-0 text-pink"
+                    className="shrink-0 text-violet"
                     aria-hidden="true"
                   />
                   <span className="text-sm leading-tight text-muted-foreground">

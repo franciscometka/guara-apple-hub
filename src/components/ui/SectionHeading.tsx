@@ -32,7 +32,7 @@ export function SectionHeading({
         <p
           className={cn(
             "type-caption mb-4",
-            tone === "dark" ? "text-pink-bright" : "text-pink-deep",
+            tone === "dark" ? "text-violet-soft" : "text-violet-deep",
           )}
         >
           {eyebrow}

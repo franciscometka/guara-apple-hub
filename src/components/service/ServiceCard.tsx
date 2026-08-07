@@ -23,15 +23,15 @@ export function ServiceCard({
         className={cn(
           "flex h-full flex-col rounded-lg border p-6 transition-[border-color,box-shadow] duration-300 md:p-7",
           dark
-            ? "border-white/8 bg-white/[0.03] hover:border-pink-bright/50"
-            : "border-border bg-background shadow-soft hover:border-pink-glow hover:shadow-card",
+            ? "border-white/8 bg-white/[0.03] hover:border-violet-soft/50"
+            : "border-border bg-background shadow-soft hover:border-violet-glow hover:shadow-card",
         )}
       >
         <Icon
           size={24}
           strokeWidth={1.5}
           aria-hidden="true"
-          className={dark ? "text-pink-bright" : "text-pink"}
+          className={dark ? "text-violet-soft" : "text-violet"}
         />
         <h3
           className={cn(
@@ -53,7 +53,7 @@ export function ServiceCard({
         <p
           className={cn(
             "type-caption mt-5",
-            dark ? "text-pink-glow" : "text-pink-deep",
+            dark ? "text-violet-glow" : "text-violet-deep",
           )}
         >
           {servico.prazo}
@@ -66,8 +66,8 @@ export function ServiceCard({
           className={cn(
             "mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold transition-colors",
             dark
-              ? "text-white hover:text-pink-glow"
-              : "text-pink-deep hover:text-pink",
+              ? "text-white hover:text-violet-glow"
+              : "text-violet-deep hover:text-violet",
           )}
         >
           <MessageCircle size={18} strokeWidth={1.5} aria-hidden="true" />

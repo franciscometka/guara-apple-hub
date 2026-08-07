@@ -36,7 +36,7 @@ export function Hero() {
                 hidden: { opacity: 0, y: reduce ? 0 : 20 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
               }}
-              className="type-caption text-pink-glow"
+              className="type-caption text-violet-glow"
             >
               Guarapuava · Paraná
             </motion.p>
@@ -50,7 +50,7 @@ export function Hero() {
               className="type-display mt-5 text-white"
             >
               O iPhone que você quer.{" "}
-              <span className="text-gradient-pink">Do jeito certo.</span>
+              <span className="text-gradient-violet">Do jeito certo.</span>
             </motion.h1>
 
             <motion.p

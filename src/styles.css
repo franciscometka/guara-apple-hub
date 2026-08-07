@@ -37,13 +37,12 @@
   --color-ring: var(--ring);
 
   /* Marca */
-  --color-pink: var(--guara-pink);
-  --color-pink-deep: var(--guara-pink-deep);
-  --color-pink-bright: var(--guara-pink-bright);
-  --color-pink-glow: var(--guara-pink-glow);
-  --color-pink-tint: var(--guara-pink-tint);
-  --color-crimson: var(--guara-crimson);
-  --color-plum-dark: var(--guara-plum-dark);
+  --color-violet: var(--guara-violet);
+  --color-violet-deep: var(--guara-violet-deep);
+  --color-violet-dark: var(--guara-violet-dark);
+  --color-violet-soft: var(--guara-violet-soft);
+  --color-violet-glow: var(--guara-violet-glow);
+  --color-violet-tint: var(--guara-violet-tint);
   --color-ink: var(--black-rich);
   --color-off-white: var(--off-white);
   --color-whatsapp: var(--whatsapp);
@@ -56,23 +55,22 @@
     0 1px 3px rgb(24 24 27 / 0.06), 0 8px 24px rgb(24 24 27 / 0.06);
   --shadow-card:
     0 4px 12px rgb(24 24 27 / 0.05), 0 16px 48px rgb(24 24 27 / 0.08);
-  --shadow-pink: 0 8px 32px rgb(214 34 84 / 0.3);
+  --shadow-violet: 0 8px 32px rgb(124 58 237 / 0.28);
 }
 
 :root {
   --radius: 16px;
 
-  /* Marca — extraída da fachada da loja */
-  --guara-pink: #d62254;
-  --guara-pink-bright: #f0356c;
-  --guara-pink-deep: #982146;
-  --guara-crimson: #6b0f2e;
-  --guara-plum-dark: #2a0713;
-  --guara-pink-glow: #ff7ba3;
-  --guara-pink-tint: #fff1f5;
+  /* Marca */
+  --guara-violet: oklch(0.556 0.245 302.3);
+  --guara-violet-deep: oklch(0.438 0.229 303.4);
+  --guara-violet-dark: oklch(0.302 0.176 303.9);
+  --guara-violet-soft: oklch(0.749 0.145 296.8);
+  --guara-violet-glow: oklch(0.83 0.096 297.3);
+  --guara-violet-tint: oklch(0.97 0.016 300.1);
 
   --off-white: oklch(0.985 0 0);
-  --black-rich: #140309;
+  --black-rich: oklch(0.145 0.014 285.9);
 
   --whatsapp: oklch(0.777 0.184 148.5);
   --success: oklch(0.696 0.149 162.5);
@@ -86,19 +84,19 @@
   --card-foreground: oklch(0.21 0.006 285.9);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.21 0.006 285.9);
-  --primary: var(--guara-pink);
+  --primary: var(--guara-violet);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.967 0.001 286.4);
   --secondary-foreground: oklch(0.21 0.006 285.9);
   --muted: oklch(0.967 0.001 286.4);
   --muted-foreground: oklch(0.552 0.014 285.9);
-  --accent: var(--guara-pink-tint);
-  --accent-foreground: var(--guara-pink-deep);
+  --accent: var(--guara-violet-tint);
+  --accent-foreground: var(--guara-violet-deep);
   --destructive: var(--error);
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.92 0.004 286.3);
   --input: oklch(0.92 0.004 286.3);
-  --ring: var(--guara-pink);
+  --ring: var(--guara-violet);
 }
 
 @layer base {
@@ -129,7 +127,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--guara-pink);
+    outline: 2px solid var(--guara-violet);
     outline-offset: 3px;
   }
 }
@@ -180,24 +178,24 @@
 @utility glow-radial {
   background: radial-gradient(
     ellipse 80% 50% at 50% 0%,
-    rgb(214 34 84 / 0.34),
+    rgb(124 58 237 / 0.35),
     transparent 70%
   );
 }
 
-@utility text-gradient-pink {
+@utility text-gradient-violet {
   background-image: linear-gradient(
     120deg,
-    var(--guara-pink-glow) 0%,
-    var(--guara-pink-bright) 55%,
-    var(--guara-pink) 100%
+    var(--guara-violet-glow) 0%,
+    var(--guara-violet-soft) 55%,
+    var(--guara-violet) 100%
   );
   background-clip: text;
   color: transparent;
 }
 
 @utility grad-cta {
-  background-image: linear-gradient(135deg, #f0356c 0%, #c01a48 100%);
+  background-image: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
 }
 
 @utility link-underline {

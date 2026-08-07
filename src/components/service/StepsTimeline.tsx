@@ -22,7 +22,7 @@ export function StepsTimeline({ tone = "dark" }: { tone?: "dark" | "light" }) {
         )}
       >
         <motion.div
-          className={cn("h-px origin-left", dark ? "bg-pink-bright" : "bg-pink")}
+          className={cn("h-px origin-left", dark ? "bg-violet-soft" : "bg-violet")}
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
@@ -49,7 +49,7 @@ export function StepsTimeline({ tone = "dark" }: { tone?: "dark" | "light" }) {
             }}
             className={cn(
               "font-display relative z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold",
-              dark ? "bg-pink text-white" : "grad-cta text-white",
+              dark ? "bg-violet text-white" : "grad-cta text-white",
             )}
           >
             {passo.numero}

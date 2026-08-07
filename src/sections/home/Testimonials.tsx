@@ -18,7 +18,7 @@ export function Testimonials() {
           href={GOOGLE_REVIEWS_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="link-underline inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-pink-deep"
+          className="link-underline inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-violet-deep"
         >
           Ver todas as avaliações no Google →
         </a>

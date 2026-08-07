@@ -52,7 +52,7 @@ export function WhyGuara() {
           {itens.map((item) => (
             <RevealItem key={item.n}>
               <div className="border-t border-border pt-6">
-                <span className="type-caption text-pink-deep">{item.n}</span>
+                <span className="type-caption text-violet-deep">{item.n}</span>
                 <h3 className="type-h3 mt-3 text-foreground">{item.titulo}</h3>
                 <p className="mt-3 max-w-[58ch] text-muted-foreground">
                   {item.texto}

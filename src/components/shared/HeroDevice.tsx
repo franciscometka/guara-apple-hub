@@ -87,7 +87,7 @@ export default function HeroDevice() {
       <motion.div
         aria-hidden="true"
         style={{ x: glowX, y: glowY, scale: glowScale, opacity: scrollFade }}
-        className="pointer-events-none absolute inset-[-18%] -z-10 rounded-full bg-[radial-gradient(circle_at_50%_45%,color-mix(in_oklab,var(--color-pink)_45%,transparent),transparent_68%)] blur-3xl"
+        className="pointer-events-none absolute inset-[-18%] -z-10 rounded-full bg-[radial-gradient(circle_at_50%_45%,color-mix(in_oklab,var(--color-violet)_45%,transparent),transparent_68%)] blur-3xl"
       />
 
       {/* Aparelho */}

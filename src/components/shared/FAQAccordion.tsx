@@ -29,7 +29,7 @@ export function FAQAccordion({ items }: { items: FaqItem[] }) {
                   aria-hidden="true"
                   animate={{ rotate: isOpen ? 45 : 0 }}
                   transition={{ duration: reduce ? 0.2 : 0.3 }}
-                  className="shrink-0 text-pink"
+                  className="shrink-0 text-violet"
                 >
                   <Plus size={24} strokeWidth={1.5} />
                 </motion.span>
