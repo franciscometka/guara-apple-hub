@@ -2,7 +2,6 @@ import { Truck, Navigation } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { MapEmbed } from "@/components/shared/MapEmbed";
 import { OpenNowBadge } from "@/components/shared/OpenNowBadge";
 import { Button } from "@/components/ui/GuaraButton";
 import { CONTATO, mapsRoute, trackWhatsApp } from "@/lib/whatsapp";
