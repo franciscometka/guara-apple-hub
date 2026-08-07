@@ -101,7 +101,6 @@ function AssistenciaPage() {
       </Section>
 
       <Section variant="dark" labelledBy="processo">
-        <AnimatedGlow className="h-[40vh]" animate={false} />
         <SectionHeading
           id="processo"
           tone="dark"
@@ -110,6 +109,7 @@ function AssistenciaPage() {
         />
         <StepsTimeline />
       </Section>
+
 
       <Section variant="tint" labelledBy="garantia">
         <SectionHeading
