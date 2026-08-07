@@ -1,7 +1,7 @@
 import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { motion, useReducedMotion } from "motion/react";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Produto } from "@/data/products";
 import { GuaraBadge } from "@/components/ui/GuaraBadge";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
@@ -9,6 +9,12 @@ import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 export function ProductCard({ produto }: { produto: Produto }) {
   const reduce = useReducedMotion();
   const [loaded, setLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // Imagem em cache já pode estar completa antes do onLoad ser anexado.
+  useEffect(() => {
+    if (imgRef.current?.complete) setLoaded(true);
+  }, []);
 
   return (
     <motion.article
@@ -21,8 +27,11 @@ export function ProductCard({ produto }: { produto: Produto }) {
       {...(reduce ? {} : { whileHover: { y: -6 } })}
     >
       <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-background p-6">
-        {!loaded && <div className="shimmer absolute inset-0" aria-hidden="true" />}
+        {!loaded && (
+          <div className="shimmer absolute inset-0 -z-10" aria-hidden="true" />
+        )}
         <img
+          ref={imgRef}
           src={produto.imagem}
           alt={`${produto.nome} disponível na Guara iPhones, Guarapuava`}
           loading="lazy"
