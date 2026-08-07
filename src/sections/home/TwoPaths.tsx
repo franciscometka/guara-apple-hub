@@ -3,6 +3,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { RevealGroup } from "@/components/ui/Reveal";
 import { PathCard } from "@/components/shared/PathCard";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
+import imgLoja from "@/assets/images/loja-vitrine.jpg";
+import imgBancada from "@/assets/images/bancada-reparo.jpg";
 
 export function TwoPaths() {
   return (
@@ -19,7 +21,7 @@ export function TwoPaths() {
           texto="iPhone, iPad, Apple Watch, AirPods, Mac e acessórios. Lacrados e seminovos revisados, com nota fiscal e garantia."
           cta="Ver produtos"
           href="/produtos"
-          imagem="https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=800&q=80"
+          imagem={imgLoja}
           alt="Vitrine com iPhones e acessórios Apple"
         />
         <PathCard
@@ -29,7 +31,7 @@ export function TwoPaths() {
           href={waLink(WA_MESSAGES.generico)}
           external
           onClick={() => trackWhatsApp("servico")}
-          imagem="https://images.unsplash.com/photo-1580982324076-4c7d9ce8f0cd?auto=format&fit=crop&w=800&q=80"
+          imagem={imgBancada}
           alt="Técnico realizando reparo em placa de iPhone na bancada"
         />
       </RevealGroup>
