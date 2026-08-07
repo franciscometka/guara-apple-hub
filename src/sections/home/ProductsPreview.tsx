@@ -15,7 +15,7 @@ export function ProductsPreview() {
         id="produtos-destaque"
         eyebrow="Loja"
         title="Aparelhos disponíveis agora"
-        description="Lacrados e seminovos revisados, com a condição real informada antes da compra. Valores atualizados no WhatsApp."
+        subtitle="Lacrados e seminovos revisados, com a condição real informada antes da compra. Valores atualizados no WhatsApp."
       />
       <RevealGroup className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {destaques.map((p) => (
