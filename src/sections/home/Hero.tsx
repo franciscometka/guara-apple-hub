@@ -6,6 +6,7 @@ import { Link } from "@tanstack/react-router";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/GuaraButton";
 import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
+import { HeroFallbackImage } from "@/components/shared/HeroFallbackImage";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 
 const Hero3DDevice = lazy(() => import("@/components/shared/Hero3DDevice"));
@@ -51,8 +52,7 @@ export function Hero() {
               }}
               className="type-display mt-5 text-white"
             >
-              O iPhone que você quer.{" "}
-              <span className="text-gradient-violet">Do jeito certo.</span>
+              O iPhone que você quer. <span className="text-gradient-violet">Do jeito certo.</span>
             </motion.h1>
 
             <motion.p
@@ -62,9 +62,8 @@ export function Hero() {
               }}
               className="type-body-lg mt-6 max-w-[520px] text-white/65"
             >
-              Loja Apple e assistência técnica em Guarapuava. Produto original,
-              conserto com garantia e atendimento direto no WhatsApp — sem fila,
-              sem enrolação.
+              Loja Apple e assistência técnica em Guarapuava. Produto original, conserto com
+              garantia e atendimento direto no WhatsApp — sem fila, sem enrolação.
             </motion.p>
 
             <motion.div
@@ -95,20 +94,12 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            initial={
-              reduce
-                ? { opacity: 0 }
-                : { opacity: 0, y: 60, scale: 0.9, rotateZ: -6 }
-            }
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 60, scale: 0.9, rotateZ: -6 }}
             animate={{ opacity: 1, y: 0, scale: 1, rotateZ: 0 }}
             transition={{ duration: 1.1, ease, delay: 0.45 }}
             className="relative"
           >
-            <Suspense
-              fallback={
-                <div className="h-[440px] w-full sm:h-[560px] md:h-[680px]" />
-              }
-            >
+            <Suspense fallback={<HeroFallbackImage />}>
               <Hero3DDevice />
             </Suspense>
           </motion.div>

@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: "grad-cta text-white hover:shadow-violet",
-        whatsapp: "bg-whatsapp text-ink hover:shadow-violet",
+        whatsapp: "bg-whatsapp text-white hover:shadow-violet",
         secondary:
           "border border-border bg-transparent text-foreground hover:border-violet hover:text-violet-deep",
         outlineDark:

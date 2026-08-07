@@ -3,10 +3,9 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { useReducedMotion } from "motion/react";
 import * as THREE from "three";
-import heroFallback from "@/assets/images/iphone-hero.png";
+import { HERO_DEVICE_HEIGHT, HeroFallbackImage } from "@/components/shared/HeroFallbackImage";
 
 const MODEL_URL = "/models/iphone.glb";
-const CANVAS_HEIGHT = "h-[440px] sm:h-[560px] md:h-[680px]";
 
 /** Limites de inclinação vertical — compartilhados com o cálculo de enquadramento. */
 const POLAR_MIN = Math.PI / 3; // 60°
@@ -18,6 +17,14 @@ const FILL = 1.06;
 /** Animação de entrada: o aparelho "chega" girado e assenta na posição de descanso. */
 const ENTRY_ANGLE = THREE.MathUtils.degToRad(65);
 const ENTRY_DURATION = 1.1; // segundos — mesma duração da entrada do Hero (Hero.tsx)
+
+// Início do download do .glb assim que este módulo é avaliado no browser —
+// em paralelo com o resto do carregamento, em vez de esperar o Canvas
+// montar. Protegido contra SSR: este módulo pode ser importado no servidor
+// pra resolver o Suspense do lazy(), e useGLTF.preload toca APIs de browser.
+if (typeof window !== "undefined") {
+  useGLTF.preload(MODEL_URL);
+}
 
 /**
  * Distância de câmera que mantém o aparelho inteiro dentro do canvas em
@@ -47,12 +54,25 @@ function FitCamera({ halfHeight, radius }: { halfHeight: number; radius: number 
   return null;
 }
 
-function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
+function Device({
+  onReady,
+  onEntryComplete,
+}: {
+  onReady: () => void;
+  onEntryComplete: () => void;
+}) {
   const { scene } = useGLTF(MODEL_URL);
   const spinRef = useRef<THREE.Group>(null);
   const startTime = useRef<number | null>(null);
   const done = useRef(false);
   const invalidate = useThree((s) => s.invalidate);
+
+  // useGLTF já suspendeu até aqui — o modelo está pronto assim que este
+  // componente chega a renderizar pela primeira vez.
+  useEffect(() => {
+    onReady();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Modelos .glb chegam com escala e origem arbitrárias: centralizamos na
   // origem e medimos o aparelho pra câmera se ajustar sozinha ao tamanho real.
@@ -113,7 +133,7 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   );
 }
 
-function Scene() {
+function Scene({ onReady }: { onReady: () => void }) {
   // Só libera o arraste depois que a animação de entrada assentar — evita o
   // gesto do usuário brigar com o giro de chegada.
   const [controlsEnabled, setControlsEnabled] = useState(false);
@@ -121,10 +141,15 @@ function Scene() {
   return (
     <>
       <Suspense fallback={null}>
-        <Device onEntryComplete={() => setControlsEnabled(true)} />
-        <Environment preset="city" />
-        <directionalLight position={[2, 3, 4]} intensity={0.6} />
+        <Device onReady={onReady} onEntryComplete={() => setControlsEnabled(true)} />
       </Suspense>
+      {/* Boundary própria: o mapa de ambiente vem de um HDR hospedado fora
+          do nosso build (raw.githack.com, via drei) — não pode travar a
+          revelação do aparelho se esse download for lento ou falhar. */}
+      <Suspense fallback={null}>
+        <Environment preset="city" />
+      </Suspense>
+      <directionalLight position={[2, 3, 4]} intensity={0.6} />
       <OrbitControls
         enabled={controlsEnabled}
         enableZoom={false}
@@ -147,26 +172,10 @@ function DeviceGlow() {
   );
 }
 
-function FallbackImage() {
-  // O PNG já traz o halo violeta na própria arte — por isso não leva DeviceGlow.
-  return (
-    <div className={`relative flex w-full items-center justify-center ${CANVAS_HEIGHT}`}>
-      <img
-        src={heroFallback}
-        alt="iPhone em destaque na Guara iPhones"
-        width={521}
-        height={651}
-        fetchPriority="high"
-        decoding="async"
-        className="block h-full w-auto max-w-full object-contain select-none"
-      />
-    </div>
-  );
-}
-
 export default function Hero3DDevice() {
   const reduced = useReducedMotion();
   const [mounted, setMounted] = useState(false);
+  const [modelReady, setModelReady] = useState(false);
 
   // O WebGL não roda no SSR: até hidratar, sai sempre a imagem estática.
   // Esse mesmo caminho cobre prefers-reduced-motion — nunca chega a montar
@@ -176,11 +185,11 @@ export default function Hero3DDevice() {
   }, []);
 
   if (!mounted || reduced) {
-    return <FallbackImage />;
+    return <HeroFallbackImage />;
   }
 
   return (
-    <div className={`relative w-full ${CANVAS_HEIGHT}`}>
+    <div className={`relative w-full ${HERO_DEVICE_HEIGHT}`}>
       <DeviceGlow />
       <Canvas
         frameloop="demand"
@@ -189,8 +198,16 @@ export default function Hero3DDevice() {
         dpr={[1, 2]}
         style={{ background: "transparent" }}
       >
-        <Scene />
+        <Scene onReady={() => setModelReady(true)} />
       </Canvas>
+      {/* Cobre o Canvas com a imagem estática até o .glb terminar de
+          carregar — sem isso, a pessoa vê só o glow atrás sem nenhum
+          aparelho durante o download do modelo. */}
+      {!modelReady && (
+        <div className="absolute inset-0">
+          <HeroFallbackImage />
+        </div>
+      )}
     </div>
   );
 }
