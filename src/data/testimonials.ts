@@ -1,37 +1,42 @@
 export interface Depoimento {
   nome: string;
-  cidade: string;
+  fonte: "Google";
   texto: string;
-  foto: string;
-  placeholder?: boolean;
 }
 
-// TODO: substituir por depoimento real — [CONFIRMAR: 3 DEPOIMENTOS REAIS +
-// primeiro nome + cidade. Pegar prints de avaliação do Google/Instagram.]
-// Nada aqui deve ir ao ar como se fosse avaliação verdadeira.
+/** Avaliações reais publicadas no Google. Texto exatamente como o cliente escreveu. */
 export const depoimentos: Depoimento[] = [
   {
-    nome: "Depoimento a confirmar",
-    cidade: "Guarapuava/PR",
+    nome: "Melissa Dellê Marcondes",
+    fonte: "Google",
     texto:
-      "Espaço reservado para uma avaliação real de cliente. Assim que os prints do Google/Instagram chegarem, este texto será substituído.",
-    foto: "",
-    placeholder: true,
+      "Atendimento fantástico, produtos originais, preço justo. Super recomendo!!!",
   },
   {
-    nome: "Depoimento a confirmar",
-    cidade: "Guarapuava/PR",
+    nome: "Lucas Maciel",
+    fonte: "Google",
     texto:
-      "Espaço reservado para uma avaliação real de cliente sobre a experiência de compra na loja.",
-    foto: "",
-    placeholder: true,
+      "Ótimo atendimento, produto de qualidade. Recomendo a todos. Nenhum problema com todo o processo, desde atendimento até com a entrega.",
   },
   {
-    nome: "Depoimento a confirmar",
-    cidade: "Região de Guarapuava",
+    nome: "Maria Aparecida do Nascimento Oliveira",
+    fonte: "Google",
     texto:
-      "Espaço reservado para uma avaliação real de cliente sobre a assistência técnica.",
-    foto: "",
-    placeholder: true,
+      "Atendimento incrível! Comprei meu iPhone aqui e fui super bem atendido. Equipe atenciosa e muito prestativa. Recomendo!",
+  },
+  {
+    nome: "Larissa Almeida",
+    fonte: "Google",
+    texto:
+      "Melhor atendimento! Melhores preços! Segunda vez que compro e recomendo muito!",
+  },
+  {
+    nome: "Dayane Techy",
+    fonte: "Google",
+    texto: "Ótimo atendimento e ótimo preço! Mais em conta da cidade.",
   },
 ];
+
+// TODO: [CONFIRMAR: link do perfil no Google Maps]
+export const GOOGLE_REVIEWS_URL = "https://www.google.com/maps";
+// TODO: [CONFIRMAR: nota e total de avaliações no Google] — não exibir até confirmar.
