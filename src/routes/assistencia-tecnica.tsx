@@ -1,5 +1,6 @@
+import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { createFileRoute } from "@tanstack/react-router";
-import { MessageCircle, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -78,7 +79,7 @@ function AssistenciaPage() {
               external
               onClick={() => trackWhatsApp("hero")}
             >
-              <MessageCircle size={20} strokeWidth={1.5} aria-hidden="true" />
+              <WhatsAppIcon size={20} />
               Pedir orçamento no WhatsApp
             </Button>
           </div>

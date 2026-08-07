@@ -1,4 +1,5 @@
-import { MessageCircle } from "lucide-react";
+import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
+
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
@@ -21,7 +22,7 @@ export function TradeIn() {
           external
           onClick={() => trackWhatsApp("produto")}
         >
-          <MessageCircle size={18} strokeWidth={1.5} aria-hidden="true" />
+          <WhatsAppIcon size={18} />
           Avaliar meu aparelho
         </Button>
       </Reveal>

@@ -1,5 +1,6 @@
+import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { motion, useReducedMotion } from "motion/react";
-import { MessageCircle } from "lucide-react";
+
 import { useState } from "react";
 import type { Produto } from "@/data/products";
 import { GuaraBadge } from "@/components/ui/GuaraBadge";
@@ -49,7 +50,7 @@ export function ProductCard({ produto }: { produto: Produto }) {
           onClick={() => trackWhatsApp("produto")}
           className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-violet-deep transition-colors hover:text-violet"
         >
-          <MessageCircle size={18} strokeWidth={1.5} aria-hidden="true" />
+          <WhatsAppIcon size={18} />
           Consultar valor no WhatsApp
         </a>
       </div>
