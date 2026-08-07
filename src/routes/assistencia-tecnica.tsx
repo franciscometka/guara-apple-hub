@@ -58,7 +58,7 @@ function AssistenciaPage() {
       >
         <Container className="relative">
 
-          <p className="type-caption text-violet-glow">Assistência técnica</p>
+          <p className="type-caption text-pink-glow">Assistência técnica</p>
           <h1
             id="assistencia-title"
             className="type-h1 mt-4 max-w-[760px] text-white"
@@ -120,11 +120,11 @@ function AssistenciaPage() {
         <RevealGroup className="mt-14 grid gap-7 md:grid-cols-3">
           {GARANTIA.map((g) => (
             <RevealItem key={g.titulo}>
-              <div className="h-full rounded-lg border border-violet-glow/30 bg-background p-7 shadow-soft">
+              <div className="h-full rounded-lg border border-pink-glow/30 bg-background p-7 shadow-soft">
                 <ShieldCheck
                   size={24}
                   strokeWidth={1.5}
-                  className="text-violet"
+                  className="text-pink"
                   aria-hidden="true"
                 />
                 <h3 className="font-display mt-5 text-lg font-semibold text-foreground">

@@ -41,7 +41,7 @@ export function Navbar() {
             )}
             onClick={() => setOpen(false)}
           >
-            Guara<span className="text-violet">iPhones</span>
+            Guara<span className="text-pink">iPhones</span>
           </Link>
 
           <nav aria-label="Navegação principal" className="hidden md:block">

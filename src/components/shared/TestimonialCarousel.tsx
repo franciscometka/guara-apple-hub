@@ -40,7 +40,7 @@ export function TestimonialCarousel() {
         <Quote
           size={24}
           strokeWidth={1.5}
-          className="text-violet"
+          className="text-pink"
           aria-hidden="true"
         />
         <AnimatePresence mode="wait">
@@ -56,7 +56,7 @@ export function TestimonialCarousel() {
             <footer className="mt-6 flex items-center gap-3">
               <span
                 aria-hidden="true"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-tint text-sm font-semibold text-violet-deep"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-pink-tint text-sm font-semibold text-pink-deep"
               >
                 {atual.nome.charAt(0)}
               </span>
@@ -86,7 +86,7 @@ export function TestimonialCarousel() {
               key={i}
               className={
                 i === index
-                  ? "h-1.5 w-6 rounded-full bg-violet"
+                  ? "h-1.5 w-6 rounded-full bg-pink"
                   : "h-1.5 w-1.5 rounded-full bg-border"
               }
             />
@@ -97,7 +97,7 @@ export function TestimonialCarousel() {
             type="button"
             onClick={() => go(-1)}
             aria-label="Depoimento anterior"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-foreground transition-colors hover:border-violet hover:text-violet-deep"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-foreground transition-colors hover:border-pink hover:text-pink-deep"
           >
             <ChevronLeft size={20} strokeWidth={1.5} />
           </button>
@@ -105,7 +105,7 @@ export function TestimonialCarousel() {
             type="button"
             onClick={() => go(1)}
             aria-label="Próximo depoimento"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-foreground transition-colors hover:border-violet hover:text-violet-deep"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-foreground transition-colors hover:border-pink hover:text-pink-deep"
           >
             <ChevronRight size={20} strokeWidth={1.5} />
           </button>

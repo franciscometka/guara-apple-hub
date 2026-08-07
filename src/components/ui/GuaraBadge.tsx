@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export type BadgeTone = "violet" | "dark" | "success";
+export type BadgeTone = "pink" | "dark" | "success";
 
 export function GuaraBadge({
   children,
-  tone = "violet",
+  tone = "pink",
   className,
 }: {
   children: ReactNode;
@@ -13,8 +13,8 @@ export function GuaraBadge({
   className?: string | undefined;
 }) {
   const tones: Record<BadgeTone, string> = {
-    violet: "bg-violet-tint text-violet-deep",
-    dark: "bg-white/8 text-violet-glow",
+    pink: "bg-pink-tint text-pink-deep",
+    dark: "bg-white/8 text-pink-glow",
     success: "bg-success/12 text-success",
   };
   return (

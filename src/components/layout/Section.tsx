@@ -8,7 +8,7 @@ const variants: Record<SectionVariant, string> = {
   light: "bg-background text-foreground",
   off: "bg-off-white text-foreground",
   dark: "bg-ink text-white",
-  tint: "bg-violet-tint text-foreground",
+  tint: "bg-pink-tint text-foreground",
 };
 
 export function Section({

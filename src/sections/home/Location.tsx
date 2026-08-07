@@ -24,7 +24,7 @@ export function Location() {
               <MapPin
                 size={22}
                 strokeWidth={1.5}
-                className="mt-0.5 shrink-0 text-violet"
+                className="mt-0.5 shrink-0 text-pink"
                 aria-hidden="true"
               />
               <div>
@@ -36,7 +36,7 @@ export function Location() {
               <Clock
                 size={22}
                 strokeWidth={1.5}
-                className="mt-0.5 shrink-0 text-violet"
+                className="mt-0.5 shrink-0 text-pink"
                 aria-hidden="true"
               />
               <div>
@@ -57,7 +57,7 @@ export function Location() {
               <Phone
                 size={22}
                 strokeWidth={1.5}
-                className="mt-0.5 shrink-0 text-violet"
+                className="mt-0.5 shrink-0 text-pink"
                 aria-hidden="true"
               />
               <div>
