@@ -1,10 +1,10 @@
 import imgWatch from "@/assets/images/cat-watch.jpg";
 import imgAirpods from "@/assets/images/cat-airpods.jpg";
 import showroom from "@/assets/images/showroom.webp.asset.json";
-import iphone15 from "@/assets/images/produtos/iphone-15-256gb-azul.webp.asset.json";
-import iphone14pro from "@/assets/images/produtos/iphone-14-pro-256gb-preto-espacial-seminovo.webp.asset.json";
-import iphone13pro from "@/assets/images/produtos/iphone-13-pro-azul-sierra.jpg.asset.json";
-import iphone13 from "@/assets/images/produtos/iphone-13-128gb-preto.webp.asset.json";
+import iphone15 from "@/assets/images/produtos/iphone-15-256gb-azul-norm.webp";
+import iphone14pro from "@/assets/images/produtos/iphone-14-pro-256gb-preto-espacial-seminovo-norm.webp";
+import iphone13pro from "@/assets/images/produtos/iphone-13-pro-azul-sierra-norm.webp";
+import iphone13 from "@/assets/images/produtos/iphone-13-128gb-preto-norm.webp";
 import ipad10 from "@/assets/images/produtos/ipad-10-wifi-cellular-64gb-silver.webp.asset.json";
 
 export type Categoria =
@@ -43,7 +43,7 @@ export const produtos: Produto[] = [
     categoria: "iPhone",
     condicao: "Lacrado",
     detalhe: "256GB · Caixa lacrada com nota fiscal",
-    imagem: iphone15.url,
+    imagem: iphone15,
     destaque: true,
   },
   {
@@ -52,7 +52,7 @@ export const produtos: Produto[] = [
     categoria: "iPhone",
     condicao: "Seminovo",
     detalhe: "Revisado peça por peça · saúde de bateria informada",
-    imagem: iphone14pro.url,
+    imagem: iphone14pro,
     destaque: true,
   },
   {
@@ -61,7 +61,7 @@ export const produtos: Produto[] = [
     categoria: "iPhone",
     condicao: "Seminovo",
     detalhe: "Checagem completa de tela, bateria e câmeras",
-    imagem: iphone13pro.url,
+    imagem: iphone13pro,
     destaque: true,
   },
   {
@@ -70,7 +70,7 @@ export const produtos: Produto[] = [
     categoria: "iPhone",
     condicao: "Seminovo",
     detalhe: "128GB · condição real informada antes da compra",
-    imagem: iphone13.url,
+    imagem: iphone13,
     destaque: true,
   },
   {
