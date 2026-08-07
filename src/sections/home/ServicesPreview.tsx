@@ -3,7 +3,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { RevealGroup } from "@/components/ui/Reveal";
 import { ServiceCard } from "@/components/service/ServiceCard";
 import { StepsTimeline } from "@/components/service/StepsTimeline";
-import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
 import { servicos } from "@/data/services";
 
 export function ServicesPreview() {
@@ -11,7 +10,6 @@ export function ServicesPreview() {
 
   return (
     <Section variant="dark" labelledBy="assistencia">
-      <AnimatedGlow className="h-[50vh]" animate={false} />
       <SectionHeading
         id="assistencia"
         tone="dark"
@@ -28,3 +26,4 @@ export function ServicesPreview() {
     </Section>
   );
 }
+

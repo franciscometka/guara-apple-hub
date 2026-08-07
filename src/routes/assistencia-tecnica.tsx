@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MessageCircle, ShieldCheck } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
-import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+
 import { Button } from "@/components/ui/GuaraButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { ServiceCard } from "@/components/service/ServiceCard";
@@ -56,8 +56,8 @@ function AssistenciaPage() {
         aria-labelledby="assistencia-title"
         className="relative overflow-hidden bg-ink pt-32 pb-20 md:pt-40 md:pb-24"
       >
-        <AnimatedGlow className="h-[50vh]" />
         <Container className="relative">
+
           <p className="type-caption text-violet-glow">Assistência técnica</p>
           <h1
             id="assistencia-title"
@@ -101,7 +101,6 @@ function AssistenciaPage() {
       </Section>
 
       <Section variant="dark" labelledBy="processo">
-        <AnimatedGlow className="h-[40vh]" animate={false} />
         <SectionHeading
           id="processo"
           tone="dark"
@@ -110,6 +109,7 @@ function AssistenciaPage() {
         />
         <StepsTimeline />
       </Section>
+
 
       <Section variant="tint" labelledBy="garantia">
         <SectionHeading
