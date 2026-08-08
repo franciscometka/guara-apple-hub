@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { useReducedMotion } from "motion/react";
@@ -40,12 +40,23 @@ if (typeof window !== "undefined") {
  * rotação de entrada, que gira o objeto em vez da câmera — geometricamente
  * é a mesma relação, só o lado que se move muda.
  */
-function FitCamera({ halfHeight, radius }: { halfHeight: number; radius: number }) {
+function FitCamera({
+  halfHeight,
+  radius,
+  onFit,
+}: {
+  halfHeight: number;
+  radius: number;
+  onFit: () => void;
+}) {
   const camera = useThree((s) => s.camera);
   const size = useThree((s) => s.size);
   const invalidate = useThree((s) => s.invalidate);
 
-  useEffect(() => {
+  // useLayoutEffect: o enquadramento precisa acontecer ANTES do primeiro
+  // quadro pintado, senão o aparelho aparece na distância padrão da câmera
+  // (pequeno) e "salta" pro tamanho certo no recarregamento da página.
+  useLayoutEffect(() => {
     const cam = camera as THREE.PerspectiveCamera;
     const vFov = (cam.fov * Math.PI) / 180;
     const hFov = 2 * Math.atan(Math.tan(vFov / 2) * cam.aspect);
@@ -57,8 +68,9 @@ function FitCamera({ halfHeight, radius }: { halfHeight: number; radius: number 
 
     cam.position.setLength(distance);
     cam.updateProjectionMatrix();
+    onFit();
     invalidate();
-  }, [camera, size, halfHeight, radius, invalidate]);
+  }, [camera, size, halfHeight, radius, invalidate, onFit]);
 
   return null;
 }
@@ -69,6 +81,9 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   const startTime = useRef<number | null>(null);
   const done = useRef(false);
   const invalidate = useThree((s) => s.invalidate);
+  // Só revelamos o aparelho depois que a câmera está na distância correta.
+  const [fitted, setFitted] = useState(false);
+  const handleFit = useCallback(() => setFitted(true), []);
 
   // O arquivo .glb contém duas cópias do mesmo iPhone (iphone17promax_0 e
   // iphone17promax.001_1). Removemos a duplicata antes de medir/enquadrar,
@@ -114,7 +129,7 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   }, [cleanedScene]);
 
   useFrame((state) => {
-    if (done.current || !spinRef.current) return;
+    if (done.current || !spinRef.current || !fitted) return;
 
     if (startTime.current === null) startTime.current = state.clock.elapsedTime;
     const elapsed = state.clock.elapsedTime - startTime.current;
@@ -136,13 +151,13 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   return (
     <>
       {/* Gira em volta da origem — o mesmo pivô que o OrbitControls usa depois. */}
-      <group ref={spinRef} rotation={[0, ENTRY_ANGLE, 0]}>
+      <group ref={spinRef} rotation={[0, ENTRY_ANGLE, 0]} visible={fitted}>
         {/* Recentraliza a geometria: translação pura, nunca gira. */}
         <group position={center.clone().negate()}>
           <primitive object={cleanedScene} />
         </group>
       </group>
-      <FitCamera halfHeight={halfHeight} radius={radius} />
+      <FitCamera halfHeight={halfHeight} radius={radius} onFit={handleFit} />
     </>
   );
 }
