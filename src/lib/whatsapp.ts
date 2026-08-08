@@ -44,8 +44,7 @@ export function trackWhatsApp(origem: WaOrigem) {
 export const TAGLINE = "Somos apaixonados pela Apple";
 
 export const CONTATO = {
-  // TODO: [CONFIRMAR: NÚMERO WHATSAPP]
-  telefoneExibicao: "(42) 99122-0341",
+  telefoneExibicao: "(42) 99162-1683",
   // TODO: [CONFIRMAR: e-mail comercial no domínio próprio]
   email: "adrianom.dacruz2@gmail.com",
   // TODO: [CONFIRMAR: CEP e bairro]
