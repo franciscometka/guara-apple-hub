@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFAB } from "@/components/shared/WhatsAppFAB";
+import { ScrollProgress } from "@/components/shared/ScrollProgress";
 
 function NotFoundComponent() {
   return (
@@ -138,6 +139,7 @@ function RootComponent() {
       >
         Ir para o conteúdo
       </a>
+      <ScrollProgress />
       <Navbar />
       <main id="conteudo">
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
