@@ -58,7 +58,7 @@ export const CONTATO = {
     "Domingo: fechado",
   ],
   horarioResumo: "Seg a Sex 09h–19h · Sáb 09h–15h",
-  instagram: "https://instagram.com/guaraiphones",
+  instagram: "https://www.instagram.com/guaraiphones?igsh=MnY3Y3didjEwbjA4&utm_source=qr",
   instagramHandle: "@guaraiphones",
   // TODO: [CONFIRMAR: página exata no Facebook]
   facebook: "https://facebook.com/",
