@@ -74,14 +74,16 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   // senão a cena mostra dois aparelhos lado a lado e cada um parece menor.
   const cleanedScene = useMemo(() => {
     const clone = scene.clone();
-    // O nome do nó duplicado perde o ponto na importação do Three.js.
-    // getObjectByName pode falhar por causa de como o GLTFLoader nomeia
-    // grupos internos, então removemos por busca manual na hierarquia.
+    // O arquivo .glb contém duas cópias do mesmo iPhone. O nome do nó
+    // duplicado perde o ponto na importação do Three.js, então coletamos
+    // fora do traverse e removemos depois para evitar mutação durante iteração.
+    const toRemove: THREE.Object3D[] = [];
     clone.traverse((obj) => {
       if (obj.name === "iphone17promax001_1") {
-        obj.removeFromParent();
+        toRemove.push(obj);
       }
     });
+    toRemove.forEach((obj) => obj.removeFromParent());
     return clone;
   }, [scene]);
 
