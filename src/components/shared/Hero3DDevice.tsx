@@ -17,7 +17,7 @@ const POLAR_MIN = Math.PI / 3; // 60°
 const POLAR_MAX = Math.PI / 1.7; // ~106°
 
 /** Folga em volta do aparelho: 1 = encostando na borda, maior = mais respiro. */
-const FILL = 1.06;
+const FILL = 0.88;
 
 /** Animação de entrada: o aparelho "chega" girado e assenta na posição de descanso. */
 const ENTRY_ANGLE = THREE.MathUtils.degToRad(65);
@@ -51,7 +51,7 @@ function FitCamera({ halfHeight, radius }: { halfHeight: number; radius: number 
 
     // Em telas estreitas o aparelho encostava nas bordas e parecia cortado /
     // desalinhado — mais folga no mobile.
-    const fill = size.width < 640 ? FILL * 1.22 : FILL;
+    const fill = size.width < 640 ? FILL * 1.12 : FILL;
     const distance = Math.max(halfHeight / Math.tan(vFov / 2), radius / Math.tan(hFov / 2)) * fill;
 
     cam.position.setLength(distance);
@@ -69,10 +69,28 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   const done = useRef(false);
   const invalidate = useThree((s) => s.invalidate);
 
+  // O arquivo .glb contém duas cópias do mesmo iPhone (iphone17promax_0 e
+  // iphone17promax.001_1). Removemos a duplicata antes de medir/enquadrar,
+  // senão a cena mostra dois aparelhos lado a lado e cada um parece menor.
+  const cleanedScene = useMemo(() => {
+    const clone = scene.clone();
+    // O arquivo .glb contém duas cópias do mesmo iPhone. O nome do nó
+    // duplicado perde o ponto na importação do Three.js, então coletamos
+    // fora do traverse e removemos depois para evitar mutação durante iteração.
+    const toRemove: THREE.Object3D[] = [];
+    clone.traverse((obj) => {
+      if (obj.name === "iphone17promax001_1") {
+        toRemove.push(obj);
+      }
+    });
+    toRemove.forEach((obj) => obj.removeFromParent());
+    return clone;
+  }, [scene]);
+
   // Modelos .glb chegam com escala e origem arbitrárias: centralizamos na
   // origem e medimos o aparelho pra câmera se ajustar sozinha ao tamanho real.
   const { center, halfHeight, radius } = useMemo(() => {
-    const box = new THREE.Box3().setFromObject(scene);
+    const box = new THREE.Box3().setFromObject(cleanedScene);
     const boxSize = box.getSize(new THREE.Vector3());
     const halfY = boxSize.y / 2;
     // Raio máximo no plano horizontal — o que a silhueta ocupa ao girar em Y.
@@ -92,7 +110,7 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
       halfHeight: worstHalfHeight,
       radius: xzRadius,
     };
-  }, [scene]);
+  }, [cleanedScene]);
 
   useFrame((state) => {
     if (done.current || !spinRef.current) return;
@@ -120,7 +138,7 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
       <group ref={spinRef} rotation={[0, ENTRY_ANGLE, 0]}>
         {/* Recentraliza a geometria: translação pura, nunca gira. */}
         <group position={center.clone().negate()}>
-          <primitive object={scene} />
+          <primitive object={cleanedScene} />
         </group>
       </group>
       <FitCamera halfHeight={halfHeight} radius={radius} />
