@@ -83,6 +83,7 @@ function HomePage() {
       <ServicesPreview />
       <Testimonials />
       <Location />
+      <DeliveryBanner />
       <FAQ />
       <CTASection />
     </>
