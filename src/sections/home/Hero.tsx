@@ -88,25 +88,23 @@ export function Hero() {
                   <WhatsAppIcon size={20} variant="white" eager />
                   Falar no WhatsApp
                 </Button>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button
+                  variant="instagram"
+                  size="lg"
+                  href={CONTATO.instagram}
+                  external
+                >
+                  <InstagramIcon size={20} eager />
+                  Seguir no Instagram
+                </Button>
                 <Link to="/produtos" className="contents">
                   <Button variant="outlineDark" size="lg">
                     Ver produtos
                     <ArrowRight size={18} strokeWidth={1.5} aria-hidden="true" />
                   </Button>
                 </Link>
-              </div>
-              <div className="flex">
-                <Button
-                  variant="instagram"
-                  size="lg"
-                  href={CONTATO.instagram}
-                  external
-                  full
-                  className="sm:w-auto"
-                >
-                  <InstagramIcon size={20} eager />
-                  Seguir no Instagram
-                </Button>
               </div>
             </motion.div>
           </motion.div>
