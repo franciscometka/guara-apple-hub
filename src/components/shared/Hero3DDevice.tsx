@@ -226,8 +226,9 @@ export default function Hero3DDevice() {
       <Canvas
         frameloop="demand"
         camera={{ position: [0, 0, 4.2], fov: 35 }}
-        gl={{ alpha: true, antialias: !mobile, powerPreference: "high-performance" }}
-        dpr={mobile ? 1 : [1, 2]}
+        gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+        dpr={mobile ? [1, 1.75] : [1, 2]}
+
         style={{ background: "transparent", touchAction: "pan-y" }}
       >
         <Scene interactive={finePointer || mobile} mobile={mobile} />
