@@ -74,7 +74,11 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   // senão a cena mostra dois aparelhos lado a lado e cada um parece menor.
   const cleanedScene = useMemo(() => {
     const clone = scene.clone();
+    const allNames: string[] = [];
+    clone.traverse((o) => allNames.push(o.name || "<no name>"));
+    console.log("[Hero3DDevice] scene node names:", allNames);
     const duplicate = clone.getObjectByName("iphone17promax.001_1");
+    console.log("[Hero3DDevice] duplicate found:", !!duplicate);
     if (duplicate) {
       duplicate.removeFromParent();
     }
