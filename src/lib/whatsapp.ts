@@ -12,6 +12,8 @@ export const WA_MESSAGES = {
     `Olá! Preciso de um orçamento para ${servico} no meu iPhone.`,
   troca:
     "Olá! Quero saber quanto meu iPhone vale de entrada na troca. Modelo: ",
+  entrega:
+    "Olá! Quero saber se vocês entregam na minha cidade. Moro em: ",
   ctaFinal: "Olá! Vim pelo site e quero falar com um atendente.",
 };
 
