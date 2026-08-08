@@ -16,10 +16,13 @@ const icons = {
 export function WhatsAppIcon({
   size = 20,
   variant = "color",
+  eager,
   className,
 }: {
   size?: number;
   variant?: "color" | "white";
+  /** Para os botões que já aparecem na primeira tela — lazy ali só atrasa. */
+  eager?: boolean | undefined;
   className?: string | undefined;
 }) {
   return (
@@ -29,7 +32,7 @@ export function WhatsAppIcon({
       aria-hidden="true"
       width={size}
       height={size}
-      loading="lazy"
+      loading={eager ? "eager" : "lazy"}
       decoding="async"
       style={{ width: size, height: size }}
       className={className}

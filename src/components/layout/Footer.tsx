@@ -29,6 +29,10 @@ export function Footer() {
             <img
               src={logoWhite}
               alt="Guara iPhones"
+              width={190}
+              height={109}
+              loading="lazy"
+              decoding="async"
               className="h-auto w-[190px] object-contain"
             />
             <p className="type-caption mt-3 text-violet-soft">
@@ -77,12 +81,12 @@ export function Footer() {
             >
               Navegação
             </h2>
-            <ul className="mt-5 space-y-3 text-sm">
+            <ul className="mt-3 space-y-2 text-sm">
               {footerNav.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="transition-colors hover:text-white"
+                    className="flex min-h-11 items-center transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -93,12 +97,12 @@ export function Footer() {
 
           <div>
             <h2 className="type-caption font-semibold text-white">Serviços</h2>
-            <ul className="mt-5 space-y-3 text-sm">
+            <ul className="mt-3 space-y-2 text-sm">
               {footerServicos.map((s) => (
                 <li key={s}>
                   <Link
                     to="/assistencia-tecnica"
-                    className="transition-colors hover:text-white"
+                    className="flex min-h-11 items-center transition-colors hover:text-white"
                   >
                     {s}
                   </Link>
@@ -119,11 +123,11 @@ export function Footer() {
                 />
                 <span>{CONTATO.endereco}</span>
               </li>
-              <li className="flex gap-3">
+              <li className="flex items-center gap-3">
                 <Phone
                   size={18}
                   strokeWidth={1.5}
-                  className="mt-0.5 shrink-0 text-violet-soft"
+                  className="shrink-0 text-violet-soft"
                   aria-hidden="true"
                 />
                 <a
@@ -131,7 +135,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackWhatsApp("rodape")}
-                  className="transition-colors hover:text-white"
+                  className="inline-flex min-h-11 items-center transition-colors hover:text-white"
                 >
                   {CONTATO.telefoneExibicao}
                 </a>
@@ -161,7 +165,7 @@ export function Footer() {
         <div className="flex flex-col gap-2 border-t border-white/8 py-7 text-xs md:flex-row md:items-center md:justify-between">
           <p>© {ano} Guara iPhones. Todos os direitos reservados.</p>
           {/* TODO: [CONFIRMAR: CNPJ e razão social] */}
-          <p>
+          <p className="max-w-[65ch] leading-relaxed">
             Guarapuava/PR · Não somos revenda autorizada Apple. Apple, iPhone,
             iPad e Mac são marcas da Apple Inc.
           </p>

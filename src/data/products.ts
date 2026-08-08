@@ -124,7 +124,9 @@ export const produtos: Produto[] = [
     nome: "MacBook Air 13”",
     categoria: "Mac",
     condicao: "Lacrado",
-    detalhe: "Lacrado com nota fiscal",
+    // TODO: [CONFIRMAR: chip (M2/M3/M4), memória e armazenamento do MacBook]
+    // Sem isso, o detalhe só repetia o badge "Lacrado" — melhor dizer a verdade.
+    detalhe: "Chip e armazenamento você confirma no WhatsApp",
     imagem: macbookAir13,
   },
   {
@@ -140,7 +142,8 @@ export const produtos: Produto[] = [
     nome: "Capinha MagSafe Transparente",
     categoria: "Acessórios",
     condicao: "Lacrado",
-    detalhe: "Transparente · Compatível com MagSafe",
+    // TODO: [CONFIRMAR: para quais modelos de iPhone essa capinha serve]
+    detalhe: "Confirma no WhatsApp se tem pro seu modelo de iPhone",
     imagem: capinhaMagsafe,
   },
 ];

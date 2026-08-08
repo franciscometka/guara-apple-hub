@@ -38,12 +38,14 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between md:h-18">
           <Link
             to="/"
-            className="flex items-center gap-2"
+            className="flex min-h-11 items-center gap-2"
             onClick={() => setOpen(false)}
           >
             <img
               src={solid ? markBlack : markWhite}
               alt="Guara iPhones"
+              width={57}
+              height={28}
               className="h-7 w-auto object-contain"
             />
             <span
@@ -88,7 +90,7 @@ export function Navbar() {
               external
               onClick={() => trackWhatsApp("navbar")}
             >
-              <WhatsAppIcon size={18} variant="white" />
+              <WhatsAppIcon size={18} variant="white" eager />
               WhatsApp
             </Button>
           </div>

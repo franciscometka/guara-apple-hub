@@ -10,7 +10,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { CTASection } from "@/components/shared/CTASection";
 import { TrustBar } from "@/components/shared/TrustBar";
 import { produtos, type Categoria } from "@/data/products";
-import showroom from "@/assets/images/showroom.webp.asset.json";
+import fachada from "@/assets/images/fachada.webp";
 
 const title = "Produtos Apple em Guarapuava — Guara iPhones";
 const description =
@@ -46,9 +46,11 @@ function ProdutosPage() {
         className="relative overflow-hidden bg-ink pt-32 pb-16 md:pt-40 md:pb-20"
       >
         <img
-          src={showroom.url}
+          src={fachada}
           alt=""
           aria-hidden="true"
+          fetchPriority="high"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover opacity-25"
         />
         <div

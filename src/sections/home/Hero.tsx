@@ -81,7 +81,7 @@ export function Hero() {
                 external
                 onClick={() => trackWhatsApp("hero")}
               >
-                <WhatsAppIcon size={20} variant="white" />
+                <WhatsAppIcon size={20} variant="white" eager />
                 Falar no WhatsApp
               </Button>
               <Link to="/produtos" className="contents">

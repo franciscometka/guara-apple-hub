@@ -20,8 +20,8 @@ export function TaglineBanner() {
           Somos apaixonados pela Apple
         </h2>
         <p className="type-body-lg mx-auto mt-6 max-w-[620px] text-white/65">
-          Não é slogan de marketing. É o que a gente faz o dia inteiro, há anos,
-          em Guarapuava: vender, cuidar e consertar Apple — e só Apple.
+          Não é slogan de marketing. É o que a gente faz o dia inteiro aqui em
+          Guarapuava: vender, cuidar e consertar Apple — e só Apple.
         </p>
       </Reveal>
     </section>

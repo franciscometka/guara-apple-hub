@@ -17,11 +17,11 @@ export function CTASection() {
       <AnimatedGlow className="top-auto -bottom-20 h-[70vh]" animate={false} />
       <Reveal className="relative mx-auto max-w-[720px]">
         <h2 id="cta-final" className="type-h2 text-white">
-          Chama no WhatsApp. A resposta vem rápido.
+          Ficou com dúvida? Chama no WhatsApp.
         </h2>
         <p className="type-body-lg mx-auto mt-5 text-white/65">
-          Dúvida sobre modelo, valor, disponibilidade ou conserto — manda
-          mensagem que a gente te responde no horário comercial.
+          Modelo, valor, disponibilidade ou conserto — manda a mensagem que a
+          gente responde no horário de atendimento.
         </p>
         <div className="mt-9 flex justify-center">
           <Button

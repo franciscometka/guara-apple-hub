@@ -79,7 +79,7 @@ function AssistenciaPage() {
               external
               onClick={() => trackWhatsApp("hero")}
             >
-              <WhatsAppIcon size={20} variant="white" />
+              <WhatsAppIcon size={20} variant="white" eager />
               Pedir orçamento no WhatsApp
             </Button>
           </div>
@@ -137,7 +137,7 @@ function AssistenciaPage() {
           ))}
         </RevealGroup>
         <Reveal className="mt-12">
-          <p className="text-sm text-muted-foreground">
+          <p className="max-w-[65ch] text-sm text-muted-foreground">
             {/* TODO: [CONFIRMAR: prazos exatos de garantia por serviço] */}
             Os prazos de garantia variam conforme o serviço e a peça — sempre
             informados junto com o orçamento.

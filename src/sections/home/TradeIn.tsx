@@ -9,12 +9,16 @@ import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 export function TradeIn() {
   return (
     <Section variant="tint" labelledBy="troca" id="troca" narrow>
+      {/* TODO: [CONFIRMAR: a loja faz trade-in?] — o FAQ trata isso como
+          possibilidade a confirmar, então o texto aqui também não afirma que
+          a troca existe. Se o Adriano confirmar que faz, dá pra voltar pra
+          uma headline afirmativa ("Seu iPhone atual vale desconto no próximo"). */}
       <SectionHeading
         id="troca"
         align="center"
-        eyebrow="Troca com desconto"
-        title="Seu iPhone atual vale desconto no próximo."
-        subtitle="A gente avalia o seu aparelho e abate no valor do novo. Manda o modelo e o estado no WhatsApp que te passamos quanto vale."
+        eyebrow="Seu aparelho atual"
+        title="Quer usar seu iPhone usado como parte do pagamento?"
+        subtitle="Manda o modelo e o estado do aparelho no WhatsApp. A gente confirma na hora se dá pra abater no valor do novo e quanto ele vale."
       />
       <Reveal className="mt-10 flex justify-center">
         <Button

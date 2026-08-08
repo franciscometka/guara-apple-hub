@@ -70,6 +70,8 @@ export function Location() {
           <img
             src={fachada}
             alt="Fachada da loja Guara iPhones com letreiro, Instagram e telefone"
+            width={382}
+            height={510}
             loading="lazy"
             decoding="async"
             className="aspect-4/5 w-full rounded-lg bg-muted object-cover"

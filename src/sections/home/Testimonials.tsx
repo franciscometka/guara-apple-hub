@@ -9,7 +9,7 @@ export function Testimonials() {
       <SectionHeading
         id="depoimentos"
         eyebrow="Avaliações no Google"
-        title="A melhor propaganda continua sendo a indicação."
+        title="Não somos a gente falando bem da gente."
       />
       <TestimonialCarousel />
       {/* TODO: [CONFIRMAR: link do perfil no Google Maps] */}

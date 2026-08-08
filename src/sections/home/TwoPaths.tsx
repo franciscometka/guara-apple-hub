@@ -18,7 +18,7 @@ export function TwoPaths() {
       <RevealGroup className="mt-14 grid gap-7 md:grid-cols-2">
         <PathCard
           titulo="Quero comprar"
-          texto="iPhone, iPad, Apple Watch, AirPods, Mac e acessórios. Lacrados e seminovos revisados, com nota fiscal e garantia."
+          texto="iPhone, iPad, Apple Watch, AirPods, Mac e acessórios. Não achou o modelo na vitrine? Pergunta no WhatsApp que a gente confirma o estoque."
           cta="Ver produtos"
           href="/produtos"
           imagem={linhaProdutos}
