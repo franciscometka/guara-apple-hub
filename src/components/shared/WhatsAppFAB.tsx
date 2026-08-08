@@ -32,10 +32,11 @@ export function WhatsAppFAB() {
         />
       )}
       <WhatsAppIcon
-        size={32}
+        size={28}
         variant="white"
-        className="relative rounded-full"
+        className="relative block object-contain"
       />
+
     </motion.a>
   );
 }
