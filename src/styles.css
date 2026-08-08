@@ -198,6 +198,16 @@
   background-image: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
 }
 
+/* Gradiente oficial da marca Instagram — usado só no botão do perfil. */
+@utility grad-instagram {
+  background-image: linear-gradient(
+    135deg,
+    #f9ce34 0%,
+    #ee2a7b 50%,
+    #6228d7 100%
+  );
+}
+
 @utility link-underline {
   position: relative;
   &::after {
