@@ -1,6 +1,5 @@
-// TODO: [CONFIRMAR: NÚMERO WHATSAPP] — o formulário informou 42 99122-0341,
-// a fachada da loja mostra 42 9 9162-1683. Mantido o do formulário até confirmar.
-export const WHATSAPP = "5542991220341";
+// Número oficial confirmado pelo cliente (o mesmo da fachada da loja).
+export const WHATSAPP = "5542991621683";
 
 export const waLink = (msg: string) =>
   `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
@@ -45,8 +44,7 @@ export function trackWhatsApp(origem: WaOrigem) {
 export const TAGLINE = "Somos apaixonados pela Apple";
 
 export const CONTATO = {
-  // TODO: [CONFIRMAR: NÚMERO WHATSAPP]
-  telefoneExibicao: "(42) 99122-0341",
+  telefoneExibicao: "(42) 99162-1683",
   // TODO: [CONFIRMAR: e-mail comercial no domínio próprio]
   email: "adrianom.dacruz2@gmail.com",
   // TODO: [CONFIRMAR: CEP e bairro]
