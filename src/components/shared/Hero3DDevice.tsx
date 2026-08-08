@@ -49,7 +49,10 @@ function FitCamera({ halfHeight, radius }: { halfHeight: number; radius: number 
     const vFov = (cam.fov * Math.PI) / 180;
     const hFov = 2 * Math.atan(Math.tan(vFov / 2) * cam.aspect);
 
-    const distance = Math.max(halfHeight / Math.tan(vFov / 2), radius / Math.tan(hFov / 2)) * FILL;
+    // Em telas estreitas o aparelho encostava nas bordas e parecia cortado /
+    // desalinhado — mais folga no mobile.
+    const fill = size.width < 640 ? FILL * 1.22 : FILL;
+    const distance = Math.max(halfHeight / Math.tan(vFov / 2), radius / Math.tan(hFov / 2)) * fill;
 
     cam.position.setLength(distance);
     cam.updateProjectionMatrix();
