@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { Reveal } from "./Reveal";
+import { Reveal, EASE_OUT } from "./Reveal";
 
 export function SectionHeading({
   eyebrow,
