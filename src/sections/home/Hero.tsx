@@ -99,9 +99,9 @@ export function Hero() {
             initial={
               reduce
                 ? { opacity: 0 }
-                : { opacity: 0, y: 60, scale: 0.9, rotateZ: finePointer ? -6 : 0 }
+                : { opacity: 0, y: 60, rotateZ: finePointer ? -6 : 0 }
             }
-            animate={{ opacity: 1, y: 0, scale: 1, rotateZ: 0 }}
+            animate={{ opacity: 1, y: 0, rotateZ: 0 }}
             transition={{ duration: 1.1, ease, delay: 0.45 }}
             className="relative min-w-0"
           >
