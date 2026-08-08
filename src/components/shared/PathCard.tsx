@@ -34,7 +34,7 @@ export function PathCard({
         {...(reduce ? {} : { whileHover: { y: -6 } })}
       >
         {imagemClara ? (
-          <div className="flex aspect-16/10 items-center justify-center bg-background p-8 md:p-10">
+          <div className="flex aspect-16/10 items-center justify-center bg-background p-3 md:p-4">
             <img
               src={imagem}
               alt={alt}

@@ -8,10 +8,9 @@ import heroFallback from "@/assets/images/iphone-hero.png";
 export const HERO_DEVICE_HEIGHT = "h-[440px] sm:h-[560px] md:h-[680px]";
 
 /**
- * Imagem estática do iPhone — usada em três momentos: enquanto o chunk do
- * Hero3DDevice ainda está baixando (Suspense externo no Hero.tsx), enquanto
- * o modelo .glb ainda não terminou de carregar (Hero3DDevice.tsx), e como
- * substituto permanente quando prefers-reduced-motion está ativo.
+ * Imagem estática do iPhone — usada só quando prefers-reduced-motion está
+ * ativo (substituto permanente do 3D, nunca chega a tentar montar o Canvas)
+ * ou antes da hidratação confirmar se esse é o caso.
  */
 export function HeroFallbackImage() {
   return (
@@ -25,6 +24,34 @@ export function HeroFallbackImage() {
         decoding="async"
         className="block h-full w-auto max-w-full object-contain select-none"
       />
+    </div>
+  );
+}
+
+/**
+ * Halo violeta atrás do aparelho. Puro CSS, sem dependência de Three.js —
+ * fica neste módulo (carregado de cara) em vez do chunk lazy do
+ * Hero3DDevice, pra poder aparecer antes mesmo desse chunk ter baixado.
+ */
+export function DeviceGlow() {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute top-1/2 left-1/2 h-[72%] w-[64%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--color-violet)_75%,transparent)_0%,transparent_70%)] opacity-55 blur-2xl"
+    />
+  );
+}
+
+/**
+ * Espaço reservado pro aparelho 3D enquanto ele ainda não está pronto —
+ * chunk baixando ou modelo .glb carregando. Só o glow, sem imagem estática:
+ * o pop-in do 3D já girando na posição final É a transição, não precisa de
+ * uma foto pra "disfarçar" a espera antes dele.
+ */
+export function HeroDevicePlaceholder() {
+  return (
+    <div className={`relative w-full ${HERO_DEVICE_HEIGHT}`}>
+      <DeviceGlow />
     </div>
   );
 }

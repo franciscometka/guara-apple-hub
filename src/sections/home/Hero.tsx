@@ -6,7 +6,7 @@ import { Link } from "@tanstack/react-router";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/GuaraButton";
 import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
-import { HeroFallbackImage } from "@/components/shared/HeroFallbackImage";
+import { HeroFallbackImage, HeroDevicePlaceholder } from "@/components/shared/HeroFallbackImage";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 
 const Hero3DDevice = lazy(() => import("@/components/shared/Hero3DDevice"));
@@ -99,7 +99,15 @@ export function Hero() {
             transition={{ duration: 1.1, ease, delay: 0.45 }}
             className="relative"
           >
-            <Suspense fallback={<HeroFallbackImage />}>
+            {/* reduce começa null no SSR (prefers-reduced-motion é client-only)
+                e só é confirmado depois da hidratação. Por padrão mostra o
+                placeholder de glow (o caso comum, sem motion reduzido) — só
+                troca pra imagem estática quando reduce === true de fato, pra
+                não reintroduzir o flash "imagem aparece e some" que a gente
+                acabou de tirar pro caminho principal. Quem tem reduced-motion
+                pode ver um instante de glow antes da imagem chegar; depois
+                disso ela fica pra sempre — o que importa aqui. */}
+            <Suspense fallback={reduce === true ? <HeroFallbackImage /> : <HeroDevicePlaceholder />}>
               <Hero3DDevice />
             </Suspense>
           </motion.div>

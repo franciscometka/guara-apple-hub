@@ -1,12 +1,14 @@
 import watchSE from "@/assets/images/produtos/apple-watch-se-40mm-midnight-norm.webp";
 import imgWatch from "@/assets/images/cat-watch.jpg";
 import imgAirpods from "@/assets/images/cat-airpods.jpg";
-import showroom from "@/assets/images/showroom.webp.asset.json";
 import iphone15 from "@/assets/images/produtos/iphone-15-256gb-azul-norm.webp";
 import iphone14pro from "@/assets/images/produtos/iphone-14-pro-256gb-preto-espacial-seminovo-norm.webp";
 import iphone13pro from "@/assets/images/produtos/iphone-13-pro-azul-sierra-norm.webp";
 import iphone13 from "@/assets/images/produtos/iphone-13-128gb-preto-norm.webp";
 import ipad10 from "@/assets/images/produtos/ipad-10-wifi-cellular-64gb-silver.webp";
+import macbookAir13 from "@/assets/images/produtos/macbook-air-13-norm.webp";
+import carregador20w from "@/assets/images/produtos/carregador-usb-c-20w-norm.webp";
+import capinhaMagsafe from "@/assets/images/produtos/capinha-magsafe-transparente-norm.webp";
 
 export type Categoria =
   | "iPhone"
@@ -118,28 +120,28 @@ export const produtos: Produto[] = [
     imagem: imgAirpods, // TODO: foto real do produto
   },
   {
-    id: "macbook-air",
-    nome: "MacBook Air M2",
+    id: "macbook-air-13",
+    nome: "MacBook Air 13”",
     categoria: "Mac",
-    condicao: "Seminovo",
-    detalhe: "Ciclos de bateria informados na hora",
-    imagem: showroom.url, // TODO: foto real do produto
+    condicao: "Lacrado",
+    detalhe: "Lacrado com nota fiscal",
+    imagem: macbookAir13,
   },
   {
-    id: "carregador-20w",
+    id: "carregador-usb-c-20w",
     nome: "Carregador USB-C 20W",
     categoria: "Acessórios",
     condicao: "Lacrado",
-    detalhe: "Original Apple · com nota fiscal",
-    imagem: showroom.url, // TODO: foto real do produto
+    detalhe: "20W · Compatível com iPhone e iPad",
+    imagem: carregador20w,
   },
   {
-    id: "capa-magsafe",
-    nome: "Capa MagSafe",
+    id: "capinha-magsafe-transparente",
+    nome: "Capinha MagSafe Transparente",
     categoria: "Acessórios",
     condicao: "Lacrado",
-    detalhe: "Modelos para iPhone 12 ao 16",
-    imagem: showroom.url, // TODO: foto real do produto
+    detalhe: "Transparente · Compatível com MagSafe",
+    imagem: capinhaMagsafe,
   },
 ];
 

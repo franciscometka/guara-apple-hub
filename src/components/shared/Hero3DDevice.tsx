@@ -3,7 +3,12 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { useReducedMotion } from "motion/react";
 import * as THREE from "three";
-import { HERO_DEVICE_HEIGHT, HeroFallbackImage } from "@/components/shared/HeroFallbackImage";
+import {
+  DeviceGlow,
+  HERO_DEVICE_HEIGHT,
+  HeroDevicePlaceholder,
+  HeroFallbackImage,
+} from "@/components/shared/HeroFallbackImage";
 
 const MODEL_URL = "/models/iphone.glb";
 
@@ -54,25 +59,12 @@ function FitCamera({ halfHeight, radius }: { halfHeight: number; radius: number 
   return null;
 }
 
-function Device({
-  onReady,
-  onEntryComplete,
-}: {
-  onReady: () => void;
-  onEntryComplete: () => void;
-}) {
+function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   const { scene } = useGLTF(MODEL_URL);
   const spinRef = useRef<THREE.Group>(null);
   const startTime = useRef<number | null>(null);
   const done = useRef(false);
   const invalidate = useThree((s) => s.invalidate);
-
-  // useGLTF já suspendeu até aqui — o modelo está pronto assim que este
-  // componente chega a renderizar pela primeira vez.
-  useEffect(() => {
-    onReady();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // Modelos .glb chegam com escala e origem arbitrárias: centralizamos na
   // origem e medimos o aparelho pra câmera se ajustar sozinha ao tamanho real.
@@ -133,7 +125,7 @@ function Device({
   );
 }
 
-function Scene({ onReady }: { onReady: () => void }) {
+function Scene() {
   // Só libera o arraste depois que a animação de entrada assentar — evita o
   // gesto do usuário brigar com o giro de chegada.
   const [controlsEnabled, setControlsEnabled] = useState(false);
@@ -141,7 +133,7 @@ function Scene({ onReady }: { onReady: () => void }) {
   return (
     <>
       <Suspense fallback={null}>
-        <Device onReady={onReady} onEntryComplete={() => setControlsEnabled(true)} />
+        <Device onEntryComplete={() => setControlsEnabled(true)} />
       </Suspense>
       {/* Boundary própria: o mapa de ambiente vem de um HDR hospedado fora
           do nosso build (raw.githack.com, via drei) — não pode travar a
@@ -162,32 +154,43 @@ function Scene({ onReady }: { onReady: () => void }) {
   );
 }
 
-/** Halo violeta atrás do aparelho — no 2D ele vinha pintado dentro do PNG. */
-function DeviceGlow() {
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute top-1/2 left-1/2 h-[72%] w-[64%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--color-violet)_75%,transparent)_0%,transparent_70%)] opacity-55 blur-2xl"
-    />
-  );
-}
-
 export default function Hero3DDevice() {
   const reduced = useReducedMotion();
   const [mounted, setMounted] = useState(false);
-  const [modelReady, setModelReady] = useState(false);
 
-  // O WebGL não roda no SSR: até hidratar, sai sempre a imagem estática.
-  // Esse mesmo caminho cobre prefers-reduced-motion — nunca chega a montar
-  // o Canvas, então a animação de entrada nem é instanciada.
+  // O WebGL não roda no SSR: até hidratar, sai sempre o placeholder de glow,
+  // nunca a imagem estática — senão ela fica gravada no HTML do servidor e
+  // persiste, sem piscar, até o chunk deste componente terminar de baixar no
+  // cliente (é esse HTML que aparece na tela, não o fallback do Suspense lá
+  // em Hero.tsx: o SSR resolve o lazy() direto, então o fallback nunca chega
+  // a ser usado no carregamento inicial da página).
+  //
+  // Importante: esse branch de pré-montagem NÃO pode depender de `reduced`.
+  // No servidor prefers-reduced-motion é sempre desconhecido (null); no
+  // cliente ele já resolve pro valor real de cara, antes do efeito de
+  // montagem rodar — se a saída daqui variasse com `reduced`, o React veria
+  // HTML diferente do servidor pra quem usa reduced-motion e re-renderizaria
+  // do zero nesse ponto (mismatch), com um flash pior do que o que estamos
+  // tentando evitar. Por isso quem pediu reduced-motion vê um instante de
+  // glow antes da imagem estática assentar — só nesse primeiro carregamento,
+  // nunca mais depois. Diferente do comportamento anterior (imagem direto,
+  // sem esse instante) — avisar se isso não for aceitável.
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted || reduced) {
+  if (!mounted) {
+    return <HeroDevicePlaceholder />;
+  }
+
+  if (reduced) {
     return <HeroFallbackImage />;
   }
 
+  // Sem fallback 2D aqui: enquanto o .glb ainda está carregando, o Canvas já
+  // está montado mas o Suspense interno da Scene ainda não renderizou o
+  // <Device>, então só aparece o glow atrás. Quando o modelo chega, ele
+  // entra direto tocando a animação de giro — essa entrada já É a transição.
   return (
     <div className={`relative w-full ${HERO_DEVICE_HEIGHT}`}>
       <DeviceGlow />
@@ -198,16 +201,8 @@ export default function Hero3DDevice() {
         dpr={[1, 2]}
         style={{ background: "transparent" }}
       >
-        <Scene onReady={() => setModelReady(true)} />
+        <Scene />
       </Canvas>
-      {/* Cobre o Canvas com a imagem estática até o .glb terminar de
-          carregar — sem isso, a pessoa vê só o glow atrás sem nenhum
-          aparelho durante o download do modelo. */}
-      {!modelReady && (
-        <div className="absolute inset-0">
-          <HeroFallbackImage />
-        </div>
-      )}
     </div>
   );
 }

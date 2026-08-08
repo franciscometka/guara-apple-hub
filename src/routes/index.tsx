@@ -31,7 +31,18 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: ogImage },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: "/" },
+      // Começa a baixar o modelo 3D do Hero em paralelo com o JS, sem
+      // esperar o chunk do Three.js terminar de baixar e executar pra só
+      // então disparar o fetch via useGLTF.preload.
+      {
+        rel: "preload",
+        as: "fetch",
+        href: "/models/iphone.glb",
+        crossOrigin: "anonymous",
+      },
+    ],
     scripts: [
       {
         type: "application/ld+json",
