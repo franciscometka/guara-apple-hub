@@ -159,14 +159,15 @@ function Scene({ interactive, mobile }: { interactive: boolean; mobile: boolean 
       </Suspense>
       {/* Boundary própria: o mapa de ambiente vem de um HDR hospedado fora
           do nosso build (raw.githack.com, via drei) — não pode travar a
-          revelação do aparelho se esse download for lento ou falhar. */}
-      {!mobile && (
-        <Suspense fallback={null}>
-          <Environment preset="city" />
-        </Suspense>
-      )}
-      {mobile && <ambientLight intensity={1.25} />}
-      <directionalLight position={[2, 3, 4]} intensity={mobile ? 1.8 : 0.6} />
+          revelação do aparelho se esse download for lento ou falhar.
+          Também é ele que dá vidro/alumínio ao aparelho: sem env map a tela
+          fica preta e o corpo sem reflexo, então mantemos no mobile também. */}
+      <Suspense fallback={null}>
+        <Environment preset="city" />
+      </Suspense>
+      <ambientLight intensity={mobile ? 0.5 : 0.25} />
+      <directionalLight position={[2, 3, 4]} intensity={mobile ? 0.9 : 0.6} />
+
       <OrbitControls
         enabled={controlsEnabled && interactive}
         enableZoom={false}
@@ -225,8 +226,9 @@ export default function Hero3DDevice() {
       <Canvas
         frameloop="demand"
         camera={{ position: [0, 0, 4.2], fov: 35 }}
-        gl={{ alpha: true, antialias: !mobile, powerPreference: "high-performance" }}
-        dpr={mobile ? 1 : [1, 2]}
+        gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+        dpr={mobile ? [1, 1.75] : [1, 2]}
+
         style={{ background: "transparent", touchAction: "pan-y" }}
       >
         <Scene interactive={finePointer || mobile} mobile={mobile} />
