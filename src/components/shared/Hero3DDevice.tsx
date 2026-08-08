@@ -132,7 +132,7 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
       <group ref={spinRef} rotation={[0, ENTRY_ANGLE, 0]}>
         {/* Recentraliza a geometria: translação pura, nunca gira. */}
         <group position={center.clone().negate()}>
-          <primitive object={scene} />
+          <primitive object={cleanedScene} />
         </group>
       </group>
       <FitCamera halfHeight={halfHeight} radius={radius} />
