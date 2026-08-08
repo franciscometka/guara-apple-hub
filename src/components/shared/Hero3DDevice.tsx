@@ -3,6 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { useReducedMotion } from "motion/react";
 import * as THREE from "three";
+import { useFinePointer } from "@/hooks/useMediaQuery";
 import {
   DeviceGlow,
   HERO_DEVICE_HEIGHT,
@@ -146,7 +147,7 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   );
 }
 
-function Scene() {
+function Scene({ interactive }: { interactive: boolean }) {
   // Só libera o arraste depois que a animação de entrada assentar — evita o
   // gesto do usuário brigar com o giro de chegada.
   const [controlsEnabled, setControlsEnabled] = useState(false);
@@ -164,7 +165,7 @@ function Scene() {
       </Suspense>
       <directionalLight position={[2, 3, 4]} intensity={0.6} />
       <OrbitControls
-        enabled={controlsEnabled}
+        enabled={controlsEnabled && interactive}
         enableZoom={false}
         enablePan={false}
         minPolarAngle={POLAR_MIN}
@@ -177,6 +178,7 @@ function Scene() {
 
 export default function Hero3DDevice() {
   const reduced = useReducedMotion();
+  const finePointer = useFinePointer();
   const [mounted, setMounted] = useState(false);
 
   // O WebGL não roda no SSR: até hidratar, sai sempre o placeholder de glow,
@@ -213,7 +215,7 @@ export default function Hero3DDevice() {
   // <Device>, então só aparece o glow atrás. Quando o modelo chega, ele
   // entra direto tocando a animação de giro — essa entrada já É a transição.
   return (
-    <div className={`relative w-full ${HERO_DEVICE_HEIGHT}`}>
+    <div className={`relative mx-auto w-full max-w-[520px] overflow-visible ${HERO_DEVICE_HEIGHT}`}>
       <DeviceGlow />
       <Canvas
         frameloop="demand"
@@ -222,7 +224,7 @@ export default function Hero3DDevice() {
         dpr={[1, 2]}
         style={{ background: "transparent" }}
       >
-        <Scene />
+        <Scene interactive={finePointer} />
       </Canvas>
     </div>
   );

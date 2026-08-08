@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { motion, useReducedMotion, useMotionValue, useSpring } from "motion/react";
 import type { ReactNode, MouseEvent } from "react";
 import { cn } from "@/lib/utils";
+import { useFinePointer } from "@/hooks/useMediaQuery";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[box-shadow,background-color,border-color,color] duration-200 disabled:pointer-events-none disabled:opacity-50 min-h-11",
@@ -60,13 +61,14 @@ export function Button({
   ariaControls,
 }: ButtonProps) {
   const reduce = useReducedMotion();
+  const finePointer = useFinePointer();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 260, damping: 26 });
   const sy = useSpring(y, { stiffness: 260, damping: 26 });
 
   const magneticProps =
-    magnetic && !reduce
+    magnetic && !reduce && finePointer
       ? {
           style: { x: sx, y: sy },
           onMouseMove: (e: MouseEvent<HTMLElement>) => {

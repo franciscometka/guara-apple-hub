@@ -14,8 +14,11 @@ export function WhatsAppFAB() {
       rel="noopener noreferrer"
       onClick={() => trackWhatsApp("fab")}
       aria-label="Falar no WhatsApp"
-      className="fixed right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp shadow-violet"
-      style={{ bottom: "calc(1.25rem + env(safe-area-inset-bottom))" }}
+      className="fixed z-50 flex h-14 w-14 items-center justify-center overflow-visible rounded-full bg-whatsapp shadow-violet"
+      style={{
+        right: "max(1rem, env(safe-area-inset-right))",
+        bottom: "calc(1rem + env(safe-area-inset-bottom))",
+      }}
       initial={{ scale: 0, opacity: 0 }}
       animate={
         visible ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }
@@ -32,9 +35,9 @@ export function WhatsAppFAB() {
         />
       )}
       <WhatsAppIcon
-        size={28}
+        size={30}
         variant="white"
-        className="relative block object-contain"
+        className="relative z-10 block shrink-0 object-contain"
       />
 
     </motion.a>

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/GuaraButton";
 import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
 import { HeroFallbackImage, HeroDevicePlaceholder } from "@/components/shared/HeroFallbackImage";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
+import { useFinePointer } from "@/hooks/useMediaQuery";
 
 const Hero3DDevice = lazy(() => import("@/components/shared/Hero3DDevice"));
 
@@ -16,6 +17,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const finePointer = useFinePointer();
 
   return (
     <section
@@ -94,10 +96,14 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 60, scale: 0.9, rotateZ: -6 }}
+            initial={
+              reduce
+                ? { opacity: 0 }
+                : { opacity: 0, y: 60, scale: 0.9, rotateZ: finePointer ? -6 : 0 }
+            }
             animate={{ opacity: 1, y: 0, scale: 1, rotateZ: 0 }}
             transition={{ duration: 1.1, ease, delay: 0.45 }}
-            className="relative"
+            className="relative min-w-0"
           >
             {/* reduce começa null no SSR (prefers-reduced-motion é client-only)
                 e só é confirmado depois da hidratação. Por padrão mostra o
