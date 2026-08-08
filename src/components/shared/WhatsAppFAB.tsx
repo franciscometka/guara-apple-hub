@@ -32,7 +32,7 @@ export function WhatsAppFAB() {
         />
       )}
       <WhatsAppIcon
-        size={40}
+        size={32}
         variant="white"
         className="relative rounded-full"
       />
