@@ -3,9 +3,6 @@ import { Truck } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { Button } from "@/components/ui/GuaraButton";
-import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
-import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 
 export function DeliveryBanner() {
   return (
@@ -23,17 +20,6 @@ export function DeliveryBanner() {
           title="Não está em Guarapuava? A gente leva até você."
           subtitle="Entregamos em até 200 km a partir do centro de Guarapuava — Ponta Grossa, Cascavel, Curitiba e região. Manda sua cidade no WhatsApp que a gente confirma se cobre."
         />
-        <Reveal className="mt-10 flex justify-center">
-          <Button
-            variant="primary"
-            href={waLink(WA_MESSAGES.entrega)}
-            external
-            onClick={() => trackWhatsApp("produto")}
-          >
-            <WhatsAppIcon size={18} variant="white" />
-            Perguntar se entrega na minha cidade
-          </Button>
-        </Reveal>
       </div>
     </Section>
   );

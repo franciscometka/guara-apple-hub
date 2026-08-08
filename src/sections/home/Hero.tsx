@@ -1,4 +1,5 @@
 import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
+import { InstagramIcon } from "@/components/shared/InstagramIcon";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { lazy, Suspense, useRef } from "react";
@@ -7,7 +8,7 @@ import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/GuaraButton";
 import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
 import { HeroFallbackImage, HeroDevicePlaceholder } from "@/components/shared/HeroFallbackImage";
-import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
+import { CONTATO, WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 import { useFinePointer } from "@/hooks/useMediaQuery";
 
 const Hero3DDevice = lazy(() => import("@/components/shared/Hero3DDevice"));
@@ -73,25 +74,40 @@ export function Hero() {
                 hidden: { opacity: 0, y: reduce ? 0 : 20 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
               }}
-              className="mt-10 flex flex-col gap-3 sm:flex-row"
+              className="mt-10 flex flex-col gap-3"
             >
-              <Button
-                variant="whatsapp"
-                size="lg"
-                magnetic
-                href={waLink(WA_MESSAGES.generico)}
-                external
-                onClick={() => trackWhatsApp("hero")}
-              >
-                <WhatsAppIcon size={20} variant="white" eager />
-                Falar no WhatsApp
-              </Button>
-              <Link to="/produtos" className="contents">
-                <Button variant="outlineDark" size="lg">
-                  Ver produtos
-                  <ArrowRight size={18} strokeWidth={1.5} aria-hidden="true" />
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button
+                  variant="whatsapp"
+                  size="lg"
+                  magnetic
+                  href={waLink(WA_MESSAGES.generico)}
+                  external
+                  onClick={() => trackWhatsApp("hero")}
+                >
+                  <WhatsAppIcon size={20} variant="white" eager />
+                  Falar no WhatsApp
                 </Button>
-              </Link>
+                <Link to="/produtos" className="contents">
+                  <Button variant="outlineDark" size="lg">
+                    Ver produtos
+                    <ArrowRight size={18} strokeWidth={1.5} aria-hidden="true" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="flex">
+                <Button
+                  variant="instagram"
+                  size="lg"
+                  href={CONTATO.instagram}
+                  external
+                  full
+                  className="sm:w-auto"
+                >
+                  <InstagramIcon size={20} eager />
+                  Seguir no Instagram
+                </Button>
+              </div>
             </motion.div>
           </motion.div>
 
