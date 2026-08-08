@@ -8,6 +8,7 @@ import { TaglineBanner } from "@/components/shared/TaglineBanner";
 import { ServicesPreview } from "@/sections/home/ServicesPreview";
 import { Testimonials } from "@/sections/home/Testimonials";
 import { Location } from "@/sections/home/Location";
+import { DeliveryBanner } from "@/sections/home/DeliveryBanner";
 import { FAQ } from "@/sections/home/FAQ";
 import { CTASection } from "@/components/shared/CTASection";
 import { CONTATO, WHATSAPP } from "@/lib/whatsapp";
@@ -82,6 +83,7 @@ function HomePage() {
       <ServicesPreview />
       <Testimonials />
       <Location />
+      <DeliveryBanner />
       <FAQ />
       <CTASection />
     </>
