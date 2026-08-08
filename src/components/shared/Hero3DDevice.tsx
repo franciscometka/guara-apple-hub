@@ -75,10 +75,13 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   const cleanedScene = useMemo(() => {
     const clone = scene.clone();
     // O nome do nó duplicado perde o ponto na importação do Three.js.
-    const duplicate = clone.getObjectByName("iphone17promax001_1");
-    if (duplicate) {
-      duplicate.removeFromParent();
-    }
+    // getObjectByName pode falhar por causa de como o GLTFLoader nomeia
+    // grupos internos, então removemos por busca manual na hierarquia.
+    clone.traverse((obj) => {
+      if (obj.name === "iphone17promax001_1") {
+        obj.removeFromParent();
+      }
+    });
     return clone;
   }, [scene]);
 
