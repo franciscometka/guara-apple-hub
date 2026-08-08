@@ -69,10 +69,22 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   const done = useRef(false);
   const invalidate = useThree((s) => s.invalidate);
 
+  // O arquivo .glb contém duas cópias do mesmo iPhone (iphone17promax_0 e
+  // iphone17promax.001_1). Removemos a duplicata antes de medir/enquadrar,
+  // senão a cena mostra dois aparelhos lado a lado e cada um parece menor.
+  const cleanedScene = useMemo(() => {
+    const clone = scene.clone();
+    const duplicate = clone.getObjectByName("iphone17promax.001_1");
+    if (duplicate) {
+      duplicate.removeFromParent();
+    }
+    return clone;
+  }, [scene]);
+
   // Modelos .glb chegam com escala e origem arbitrárias: centralizamos na
   // origem e medimos o aparelho pra câmera se ajustar sozinha ao tamanho real.
   const { center, halfHeight, radius } = useMemo(() => {
-    const box = new THREE.Box3().setFromObject(scene);
+    const box = new THREE.Box3().setFromObject(cleanedScene);
     const boxSize = box.getSize(new THREE.Vector3());
     const halfY = boxSize.y / 2;
     // Raio máximo no plano horizontal — o que a silhueta ocupa ao girar em Y.
@@ -92,7 +104,7 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
       halfHeight: worstHalfHeight,
       radius: xzRadius,
     };
-  }, [scene]);
+  }, [cleanedScene]);
 
   useFrame((state) => {
     if (done.current || !spinRef.current) return;
