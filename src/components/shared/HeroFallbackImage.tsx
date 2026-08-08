@@ -5,7 +5,7 @@ import heroFallback from "@/assets/images/iphone-hero.png";
  * (aqui) e o Canvas 3D (Hero3DDevice.tsx), pra não haver salto de layout
  * na troca de um pelo outro.
  */
-export const HERO_DEVICE_HEIGHT = "h-[420px] sm:h-[580px] md:h-[760px]";
+export const HERO_DEVICE_HEIGHT = "h-[460px] sm:h-[620px] md:h-[820px]";
 
 /**
  * Imagem estática do iPhone — usada só quando prefers-reduced-motion está

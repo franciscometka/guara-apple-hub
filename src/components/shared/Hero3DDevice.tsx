@@ -17,7 +17,7 @@ const POLAR_MIN = Math.PI / 3; // 60°
 const POLAR_MAX = Math.PI / 1.7; // ~106°
 
 /** Folga em volta do aparelho: 1 = encostando na borda, maior = mais respiro. */
-const FILL = 0.92;
+const FILL = 0.88;
 
 /** Animação de entrada: o aparelho "chega" girado e assenta na posição de descanso. */
 const ENTRY_ANGLE = THREE.MathUtils.degToRad(65);
@@ -51,7 +51,7 @@ function FitCamera({ halfHeight, radius }: { halfHeight: number; radius: number 
 
     // Em telas estreitas o aparelho encostava nas bordas e parecia cortado /
     // desalinhado — mais folga no mobile.
-    const fill = size.width < 640 ? FILL * 1.18 : FILL;
+    const fill = size.width < 640 ? FILL * 1.12 : FILL;
     const distance = Math.max(halfHeight / Math.tan(vFov / 2), radius / Math.tan(hFov / 2)) * fill;
 
     cam.position.setLength(distance);
