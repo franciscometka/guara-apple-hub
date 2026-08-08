@@ -23,11 +23,11 @@ export function TrustBar() {
             const Icon = icons[i] ?? ShieldCheck;
             return (
               <RevealItem key={item}>
-                <div className="flex items-center gap-3">
+                <div className="group flex items-center gap-3 transition-transform duration-300 hover:-translate-y-0.5">
                   <Icon
                     size={20}
                     strokeWidth={1.5}
-                    className="shrink-0 text-violet"
+                    className="shrink-0 text-violet transition-transform duration-300 group-hover:scale-110"
                     aria-hidden="true"
                   />
                   <span className="text-sm leading-tight text-muted-foreground">

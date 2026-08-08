@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { Reveal } from "./Reveal";
+import { Reveal, EASE_OUT } from "./Reveal";
 
 export function SectionHeading({
   eyebrow,
@@ -47,6 +48,18 @@ export function SectionHeading({
       >
         {title}
       </h2>
+      <motion.span
+        aria-hidden="true"
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.7, delay: 0.15, ease: EASE_OUT }}
+        className={cn(
+          "mt-5 block h-px w-16 origin-left",
+          align === "center" && "mx-auto origin-center",
+          tone === "dark" ? "bg-violet-glow" : "bg-violet",
+        )}
+      />
       {subtitle && (
         <p
           className={cn(
