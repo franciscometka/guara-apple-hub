@@ -3,7 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { useReducedMotion } from "motion/react";
 import * as THREE from "three";
-import { useFinePointer } from "@/hooks/useMediaQuery";
+import { useFinePointer, useMediaQuery } from "@/hooks/useMediaQuery";
 import {
   DeviceGlow,
   HERO_DEVICE_HEIGHT,
@@ -147,7 +147,7 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   );
 }
 
-function Scene({ interactive }: { interactive: boolean }) {
+function Scene({ interactive, mobile }: { interactive: boolean; mobile: boolean }) {
   // Só libera o arraste depois que a animação de entrada assentar — evita o
   // gesto do usuário brigar com o giro de chegada.
   const [controlsEnabled, setControlsEnabled] = useState(false);
@@ -160,17 +160,21 @@ function Scene({ interactive }: { interactive: boolean }) {
       {/* Boundary própria: o mapa de ambiente vem de um HDR hospedado fora
           do nosso build (raw.githack.com, via drei) — não pode travar a
           revelação do aparelho se esse download for lento ou falhar. */}
-      <Suspense fallback={null}>
-        <Environment preset="city" />
-      </Suspense>
-      <directionalLight position={[2, 3, 4]} intensity={0.6} />
+      {!mobile && (
+        <Suspense fallback={null}>
+          <Environment preset="city" />
+        </Suspense>
+      )}
+      {mobile && <ambientLight intensity={1.25} />}
+      <directionalLight position={[2, 3, 4]} intensity={mobile ? 1.8 : 0.6} />
       <OrbitControls
         enabled={controlsEnabled && interactive}
         enableZoom={false}
         enablePan={false}
+        enableDamping={!mobile}
         minPolarAngle={POLAR_MIN}
         maxPolarAngle={POLAR_MAX}
-        rotateSpeed={0.6}
+        rotateSpeed={mobile ? 0.45 : 0.6}
       />
     </>
   );
@@ -179,6 +183,7 @@ function Scene({ interactive }: { interactive: boolean }) {
 export default function Hero3DDevice() {
   const reduced = useReducedMotion();
   const finePointer = useFinePointer();
+  const mobile = useMediaQuery("(max-width: 767px)");
   const [mounted, setMounted] = useState(false);
 
   // O WebGL não roda no SSR: até hidratar, sai sempre o placeholder de glow,
@@ -220,11 +225,11 @@ export default function Hero3DDevice() {
       <Canvas
         frameloop="demand"
         camera={{ position: [0, 0, 4.2], fov: 35 }}
-        gl={{ alpha: true, antialias: true }}
-        dpr={[1, 2]}
-        style={{ background: "transparent" }}
+        gl={{ alpha: true, antialias: !mobile, powerPreference: "high-performance" }}
+        dpr={mobile ? 1 : [1, 2]}
+        style={{ background: "transparent", touchAction: "pan-y" }}
       >
-        <Scene interactive={finePointer} />
+        <Scene interactive={finePointer || mobile} mobile={mobile} />
       </Canvas>
     </div>
   );
