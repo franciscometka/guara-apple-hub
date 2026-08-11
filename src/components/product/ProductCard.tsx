@@ -30,16 +30,18 @@ export function ProductCard({ produto }: { produto: Produto }) {
         {!loaded && (
           <div className="shimmer absolute inset-0 -z-10" aria-hidden="true" />
         )}
-        <img
-          ref={imgRef}
-          src={produto.imagem}
-          alt={`${produto.nome} disponível na Guara iPhones, Guarapuava`}
-          loading="lazy"
-          width={800}
-          height={800}
-          onLoad={() => setLoaded(true)}
-          className="h-full w-full object-contain transition-transform duration-400 group-hover:scale-105"
-        />
+        <div className="relative flex h-[78%] w-[78%] items-center justify-center">
+          <img
+            ref={imgRef}
+            src={produto.imagem}
+            alt={`${produto.nome} disponível na Guara iPhones, Guarapuava`}
+            loading="lazy"
+            width={800}
+            height={800}
+            onLoad={() => setLoaded(true)}
+            className="h-full w-full object-contain transition-transform duration-400 group-hover:scale-105"
+          />
+        </div>
         <div className="absolute top-4 left-4">
           <GuaraBadge>{produto.condicao}</GuaraBadge>
         </div>
