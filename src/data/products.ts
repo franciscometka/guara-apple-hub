@@ -18,6 +18,7 @@ import imgIphone16Teal from "@/assets/images/produtos/iphone-16-128gb-teal-norm.
 import imgIphone16Ultramarine from "@/assets/images/produtos/iphone-16-128gb-ultramarine-norm.webp";
 import imgIphone16White from "@/assets/images/produtos/iphone-16-128gb-white-norm.webp";
 import imgIphone16eWhite from "@/assets/images/produtos/iphone-16e-128gb-white-norm.webp";
+import imgIphone16eBlack from "@/assets/images/produtos/iphone-16e-128gb-black-norm.webp";
 import imgIphone16ProMaxDesert from "@/assets/images/produtos/iphone-16-pro-max-desert-norm.webp";
 import imgIphone17Black from "@/assets/images/produtos/iphone-17-256gb-black-norm.webp";
 import imgIphone17Blue from "@/assets/images/produtos/iphone-17-256gb-blue-norm.webp";
@@ -25,9 +26,13 @@ import imgIphone17Lavender from "@/assets/images/produtos/iphone-17-256gb-lavend
 import imgIphone17Sage from "@/assets/images/produtos/iphone-17-256gb-sage-norm.webp";
 import imgIphone17White from "@/assets/images/produtos/iphone-17-256gb-white-norm.webp";
 import imgIphone17ProCosmicOrange from "@/assets/images/produtos/iphone-17-pro-cosmic-orange-norm.webp";
+import imgIphone17ProSilver from "@/assets/images/produtos/iphone-17-pro-silver-norm.webp";
+import imgIphone17ProDeepBlue from "@/assets/images/produtos/iphone-17-pro-deep-blue-norm.webp";
 import imgIphone17ProMaxSilver from "@/assets/images/produtos/iphone-17-pro-max-silver-norm.webp";
 import imgIphone17ProMaxDeepBlue from "@/assets/images/produtos/iphone-17-pro-max-deep-blue-norm.webp";
 import imgMacbookNeo from "@/assets/images/produtos/macbook-neo-256gb-silver-norm.webp";
+import imgMacbookNeoBlue from "@/assets/images/produtos/macbook-neo-256gb-blue-norm.webp";
+import imgMagicMouse from "@/assets/images/produtos/magic-mouse-white-norm.webp";
 
 export type Categoria =
   | "iPhone"
@@ -65,7 +70,7 @@ export const produtos: Produto[] = [
     nome: "iPhone 17 Pro Max 256GB Deep Blue",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "256GB · 10 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone17ProMaxDeepBlue,
     destaque: true,
   },
@@ -74,7 +79,7 @@ export const produtos: Produto[] = [
     nome: "iPhone 17 256GB White",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "256GB · 4 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone17White,
     destaque: true,
   },
@@ -83,7 +88,7 @@ export const produtos: Produto[] = [
     nome: "iPhone 17 256GB Blue",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "256GB · 3 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone17Blue,
     destaque: true,
   },
@@ -92,16 +97,32 @@ export const produtos: Produto[] = [
     nome: "iPhone 17 Pro Max 256GB Cosmic Orange",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "256GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone17ProCosmicOrange,
     destaque: true,
+  },
+  {
+    id: "iphone-17-pro-max-512gb-deep-blue",
+    nome: "iPhone 17 Pro Max 512GB Deep Blue",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "512GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17ProMaxDeepBlue,
+  },
+  {
+    id: "iphone-17-pro-max-512gb-cosmic-orange",
+    nome: "iPhone 17 Pro Max 512GB Cosmic Orange",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "512GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17ProCosmicOrange,
   },
   {
     id: "iphone-17-pro-max-512gb-silver",
     nome: "iPhone 17 Pro Max 512GB Silver",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "512GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "512GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone17ProMaxSilver,
     destaque: true,
   },
@@ -122,11 +143,27 @@ export const produtos: Produto[] = [
     imagem: imgIphone17ProCosmicOrange,
   },
   {
+    id: "iphone-17-pro-256gb-silver",
+    nome: "iPhone 17 Pro 256GB Silver",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17ProSilver,
+  },
+  {
+    id: "iphone-17-pro-256gb-deep-blue",
+    nome: "iPhone 17 Pro 256GB Deep Blue",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17ProDeepBlue,
+  },
+  {
     id: "iphone-17-256gb-lavender",
     nome: "iPhone 17 256GB Lavender",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "256GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone17Lavender,
   },
   {
@@ -134,7 +171,7 @@ export const produtos: Produto[] = [
     nome: "iPhone 17 256GB Sage",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "256GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone17Sage,
   },
   {
@@ -150,7 +187,7 @@ export const produtos: Produto[] = [
     nome: "iPhone 16 Pro Max Desert",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "Caixa lacrada com nota fiscal",
     imagem: imgIphone16ProMaxDesert,
     destaque: true,
   },
@@ -161,6 +198,14 @@ export const produtos: Produto[] = [
     condicao: "Lacrado",
     detalhe: "128GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone16eWhite,
+  },
+  {
+    id: "iphone-16e-128gb-black",
+    nome: "iPhone 16e 128GB Black",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone16eBlack,
   },
   {
     id: "iphone-16-128gb-white",
@@ -175,7 +220,7 @@ export const produtos: Produto[] = [
     nome: "iPhone 16 128GB Ultramarine",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "128GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone16Ultramarine,
   },
   {
@@ -183,7 +228,7 @@ export const produtos: Produto[] = [
     nome: "iPhone 16 128GB Teal",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "128GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone16Teal,
   },
   {
@@ -200,7 +245,7 @@ export const produtos: Produto[] = [
     nome: "iPhone 16 128GB Black",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "128GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone16Black,
   },
   {
@@ -216,7 +261,7 @@ export const produtos: Produto[] = [
     nome: "iPhone 15 128GB Black",
     categoria: "iPhone",
     condicao: "Lacrado",
-    detalhe: "128GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone15Black,
   },
   {
@@ -320,6 +365,14 @@ export const produtos: Produto[] = [
     imagem: imgMacbookNeo,
     destaque: true,
   },
+  {
+    id: "macbook-neo-256gb-blue",
+    nome: "MacBook Neo 256GB Blue",
+    categoria: "Mac",
+    condicao: "Lacrado",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
+    imagem: imgMacbookNeoBlue,
+  },
 
   // ----- Acessórios -----
   {
@@ -329,6 +382,14 @@ export const produtos: Produto[] = [
     condicao: "Lacrado",
     detalhe: "Caixa lacrada com nota fiscal",
     imagem: imgApplePencil,
+  },
+  {
+    id: "magic-mouse-white",
+    nome: "Magic Mouse White",
+    categoria: "Acessórios",
+    condicao: "Lacrado",
+    detalhe: "Caixa lacrada com nota fiscal",
+    imagem: imgMagicMouse,
   },
 ];
 
