@@ -1,14 +1,33 @@
-import watchSE from "@/assets/images/produtos/apple-watch-se-40mm-midnight-norm.webp";
-import imgWatch from "@/assets/images/cat-watch.jpg";
-import imgAirpods from "@/assets/images/cat-airpods.jpg";
-import iphone15 from "@/assets/images/produtos/iphone-15-256gb-azul-norm.webp";
-import iphone14pro from "@/assets/images/produtos/iphone-14-pro-256gb-preto-espacial-seminovo-norm.webp";
-import iphone13pro from "@/assets/images/produtos/iphone-13-pro-azul-sierra-norm.webp";
-import iphone13 from "@/assets/images/produtos/iphone-13-128gb-preto-norm.webp";
-import ipad10 from "@/assets/images/produtos/ipad-10-wifi-cellular-64gb-silver.webp";
-import macbookAir13 from "@/assets/images/produtos/macbook-air-13-norm.webp";
-import carregador20w from "@/assets/images/produtos/carregador-usb-c-20w-norm.webp";
-import capinhaMagsafe from "@/assets/images/produtos/capinha-magsafe-transparente-norm.webp";
+import imgAirpods4 from "@/assets/images/produtos/airpods-4-norm.webp";
+import imgAirpodsPro3 from "@/assets/images/produtos/airpods-pro-3-norm.webp";
+import imgApplePencil from "@/assets/images/produtos/apple-pencil-usbc-norm.webp";
+import imgWatch40Midnight from "@/assets/images/produtos/watch-se3-40mm-midnight-norm.webp";
+// TODO: foto real do 40mm Starlight (ainda não recebida) — usando a do 44mm
+import imgWatch40Starlight from "@/assets/images/produtos/watch-se3-44mm-starlight-norm.webp";
+import imgWatch44Midnight from "@/assets/images/produtos/watch-se3-44mm-midnight-norm.webp";
+import imgWatch44Starlight from "@/assets/images/produtos/watch-se3-44mm-starlight-norm.webp";
+import imgIpadBlue from "@/assets/images/produtos/ipad-11-128gb-blue-norm.webp";
+import imgIpadPink from "@/assets/images/produtos/ipad-11-128gb-pink-norm.webp";
+import imgIpadSilver from "@/assets/images/produtos/ipad-11-128gb-silver-norm.webp";
+import imgIphone14Midnight from "@/assets/images/produtos/iphone-14-128gb-midnight-norm.webp";
+import imgIphone15Black from "@/assets/images/produtos/iphone-15-128gb-black-norm.webp";
+import imgIphone15Blue from "@/assets/images/produtos/iphone-15-128gb-blue-norm.webp";
+import imgIphone16Black from "@/assets/images/produtos/iphone-16-128gb-black-norm.webp";
+import imgIphone16Pink from "@/assets/images/produtos/iphone-16-128gb-pink-norm.webp";
+import imgIphone16Teal from "@/assets/images/produtos/iphone-16-128gb-teal-norm.webp";
+import imgIphone16Ultramarine from "@/assets/images/produtos/iphone-16-128gb-ultramarine-norm.webp";
+import imgIphone16White from "@/assets/images/produtos/iphone-16-128gb-white-norm.webp";
+import imgIphone16eWhite from "@/assets/images/produtos/iphone-16e-128gb-white-norm.webp";
+import imgIphone16ProMaxDesert from "@/assets/images/produtos/iphone-16-pro-max-desert-norm.webp";
+import imgIphone17Black from "@/assets/images/produtos/iphone-17-256gb-black-norm.webp";
+import imgIphone17Blue from "@/assets/images/produtos/iphone-17-256gb-blue-norm.webp";
+import imgIphone17Lavender from "@/assets/images/produtos/iphone-17-256gb-lavender-norm.webp";
+import imgIphone17Sage from "@/assets/images/produtos/iphone-17-256gb-sage-norm.webp";
+import imgIphone17White from "@/assets/images/produtos/iphone-17-256gb-white-norm.webp";
+import imgIphone17ProCosmicOrange from "@/assets/images/produtos/iphone-17-pro-cosmic-orange-norm.webp";
+import imgIphone17ProMaxSilver from "@/assets/images/produtos/iphone-17-pro-max-silver-norm.webp";
+import imgIphone17ProMaxDeepBlue from "@/assets/images/produtos/iphone-17-pro-max-deep-blue-norm.webp";
+import imgMacbookNeo from "@/assets/images/produtos/macbook-neo-256gb-silver-norm.webp";
 
 export type Categoria =
   | "iPhone"
@@ -40,111 +59,276 @@ export const CATEGORIAS: Categoria[] = [
 ];
 
 export const produtos: Produto[] = [
+  // ----- iPhone -----
   {
-    id: "iphone-15-256gb-azul",
-    nome: "iPhone 15 256GB Azul",
+    id: "iphone-17-pro-max-256gb-deep-blue",
+    nome: "iPhone 17 Pro Max 256GB Deep Blue",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "256GB · 10 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17ProMaxDeepBlue,
+    destaque: true,
+  },
+  {
+    id: "iphone-17-256gb-white",
+    nome: "iPhone 17 256GB White",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "256GB · 4 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17White,
+    destaque: true,
+  },
+  {
+    id: "iphone-17-256gb-blue",
+    nome: "iPhone 17 256GB Blue",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "256GB · 3 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17Blue,
+    destaque: true,
+  },
+  {
+    id: "iphone-17-pro-max-256gb-cosmic-orange",
+    nome: "iPhone 17 Pro Max 256GB Cosmic Orange",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "256GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17ProCosmicOrange,
+    destaque: true,
+  },
+  {
+    id: "iphone-17-pro-max-512gb-silver",
+    nome: "iPhone 17 Pro Max 512GB Silver",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "512GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17ProMaxSilver,
+    destaque: true,
+  },
+  {
+    id: "iphone-17-pro-max-256gb-silver",
+    nome: "iPhone 17 Pro Max 256GB Silver",
     categoria: "iPhone",
     condicao: "Lacrado",
     detalhe: "256GB · Caixa lacrada com nota fiscal",
-    imagem: iphone15,
-    destaque: true,
+    imagem: imgIphone17ProMaxSilver,
   },
   {
-    id: "iphone-14-pro-256gb-preto-espacial",
-    nome: "iPhone 14 Pro 256GB Preto Espacial",
+    id: "iphone-17-pro-256gb-cosmic-orange",
+    nome: "iPhone 17 Pro 256GB Cosmic Orange",
     categoria: "iPhone",
-    condicao: "Seminovo",
-    detalhe: "Revisado peça por peça · saúde de bateria informada",
-    imagem: iphone14pro,
-    destaque: true,
+    condicao: "Lacrado",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17ProCosmicOrange,
   },
   {
-    id: "iphone-13-pro-azul-sierra",
-    nome: "iPhone 13 Pro Azul Sierra",
+    id: "iphone-17-256gb-lavender",
+    nome: "iPhone 17 256GB Lavender",
     categoria: "iPhone",
-    condicao: "Seminovo",
-    detalhe: "Checagem completa de tela, bateria e câmeras",
-    imagem: iphone13pro,
-    destaque: true,
+    condicao: "Lacrado",
+    detalhe: "256GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17Lavender,
   },
   {
-    id: "iphone-13-128gb-preto",
-    nome: "iPhone 13 128GB Preto",
+    id: "iphone-17-256gb-sage",
+    nome: "iPhone 17 256GB Sage",
     categoria: "iPhone",
-    condicao: "Seminovo",
-    detalhe: "128GB · condição real informada antes da compra",
-    imagem: iphone13,
+    condicao: "Lacrado",
+    detalhe: "256GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17Sage,
+  },
+  {
+    id: "iphone-17-256gb-black",
+    nome: "iPhone 17 256GB Black",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17Black,
+  },
+  {
+    id: "iphone-16-pro-max-desert",
+    nome: "iPhone 16 Pro Max Desert",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone16ProMaxDesert,
     destaque: true,
   },
   {
-    id: "ipad-10-wifi-cellular-64gb-silver",
-    nome: "iPad (10ª geração) Wi-Fi + Cellular 64GB Prateado",
+    id: "iphone-16e-128gb-white",
+    nome: "iPhone 16e 128GB White",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone16eWhite,
+  },
+  {
+    id: "iphone-16-128gb-white",
+    nome: "iPhone 16 128GB White",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone16White,
+  },
+  {
+    id: "iphone-16-128gb-ultramarine",
+    nome: "iPhone 16 128GB Ultramarine",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone16Ultramarine,
+  },
+  {
+    id: "iphone-16-128gb-teal",
+    nome: "iPhone 16 128GB Teal",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone16Teal,
+  },
+  {
+    id: "iphone-16-128gb-pink",
+    nome: "iPhone 16 128GB Pink",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone16Pink,
+    destaque: true,
+  },
+  {
+    id: "iphone-16-128gb-black",
+    nome: "iPhone 16 128GB Black",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone16Black,
+  },
+  {
+    id: "iphone-15-128gb-blue",
+    nome: "iPhone 15 128GB Blue",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone15Blue,
+  },
+  {
+    id: "iphone-15-128gb-black",
+    nome: "iPhone 15 128GB Black",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · 2 unidades disponíveis · Caixa lacrada com nota fiscal",
+    imagem: imgIphone15Black,
+  },
+  {
+    id: "iphone-14-128gb-midnight",
+    nome: "iPhone 14 128GB Midnight",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone14Midnight,
+  },
+
+  // ----- iPad -----
+  {
+    id: "ipad-11-128gb-blue",
+    nome: "iPad 11 128GB Blue",
     categoria: "iPad",
     condicao: "Lacrado",
-    detalhe: "64GB Wi-Fi + Cellular · lacrado",
-    imagem: ipad10,
+    detalhe: "128GB Wi-Fi · Caixa lacrada com nota fiscal",
+    imagem: imgIpadBlue,
     destaque: true,
   },
   {
-    id: "watch-se",
-    nome: "Apple Watch SE",
+    id: "ipad-11-128gb-pink",
+    nome: "iPad 11 128GB Pink",
+    categoria: "iPad",
+    condicao: "Lacrado",
+    detalhe: "128GB Wi-Fi · Caixa lacrada com nota fiscal",
+    imagem: imgIpadPink,
+  },
+  {
+    id: "ipad-11-128gb-silver",
+    nome: "iPad 11 128GB Silver",
+    categoria: "iPad",
+    condicao: "Lacrado",
+    detalhe: "128GB Wi-Fi · Caixa lacrada com nota fiscal",
+    imagem: imgIpadSilver,
+  },
+
+  // ----- Apple Watch -----
+  {
+    id: "watch-se3-44mm-starlight",
+    nome: "Apple Watch SE 3 44mm Starlight",
     categoria: "Apple Watch",
     condicao: "Lacrado",
-    detalhe: "40mm GPS · lacrado com garantia",
-    imagem: watchSE,
+    detalhe: "44mm GPS · Caixa lacrada com nota fiscal",
+    imagem: imgWatch44Starlight,
     destaque: true,
   },
   {
-    id: "watch-series-9",
-    nome: "Apple Watch Series 9",
+    id: "watch-se3-44mm-midnight",
+    nome: "Apple Watch SE 3 44mm Midnight",
     categoria: "Apple Watch",
-    condicao: "Seminovo",
-    detalhe: "Pulseira original · bateria checada",
-    imagem: imgWatch, // TODO: foto real do produto
+    condicao: "Lacrado",
+    detalhe: "44mm GPS · Caixa lacrada com nota fiscal",
+    imagem: imgWatch44Midnight,
   },
   {
-    id: "airpods-pro",
-    nome: "AirPods Pro 2",
+    id: "watch-se3-40mm-starlight",
+    nome: "Apple Watch SE 3 40mm Starlight",
+    categoria: "Apple Watch",
+    condicao: "Lacrado",
+    // TODO: [FOTO PENDENTE] usando a imagem do 44mm Starlight como placeholder
+    detalhe: "40mm GPS · Caixa lacrada com nota fiscal",
+    imagem: imgWatch40Starlight,
+  },
+  {
+    id: "watch-se3-40mm-midnight",
+    nome: "Apple Watch SE 3 40mm Midnight",
+    categoria: "Apple Watch",
+    condicao: "Lacrado",
+    detalhe: "40mm GPS · Caixa lacrada com nota fiscal",
+    imagem: imgWatch40Midnight,
+  },
+
+  // ----- AirPods -----
+  {
+    id: "airpods-pro-3",
+    nome: "AirPods Pro 3",
     categoria: "AirPods",
     condicao: "Lacrado",
-    detalhe: "Cancelamento de ruído · estojo MagSafe",
-    imagem: imgAirpods, // TODO: foto real do produto
+    detalhe: "Cancelamento de ruído · Caixa lacrada com nota fiscal",
+    imagem: imgAirpodsPro3,
     destaque: true,
   },
   {
-    id: "airpods-3",
-    nome: "AirPods 3ª geração",
+    id: "airpods-4",
+    nome: "AirPods 4",
     categoria: "AirPods",
-    condicao: "Seminovo",
-    detalhe: "Testado par a par antes de entregar",
-    imagem: imgAirpods, // TODO: foto real do produto
+    condicao: "Lacrado",
+    detalhe: "Caixa lacrada com nota fiscal",
+    imagem: imgAirpods4,
   },
+
+  // ----- Mac -----
   {
-    id: "macbook-air-13",
-    nome: "MacBook Air 13”",
+    id: "macbook-neo-256gb-silver",
+    nome: "MacBook Neo 256GB Silver",
     categoria: "Mac",
     condicao: "Lacrado",
-    // TODO: [CONFIRMAR: chip (M2/M3/M4), memória e armazenamento do MacBook]
-    // Sem isso, o detalhe só repetia o badge "Lacrado" — melhor dizer a verdade.
-    detalhe: "Chip e armazenamento você confirma no WhatsApp",
-    imagem: macbookAir13,
+    detalhe: "256GB · Caixa lacrada com nota fiscal",
+    imagem: imgMacbookNeo,
+    destaque: true,
   },
+
+  // ----- Acessórios -----
   {
-    id: "carregador-usb-c-20w",
-    nome: "Carregador USB-C 20W",
+    id: "apple-pencil-usbc",
+    nome: "Apple Pencil (USB-C)",
     categoria: "Acessórios",
     condicao: "Lacrado",
-    detalhe: "20W · Compatível com iPhone e iPad",
-    imagem: carregador20w,
-  },
-  {
-    id: "capinha-magsafe-transparente",
-    nome: "Capinha MagSafe Transparente",
-    categoria: "Acessórios",
-    condicao: "Lacrado",
-    // TODO: [CONFIRMAR: para quais modelos de iPhone essa capinha serve]
-    detalhe: "Confirma no WhatsApp se tem pro seu modelo de iPhone",
-    imagem: capinhaMagsafe,
+    detalhe: "Caixa lacrada com nota fiscal",
+    imagem: imgApplePencil,
   },
 ];
 
