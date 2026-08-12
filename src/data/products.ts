@@ -26,6 +26,8 @@ import imgIphone17Lavender from "@/assets/images/produtos/iphone-17-256gb-lavend
 import imgIphone17Sage from "@/assets/images/produtos/iphone-17-256gb-sage-norm.webp";
 import imgIphone17White from "@/assets/images/produtos/iphone-17-256gb-white-norm.webp";
 import imgIphone17ProCosmicOrange from "@/assets/images/produtos/iphone-17-pro-cosmic-orange-norm.webp";
+import imgIphone17eBlack from "@/assets/images/produtos/iphone-17e-128gb-black-norm.webp";
+import imgIphone17eWhite from "@/assets/images/produtos/iphone-17e-128gb-white-norm.webp";
 import imgIphone17ProSilver from "@/assets/images/produtos/iphone-17-pro-silver-norm.webp";
 import imgIphone17ProDeepBlue from "@/assets/images/produtos/iphone-17-pro-deep-blue-norm.webp";
 import imgIphone17ProMaxSilver from "@/assets/images/produtos/iphone-17-pro-max-silver-norm.webp";
@@ -181,6 +183,22 @@ export const produtos: Produto[] = [
     condicao: "Lacrado",
     detalhe: "256GB · Caixa lacrada com nota fiscal",
     imagem: imgIphone17Black,
+  },
+  {
+    id: "iphone-17e-128gb-black",
+    nome: "iPhone 17e 128GB Black",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17eBlack,
+  },
+  {
+    id: "iphone-17e-128gb-white",
+    nome: "iPhone 17e 128GB White",
+    categoria: "iPhone",
+    condicao: "Lacrado",
+    detalhe: "128GB · Caixa lacrada com nota fiscal",
+    imagem: imgIphone17eWhite,
   },
   {
     id: "iphone-16-pro-max-desert",
