@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssistenciaTecnicaRouteImport } from './routes/assistencia-tecnica'
 import { Route as ProdutosRouteImport } from './routes/produtos'
+import { Route as VendaSeuIphoneRouteImport } from './routes/venda-seu-iphone'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,49 @@ const ProdutosRoute = ProdutosRouteImport.update({
   path: '/produtos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VendaSeuIphoneRoute = VendaSeuIphoneRouteImport.update({
+  id: '/venda-seu-iphone',
+  path: '/venda-seu-iphone',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/produtos': typeof ProdutosRoute
+  '/venda-seu-iphone': typeof VendaSeuIphoneRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/produtos': typeof ProdutosRoute
+  '/venda-seu-iphone': typeof VendaSeuIphoneRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/produtos': typeof ProdutosRoute
+  '/venda-seu-iphone': typeof VendaSeuIphoneRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/assistencia-tecnica' | '/produtos'
+  fullPaths: '/' | '/assistencia-tecnica' | '/produtos' | '/venda-seu-iphone'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assistencia-tecnica' | '/produtos'
-  id: '__root__' | '/' | '/assistencia-tecnica' | '/produtos'
+  to: '/' | '/assistencia-tecnica' | '/produtos' | '/venda-seu-iphone'
+  id:
+    | '__root__'
+    | '/'
+    | '/assistencia-tecnica'
+    | '/produtos'
+    | '/venda-seu-iphone'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssistenciaTecnicaRoute: typeof AssistenciaTecnicaRoute
   ProdutosRoute: typeof ProdutosRoute
+  VendaSeuIphoneRoute: typeof VendaSeuIphoneRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +97,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/venda-seu-iphone': {
+      id: '/venda-seu-iphone'
+      path: '/venda-seu-iphone'
+      fullPath: '/venda-seu-iphone'
+      preLoaderRoute: typeof VendaSeuIphoneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,17 +111,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssistenciaTecnicaRoute: AssistenciaTecnicaRoute,
   ProdutosRoute: ProdutosRoute,
+  VendaSeuIphoneRoute: VendaSeuIphoneRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

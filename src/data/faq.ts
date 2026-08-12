@@ -66,3 +66,22 @@ export const faqAssistencia: FaqItem[] = [
   byQuestion("Onde vocês ficam?"),
 ];
 
+export const faqVenda: FaqItem[] = [
+  byQuestion("Aceitam meu aparelho usado na troca?"),
+  {
+    // TODO: [CONFIRMAR: quais modelos a loja aceita comprar/receber na troca]
+    q: "Que modelos vocês aceitam?",
+    a: "Manda o modelo do seu iPhone no WhatsApp que a gente confirma na hora se aceitamos esse aparelho.",
+  },
+  {
+    // TODO: [CONFIRMAR: critérios reais de avaliação do aparelho usado]
+    q: "Como vocês avaliam o estado do meu aparelho?",
+    a: "A gente pergunta sobre a tela, a bateria, se funciona tudo certo e o que acompanha (caixa, carregador, acessórios). Com essas informações já dá pra te passar uma ideia do valor.",
+  },
+  {
+    q: "Preciso levar o aparelho na loja pra saber o valor?",
+    a: "Não pra uma primeira ideia — você pode mandar as informações pelo WhatsApp. Mas a confirmação final do valor acontece com o aparelho em mãos, na loja.",
+  },
+  byQuestion("Onde vocês ficam?"),
+];
+
