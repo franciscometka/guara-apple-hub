@@ -1,12 +1,14 @@
 export const navLinks = [
   { label: "Início", to: "/" },
   { label: "Produtos", to: "/produtos" },
+  { label: "Venda seu iPhone", to: "/venda-seu-iphone" },
   { label: "Assistência Técnica", to: "/assistencia-tecnica" },
 ] as const;
 
 export const footerNav = [
   { label: "Início", to: "/" },
   { label: "Produtos", to: "/produtos" },
+  { label: "Venda seu iPhone", to: "/venda-seu-iphone" },
   { label: "Assistência Técnica", to: "/assistencia-tecnica" },
 ] as const;
 
