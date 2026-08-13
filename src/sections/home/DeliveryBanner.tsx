@@ -18,7 +18,7 @@ export function DeliveryBanner() {
           align="center"
           eyebrow="Entrega"
           title="Não está em Guarapuava? A gente leva até você."
-          subtitle="Entregamos em até 200 km a partir do centro de Guarapuava — Ponta Grossa, Cascavel, Curitiba e região. Manda sua cidade no WhatsApp que a gente confirma se cobre."
+          subtitle="Entregamos em até 100 km a partir do centro de Guarapuava. Manda sua cidade no WhatsApp que a gente confirma se cobre."
         />
       </div>
     </Section>

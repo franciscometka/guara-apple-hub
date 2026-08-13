@@ -24,9 +24,8 @@ export const faq: FaqItem[] = [
     a: "Não. O diagnóstico e o orçamento vêm antes, no WhatsApp. Só depois que você aprova é que o serviço começa.",
   },
   {
-    // TODO: [CONFIRMAR: formas de pagamento e número de parcelas]
     q: "Vocês parcelam?",
-    a: "Sim, trabalhamos com parcelamento. Fala com a gente no WhatsApp que te passamos as condições atualizadas.",
+    a: "Sim, parcelamos em até 21x no cartão. Fala com a gente no WhatsApp que te passamos as condições atualizadas.",
   },
   {
     // TODO: [CONFIRMAR: a loja faz trade-in? Substituir a resposta abaixo]
@@ -34,9 +33,8 @@ export const faq: FaqItem[] = [
     a: "Fala com a gente no WhatsApp com o modelo e o estado do seu aparelho que confirmamos essa possibilidade na hora.",
   },
   {
-    // TODO: [CONFIRMAR: entrega em Guarapuava? envio para outras cidades?]
     q: "Vocês entregam ou é só retirada na loja?",
-    a: "Confirme com a gente no WhatsApp: informamos as opções de retirada e entrega disponíveis para o seu endereço.",
+    a: "Entregamos em até 100 km a partir do centro de Guarapuava. Confirme com a gente no WhatsApp se sua cidade está dentro dessa área.",
   },
   {
     q: "Onde vocês ficam?",
