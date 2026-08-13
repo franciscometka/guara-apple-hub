@@ -5,11 +5,21 @@ import { useEffect, useRef, useState } from "react";
 import type { Produto } from "@/data/products";
 import { GuaraBadge } from "@/components/ui/GuaraBadge";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
+import { useProductPricing } from "@/hooks/useProductPricing";
+
+const formatarPreco = (valor: number) =>
+  new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(valor);
 
 export function ProductCard({ produto }: { produto: Produto }) {
   const reduce = useReducedMotion();
   const [loaded, setLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
+  const precos = useProductPricing();
+  const info = precos[produto.id];
+  const emEstoque = info?.emEstoque ?? true;
 
   // Imagem em cache já pode estar completa antes do onLoad ser anexado.
   useEffect(() => {
@@ -19,7 +29,9 @@ export function ProductCard({ produto }: { produto: Produto }) {
   return (
     <motion.article
       layout
-      className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-background shadow-soft transition-[box-shadow,border-color] duration-300 hover:border-violet-glow hover:shadow-card"
+      className={`group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-background shadow-soft transition-[box-shadow,border-color] duration-300 hover:border-violet-glow hover:shadow-card ${
+        emEstoque ? "" : "opacity-60"
+      }`}
       initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
@@ -43,7 +55,11 @@ export function ProductCard({ produto }: { produto: Produto }) {
           />
         </div>
         <div className="absolute top-4 left-4">
-          <GuaraBadge>{produto.condicao}</GuaraBadge>
+          {emEstoque ? (
+            <GuaraBadge>{produto.condicao}</GuaraBadge>
+          ) : (
+            <GuaraBadge tone="dark">Fora de estoque</GuaraBadge>
+          )}
         </div>
       </div>
 
@@ -54,16 +70,23 @@ export function ProductCard({ produto }: { produto: Produto }) {
         <p className="mt-2 flex-1 text-sm text-muted-foreground">
           {produto.detalhe}
         </p>
-        <a
-          href={waLink(WA_MESSAGES.produto(produto.nome))}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackWhatsApp("produto")}
-          className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-violet-deep transition-colors hover:text-violet"
-        >
-          <WhatsAppIcon size={18} />
-          Consultar valor no WhatsApp
-        </a>
+        {info?.preco != null && (
+          <p className="mt-2 font-display text-xl font-semibold text-foreground">
+            {formatarPreco(info.preco)}
+          </p>
+        )}
+        {emEstoque && (
+          <a
+            href={waLink(WA_MESSAGES.produto(produto.nome))}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackWhatsApp("produto")}
+            className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-violet-deep transition-colors hover:text-violet"
+          >
+            <WhatsAppIcon size={18} />
+            {info?.preco != null ? "Falar no WhatsApp" : "Consultar valor no WhatsApp"}
+          </a>
+        )}
       </div>
     </motion.article>
   );
