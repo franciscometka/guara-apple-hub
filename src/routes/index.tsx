@@ -12,6 +12,7 @@ import { DeliveryBanner } from "@/sections/home/DeliveryBanner";
 import { FAQ } from "@/sections/home/FAQ";
 import { CTASection } from "@/components/shared/CTASection";
 import { CONTATO, WHATSAPP } from "@/lib/whatsapp";
+import { produtosPublicosQuery } from "@/lib/produtos-query";
 import fachada from "@/assets/images/fachada.webp";
 
 const title = "Guara iPhones — Loja Apple e Assistência Técnica em Guarapuava";
@@ -68,6 +69,9 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
+  loader: ({ context }) => {
+    context.queryClient.prefetchQuery(produtosPublicosQuery());
+  },
   component: HomePage,
 });
 

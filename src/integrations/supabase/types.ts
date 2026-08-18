@@ -14,7 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      produtos: {
+        Row: {
+          ativo: boolean
+          atualizado_em: string
+          categoria: string
+          condicao: string
+          criado_em: string
+          destaque: boolean
+          detalhe: string | null
+          em_estoque: boolean
+          id: string
+          imagem_url: string | null
+          nome: string
+          preco: number | null
+          slug: string
+        }
+        Insert: {
+          ativo?: boolean
+          atualizado_em?: string
+          categoria: string
+          condicao: string
+          criado_em?: string
+          destaque?: boolean
+          detalhe?: string | null
+          em_estoque?: boolean
+          id?: string
+          imagem_url?: string | null
+          nome: string
+          preco?: number | null
+          slug: string
+        }
+        Update: {
+          ativo?: boolean
+          atualizado_em?: string
+          categoria?: string
+          condicao?: string
+          criado_em?: string
+          destaque?: boolean
+          detalhe?: string | null
+          em_estoque?: boolean
+          id?: string
+          imagem_url?: string | null
+          nome?: string
+          preco?: number | null
+          slug?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

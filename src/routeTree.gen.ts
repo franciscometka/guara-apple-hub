@@ -13,6 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssistenciaTecnicaRouteImport } from './routes/assistencia-tecnica'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as VendaSeuIphoneRouteImport } from './routes/venda-seu-iphone'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminProdutosNovoRouteImport } from './routes/admin.produtos.novo'
+import { Route as AdminProdutosIdEditarRouteImport } from './routes/admin.produtos.$id.editar'
+import { Route as ApiPublicFotoSplatRouteImport } from './routes/api/public/foto.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +39,53 @@ const VendaSeuIphoneRoute = VendaSeuIphoneRouteImport.update({
   path: '/venda-seu-iphone',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProdutosNovoRoute = AdminProdutosNovoRouteImport.update({
+  id: '/admin/produtos/novo',
+  path: '/admin/produtos/novo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProdutosIdEditarRoute = AdminProdutosIdEditarRouteImport.update({
+  id: '/admin/produtos/$id/editar',
+  path: '/admin/produtos/$id/editar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicFotoSplatRoute = ApiPublicFotoSplatRouteImport.update({
+  id: '/api/public/foto/$',
+  path: '/api/public/foto/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/produtos/novo': typeof AdminProdutosNovoRoute
+  '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
+  '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/produtos/novo': typeof AdminProdutosNovoRoute
+  '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
+  '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,18 +93,46 @@ export interface FileRoutesById {
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/produtos/novo': typeof AdminProdutosNovoRoute
+  '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
+  '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/assistencia-tecnica' | '/produtos' | '/venda-seu-iphone'
+  fullPaths:
+    | '/'
+    | '/assistencia-tecnica'
+    | '/produtos'
+    | '/venda-seu-iphone'
+    | '/admin/login'
+    | '/admin/'
+    | '/admin/produtos/novo'
+    | '/admin/produtos/$id/editar'
+    | '/api/public/foto/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assistencia-tecnica' | '/produtos' | '/venda-seu-iphone'
+  to:
+    | '/'
+    | '/assistencia-tecnica'
+    | '/produtos'
+    | '/venda-seu-iphone'
+    | '/admin/login'
+    | '/admin'
+    | '/admin/produtos/novo'
+    | '/admin/produtos/$id/editar'
+    | '/api/public/foto/$'
   id:
     | '__root__'
     | '/'
     | '/assistencia-tecnica'
     | '/produtos'
     | '/venda-seu-iphone'
+    | '/admin/login'
+    | '/admin/'
+    | '/admin/produtos/novo'
+    | '/admin/produtos/$id/editar'
+    | '/api/public/foto/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -72,6 +140,11 @@ export interface RootRouteChildren {
   AssistenciaTecnicaRoute: typeof AssistenciaTecnicaRoute
   ProdutosRoute: typeof ProdutosRoute
   VendaSeuIphoneRoute: typeof VendaSeuIphoneRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminProdutosNovoRoute: typeof AdminProdutosNovoRoute
+  AdminProdutosIdEditarRoute: typeof AdminProdutosIdEditarRoute
+  ApiPublicFotoSplatRoute: typeof ApiPublicFotoSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -104,6 +177,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VendaSeuIphoneRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/produtos/novo': {
+      id: '/admin/produtos/novo'
+      path: '/admin/produtos/novo'
+      fullPath: '/admin/produtos/novo'
+      preLoaderRoute: typeof AdminProdutosNovoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/produtos/$id/editar': {
+      id: '/admin/produtos/$id/editar'
+      path: '/admin/produtos/$id/editar'
+      fullPath: '/admin/produtos/$id/editar'
+      preLoaderRoute: typeof AdminProdutosIdEditarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/foto/$': {
+      id: '/api/public/foto/$'
+      path: '/api/public/foto/$'
+      fullPath: '/api/public/foto/$'
+      preLoaderRoute: typeof ApiPublicFotoSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -112,6 +220,11 @@ const rootRouteChildren: RootRouteChildren = {
   AssistenciaTecnicaRoute: AssistenciaTecnicaRoute,
   ProdutosRoute: ProdutosRoute,
   VendaSeuIphoneRoute: VendaSeuIphoneRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminProdutosNovoRoute: AdminProdutosNovoRoute,
+  AdminProdutosIdEditarRoute: AdminProdutosIdEditarRoute,
+  ApiPublicFotoSplatRoute: ApiPublicFotoSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

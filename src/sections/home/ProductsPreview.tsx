@@ -1,13 +1,17 @@
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup } from "@/components/ui/Reveal";
 import { ProductCard } from "@/components/product/ProductCard";
-import { produtos } from "@/data/products";
+import { produtosPublicosQuery } from "@/lib/produtos-query";
 
 export function ProductsPreview() {
-  const destaques = produtos.filter((p) => p.destaque).slice(0, 6);
+  const { data: produtos = [] } = useQuery(produtosPublicosQuery());
+  const destaques = produtos
+    .filter((p) => p.destaque && p.emEstoque)
+    .slice(0, 6);
 
   return (
     <Section labelledBy="produtos-destaque">
