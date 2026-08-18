@@ -27,13 +27,32 @@ export function AdminShell({
     <div className="min-h-dvh bg-muted/30">
       <header className="border-b border-border bg-background">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
-          <Link
-            to="/admin"
-            className="inline-flex items-center gap-2 font-display text-base font-semibold text-foreground"
-          >
-            <Package size={18} strokeWidth={1.5} aria-hidden="true" />
-            Painel Guara iPhones
-          </Link>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <Link
+              to="/admin"
+              className="inline-flex items-center gap-2 font-display text-base font-semibold text-foreground"
+            >
+              <Package size={18} strokeWidth={1.5} aria-hidden="true" />
+              Painel Guara iPhones
+            </Link>
+            <nav aria-label="Seções do painel" className="flex items-center gap-4">
+              <Link
+                to="/admin"
+                activeOptions={{ exact: true }}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                activeProps={{ className: "text-foreground" }}
+              >
+                Produtos
+              </Link>
+              <Link
+                to="/admin/clientes"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                activeProps={{ className: "text-foreground" }}
+              >
+                Clientes
+              </Link>
+            </nav>
+          </div>
           <button
             type="button"
             onClick={sair}
