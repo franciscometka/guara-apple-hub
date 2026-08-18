@@ -17,6 +17,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminProdutosNovoRouteImport } from './routes/admin.produtos.novo'
 import { Route as AdminProdutosIdEditarRouteImport } from './routes/admin.produtos.$id.editar'
+import { Route as ApiPublicFotoSplatRouteImport } from './routes/api/public/foto.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +59,11 @@ const AdminProdutosIdEditarRoute = AdminProdutosIdEditarRouteImport.update({
   path: '/admin/produtos/$id/editar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicFotoSplatRoute = ApiPublicFotoSplatRouteImport.update({
+  id: '/api/public/foto/$',
+  path: '/api/public/foto/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
+  '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
+  '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
+  '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/admin/produtos/novo'
     | '/admin/produtos/$id/editar'
+    | '/api/public/foto/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin/produtos/novo'
     | '/admin/produtos/$id/editar'
+    | '/api/public/foto/$'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/admin/produtos/novo'
     | '/admin/produtos/$id/editar'
+    | '/api/public/foto/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   AdminProdutosNovoRoute: typeof AdminProdutosNovoRoute
   AdminProdutosIdEditarRoute: typeof AdminProdutosIdEditarRoute
+  ApiPublicFotoSplatRoute: typeof ApiPublicFotoSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProdutosIdEditarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/foto/$': {
+      id: '/api/public/foto/$'
+      path: '/api/public/foto/$'
+      fullPath: '/api/public/foto/$'
+      preLoaderRoute: typeof ApiPublicFotoSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   AdminProdutosNovoRoute: AdminProdutosNovoRoute,
   AdminProdutosIdEditarRoute: AdminProdutosIdEditarRoute,
+  ApiPublicFotoSplatRoute: ApiPublicFotoSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,8 +1,6 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 
 export const BUCKET_FOTOS = "produtos-fotos";
-export const ASSINATURA_SEGUNDOS = 60 * 60 * 24 * 7; // 7 dias
 
 export const CATEGORIAS_DB = [
   "iPhone",
@@ -33,37 +31,16 @@ export interface ProdutoView {
   destaque: boolean;
 }
 
-type ClienteSupabase = SupabaseClient<Database>;
-
-/** Gera URLs assinadas para as fotos guardadas no bucket privado. */
-export async function assinarFotos(
-  cliente: ClienteSupabase,
-  caminhos: string[],
-): Promise<Record<string, string>> {
-  const unicos = [...new Set(caminhos.filter(Boolean))];
-  if (unicos.length === 0) return {};
-
-  const { data, error } = await cliente.storage
-    .from(BUCKET_FOTOS)
-    .createSignedUrls(unicos, ASSINATURA_SEGUNDOS);
-
-  if (error || !data) {
-    console.warn("[produtos] falha ao assinar fotos:", error?.message);
-    return {};
-  }
-
-  const mapa: Record<string, string> = {};
-  data.forEach((item, i) => {
-    const caminho = item.path ?? unicos[i];
-    if (caminho && item.signedUrl) mapa[caminho] = item.signedUrl;
-  });
-  return mapa;
+/**
+ * URL estável (mesma no servidor e no cliente) para a foto guardada no bucket
+ * privado — servida pela rota /api/public/foto/$.
+ */
+export function urlFoto(caminho: string | null): string {
+  if (!caminho) return "";
+  return `/api/public/foto/${caminho}`;
 }
 
-export function paraProdutoView(
-  row: ProdutoRow,
-  fotos: Record<string, string>,
-): ProdutoView {
+export function paraProdutoView(row: ProdutoRow): ProdutoView {
   return {
     id: row.id,
     slug: row.slug,
@@ -71,7 +48,7 @@ export function paraProdutoView(
     categoria: row.categoria as CategoriaDB,
     condicao: row.condicao as CondicaoDB,
     detalhe: row.detalhe ?? "",
-    imagem: row.imagem_url ? (fotos[row.imagem_url] ?? "") : "",
+    imagem: urlFoto(row.imagem_url),
     preco: row.preco === null ? null : Number(row.preco),
     emEstoque: row.em_estoque,
     destaque: row.destaque,
