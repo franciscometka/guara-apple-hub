@@ -37,11 +37,5 @@ export const listarProdutosPublicos = createServerFn({
     return [];
   }
 
-  const rows = data ?? [];
-  const fotos = await assinarFotos(
-    cliente,
-    rows.map((r) => r.imagem_url ?? ""),
-  );
-
-  return rows.map((row) => paraProdutoView(row, fotos));
+  return (data ?? []).map((row) => paraProdutoView(row));
 });
