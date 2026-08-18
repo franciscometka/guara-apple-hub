@@ -2,12 +2,14 @@ import {
   createFileRoute,
   redirect,
   useNavigate,
+  Link,
 } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { LogOut } from "lucide-react";
+import { LogOut, Package, Users } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { supabase } from "@/integrations/supabase/client";
+import { useEhAdmin } from "@/hooks/useEhAdmin";
 import { mensagemErroAuth, obterMeuPerfil, salvarMeuPerfil } from "@/lib/conta";
 
 export const Route = createFileRoute("/minha-conta")({
@@ -43,6 +45,7 @@ const campo =
 function MinhaConta() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const ehAdmin = useEhAdmin();
   const { data: perfil, isPending } = useQuery({
     queryKey: ["meu-perfil"],
     queryFn: obterMeuPerfil,
@@ -141,6 +144,39 @@ function MinhaConta() {
                 {salvando ? "Salvando…" : "Salvar alterações"}
               </button>
             </form>
+          )}
+
+          {ehAdmin && (
+            <section
+              aria-labelledby="area-equipe"
+              className="mt-10 rounded-lg border border-border bg-muted/30 p-5"
+            >
+              <h2
+                id="area-equipe"
+                className="font-display text-base font-semibold text-foreground"
+              >
+                Área da equipe
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Sua conta tem acesso ao painel administrativo.
+              </p>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  to="/admin"
+                  className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground"
+                >
+                  <Package size={16} strokeWidth={1.5} aria-hidden="true" />
+                  Gerenciar produtos
+                </Link>
+                <Link
+                  to="/admin/clientes"
+                  className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet"
+                >
+                  <Users size={16} strokeWidth={1.5} aria-hidden="true" />
+                  Ver clientes
+                </Link>
+              </div>
+            </section>
           )}
 
           <button

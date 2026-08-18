@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { navLinks } from "@/data/navigation";
 import { useScrolledPast } from "@/hooks/useScrollPosition";
 import { useSessao } from "@/hooks/useSessao";
+import { useEhAdmin } from "@/hooks/useEhAdmin";
 import { Button } from "@/components/ui/GuaraButton";
 import { Container } from "@/components/layout/Container";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
@@ -19,6 +20,7 @@ export function Navbar() {
   const reduce = useReducedMotion();
   const solid = scrolled || open;
   const logado = useSessao();
+  const ehAdmin = useEhAdmin();
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -96,6 +98,19 @@ export function Navbar() {
             >
               {logado ? "Minha conta" : "Entrar"}
             </Link>
+            {ehAdmin && (
+              <Link
+                to="/admin"
+                className={cn(
+                  "link-underline text-sm font-medium transition-colors",
+                  solid
+                    ? "text-muted-foreground hover:text-foreground"
+                    : "text-white/70 hover:text-white",
+                )}
+              >
+                Painel administrativo
+              </Link>
+            )}
             <Button
               variant="whatsapp"
               size="sm"
@@ -161,6 +176,17 @@ export function Navbar() {
                       {logado ? "Minha conta" : "Entrar"}
                     </Link>
                   </li>
+                  {ehAdmin && (
+                    <li>
+                      <Link
+                        to="/admin"
+                        onClick={() => setOpen(false)}
+                        className="flex min-h-12 items-center border-b border-border text-base font-medium text-foreground"
+                      >
+                        Painel administrativo
+                      </Link>
+                    </li>
+                  )}
                 </ul>
                 <div className="mt-6">
                   <Button
