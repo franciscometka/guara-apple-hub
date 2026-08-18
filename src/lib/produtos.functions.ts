@@ -1,11 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
-import {
-  assinarFotos,
-  paraProdutoView,
-  type ProdutoView,
-} from "./produtos-shared";
+import { paraProdutoView, type ProdutoView } from "./produtos-shared";
 
 export const listarProdutosPublicos = createServerFn({
   method: "GET",
