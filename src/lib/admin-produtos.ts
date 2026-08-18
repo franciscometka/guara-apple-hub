@@ -1,8 +1,8 @@
 import { supabase } from "@/integrations/supabase/client";
 import {
   BUCKET_FOTOS,
-  assinarFotos,
   slugify,
+  urlFoto,
   type ProdutoRow,
 } from "./produtos-shared";
 
@@ -20,11 +20,9 @@ export async function listarProdutosAdmin(): Promise<ProdutoAdmin[]> {
     .order("criado_em", { ascending: false });
   if (error) throw error;
 
-  const rows = data ?? [];
-  const fotos = await assinarFotos(supabase, rows.map((r) => r.imagem_url ?? ""));
-  return rows.map((row) => ({
+  return (data ?? []).map((row) => ({
     ...row,
-    fotoUrl: row.imagem_url ? (fotos[row.imagem_url] ?? "") : "",
+    fotoUrl: urlFoto(row.imagem_url),
   }));
 }
 
@@ -36,11 +34,7 @@ export async function obterProdutoAdmin(id: string): Promise<ProdutoAdmin> {
     .single();
   if (error) throw error;
 
-  const fotos = await assinarFotos(supabase, [data.imagem_url ?? ""]);
-  return {
-    ...data,
-    fotoUrl: data.imagem_url ? (fotos[data.imagem_url] ?? "") : "",
-  };
+  return { ...data, fotoUrl: urlFoto(data.imagem_url) };
 }
 
 export interface DadosProduto {
