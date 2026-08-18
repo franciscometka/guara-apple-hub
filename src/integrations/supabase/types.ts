@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      admins: {
+        Row: {
+          criado_em: string
+          user_id: string
+        }
+        Insert: {
+          criado_em?: string
+          user_id: string
+        }
+        Update: {
+          criado_em?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      perfis: {
+        Row: {
+          atualizado_em: string
+          criado_em: string
+          email: string | null
+          id: string
+          nome: string | null
+          telefone: string | null
+        }
+        Insert: {
+          atualizado_em?: string
+          criado_em?: string
+          email?: string | null
+          id: string
+          nome?: string | null
+          telefone?: string | null
+        }
+        Update: {
+          atualizado_em?: string
+          criado_em?: string
+          email?: string | null
+          id?: string
+          nome?: string | null
+          telefone?: string | null
+        }
+        Relationships: []
+      }
       produtos: {
         Row: {
           ativo: boolean
@@ -67,7 +109,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      eh_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
