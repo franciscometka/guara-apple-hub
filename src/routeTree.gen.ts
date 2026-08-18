@@ -15,6 +15,7 @@ import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as VendaSeuIphoneRouteImport } from './routes/venda-seu-iphone'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminProdutosNovoRouteImport } from './routes/admin.produtos.novo'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminProdutosNovoRoute = AdminProdutosNovoRouteImport.update({
+  id: '/admin/produtos/novo',
+  path: '/admin/produtos/novo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/produtos/novo': typeof AdminProdutosNovoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/produtos/novo': typeof AdminProdutosNovoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/produtos/novo': typeof AdminProdutosNovoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/venda-seu-iphone'
     | '/admin/login'
     | '/admin/'
+    | '/admin/produtos/novo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/venda-seu-iphone'
     | '/admin/login'
     | '/admin'
+    | '/admin/produtos/novo'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/venda-seu-iphone'
     | '/admin/login'
     | '/admin/'
+    | '/admin/produtos/novo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   VendaSeuIphoneRoute: typeof VendaSeuIphoneRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminProdutosNovoRoute: typeof AdminProdutosNovoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/produtos/novo': {
+      id: '/admin/produtos/novo'
+      path: '/admin/produtos/novo'
+      fullPath: '/admin/produtos/novo'
+      preLoaderRoute: typeof AdminProdutosNovoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   VendaSeuIphoneRoute: VendaSeuIphoneRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminProdutosNovoRoute: AdminProdutosNovoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
