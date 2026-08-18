@@ -10,6 +10,7 @@ import {
 import { Container } from "@/components/layout/Container";
 import { footerNav, footerServicos } from "@/data/navigation";
 import { OpenNowBadge } from "@/components/shared/OpenNowBadge";
+import { useSessao } from "@/hooks/useSessao";
 import {
   CONTATO,
   WA_MESSAGES,
@@ -20,6 +21,7 @@ import logoWhite from "@/assets/images/logo/guara-logo-white.png";
 
 export function Footer() {
   const ano = new Date().getFullYear();
+  const logado = useSessao();
 
   return (
     <footer className="border-t border-white/8 bg-ink text-white/60">
@@ -169,6 +171,12 @@ export function Footer() {
             Guarapuava/PR · Não somos revenda autorizada Apple. Apple, iPhone,
             iPad e Mac são marcas da Apple Inc.
           </p>
+          <Link
+            to={logado ? "/minha-conta" : "/entrar"}
+            className="min-h-11 shrink-0 items-center transition-colors hover:text-white md:flex"
+          >
+            {logado ? "Minha conta" : "Entrar"}
+          </Link>
         </div>
       </Container>
     </footer>
