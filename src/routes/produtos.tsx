@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { Section } from "@/components/layout/Section";
@@ -8,8 +9,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CategoryFilter } from "@/components/product/CategoryFilter";
 import { ProductCard } from "@/components/product/ProductCard";
 import { CTASection } from "@/components/shared/CTASection";
+import { produtosPublicosQuery } from "@/lib/produtos-query";
+import type { Categoria } from "@/data/products";
 import { TrustBar } from "@/components/shared/TrustBar";
-import { produtos, type Categoria } from "@/data/products";
 import fachada from "@/assets/images/fachada.webp";
 
 const title = "Produtos Apple em Guarapuava — Guara iPhones";
@@ -17,6 +19,9 @@ const description =
   "iPhone, iPad, Apple Watch, AirPods, Mac e acessórios em Guarapuava/PR. Lacrados e seminovos revisados, com nota fiscal e garantia.";
 
 export const Route = createFileRoute("/produtos")({
+  loader: ({ context }) => {
+    context.queryClient.ensureQueryData(produtosPublicosQuery());
+  },
   head: () => ({
     meta: [
       { title },
@@ -34,10 +39,12 @@ export const Route = createFileRoute("/produtos")({
 
 function ProdutosPage() {
   const [categoria, setCategoria] = useState<Categoria | "Todos">("Todos");
+  const { data: produtos } = useSuspenseQuery(produtosPublicosQuery());
+  const disponiveis = produtos.filter((p) => p.emEstoque);
   const lista =
     categoria === "Todos"
-      ? produtos
-      : produtos.filter((p) => p.categoria === categoria);
+      ? disponiveis
+      : disponiveis.filter((p) => p.categoria === categoria);
 
   return (
     <>

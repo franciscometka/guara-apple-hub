@@ -2,10 +2,9 @@ import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { motion, useReducedMotion } from "motion/react";
 
 import { useEffect, useRef, useState } from "react";
-import type { Produto } from "@/data/products";
+import type { ProdutoView } from "@/lib/produtos-shared";
 import { GuaraBadge } from "@/components/ui/GuaraBadge";
 import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
-import { useProductPricing } from "@/hooks/useProductPricing";
 
 const formatarPreco = (valor: number) =>
   new Intl.NumberFormat("pt-BR", {
@@ -13,13 +12,12 @@ const formatarPreco = (valor: number) =>
     currency: "BRL",
   }).format(valor);
 
-export function ProductCard({ produto }: { produto: Produto }) {
+export function ProductCard({ produto }: { produto: ProdutoView }) {
   const reduce = useReducedMotion();
   const [loaded, setLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
-  const precos = useProductPricing();
-  const info = precos[produto.id];
-  const emEstoque = info?.emEstoque ?? true;
+  const info = { preco: produto.preco, emEstoque: produto.emEstoque };
+  const emEstoque = produto.emEstoque;
 
   // Imagem em cache já pode estar completa antes do onLoad ser anexado.
   useEffect(() => {

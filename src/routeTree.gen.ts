@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssistenciaTecnicaRouteImport } from './routes/assistencia-tecnica'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as VendaSeuIphoneRouteImport } from './routes/venda-seu-iphone'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +36,32 @@ const VendaSeuIphoneRoute = VendaSeuIphoneRouteImport.update({
   path: '/venda-seu-iphone',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,18 +69,34 @@ export interface FileRoutesById {
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/assistencia-tecnica' | '/produtos' | '/venda-seu-iphone'
+  fullPaths:
+    | '/'
+    | '/assistencia-tecnica'
+    | '/produtos'
+    | '/venda-seu-iphone'
+    | '/admin/login'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assistencia-tecnica' | '/produtos' | '/venda-seu-iphone'
+  to:
+    | '/'
+    | '/assistencia-tecnica'
+    | '/produtos'
+    | '/venda-seu-iphone'
+    | '/admin/login'
+    | '/admin'
   id:
     | '__root__'
     | '/'
     | '/assistencia-tecnica'
     | '/produtos'
     | '/venda-seu-iphone'
+    | '/admin/login'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -72,6 +104,8 @@ export interface RootRouteChildren {
   AssistenciaTecnicaRoute: typeof AssistenciaTecnicaRoute
   ProdutosRoute: typeof ProdutosRoute
   VendaSeuIphoneRoute: typeof VendaSeuIphoneRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -104,6 +138,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VendaSeuIphoneRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -112,6 +160,8 @@ const rootRouteChildren: RootRouteChildren = {
   AssistenciaTecnicaRoute: AssistenciaTecnicaRoute,
   ProdutosRoute: ProdutosRoute,
   VendaSeuIphoneRoute: VendaSeuIphoneRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
