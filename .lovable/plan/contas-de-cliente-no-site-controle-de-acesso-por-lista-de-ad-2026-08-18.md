@@ -6,17 +6,20 @@ Hoje qualquer pessoa logada pode editar produtos. Como o site vai passar a ter c
 
 ## 1. Migration que vou aplicar (para você confirmar)
 
-**Tabela `admins`** — a lista da equipe
+**Tabela `admins**` — a lista da equipe
+
 - `user_id` (a conta de acesso), `criado_em`
-- Já entra populada com a única conta existente hoje no sistema: **franciscometka42@gmail.com** (é a sua). Você continua com acesso ao `/admin` normalmente.
+- Já entra populada com a única conta existente hoje no sistema: **[franciscometka42@gmail.com](mailto:franciscometka42@gmail.com)** (é a sua). Você continua com acesso ao `/admin` normalmente.
 - Só quem já está na lista consegue ver a lista; ninguém consegue se adicionar pelo site — novas pessoas da equipe eu adiciono a pedido seu.
 
-**Regras de acesso da tabela `produtos`**
+**Regras de acesso da tabela `produtos**`
+
 - Antes: qualquer pessoa logada podia criar, editar e excluir.
 - Depois: só quem está na lista de administradores.
 - Leitura pública continua idêntica: visitante vê apenas produtos ativos.
 
-**Tabela `perfis`** — dados do cliente
+**Tabela `perfis**` — dados do cliente
+
 - `id` (a conta), `nome`, `telefone`, `email`, `criado_em`, `atualizado_em`
 - Cada pessoa só vê e edita o próprio perfil.
 - Administradores podem ver todos os perfis (sem editar).
@@ -25,6 +28,7 @@ Hoje qualquer pessoa logada pode editar produtos. Como o site vai passar a ter c
 - Trigger que mantém `atualizado_em` em dia.
 
 **Regras das fotos de produto (bucket)**
+
 - Antes: qualquer logado podia enviar/apagar foto. Depois: só administradores.
 
 Nenhum produto ou dado existente é alterado ou apagado por essa migration.
@@ -70,4 +74,5 @@ Observação: nesta plataforma o login com Google pode ser ativado por mim, sem 
 - Perfil criado por trigger `on auth.users insert` lendo `raw_user_meta_data` (nome/telefone enviados no `signUp`), então o cadastro não depende de segunda escrita no cliente.
 - Exclusão de conta via `createServerFn` com `requireSupabaseAuth`, verificando `eh_admin` do chamador antes de usar o cliente admin (import dinâmico dentro do handler).
 - Guard `/admin/*` continua no cliente (`ssr: false`), agora consultando `eh_admin`; a autorização real é garantida por RLS no banco.
-- Login com Google via `lovable.auth.signInWithOAuth("google", ...)` com `redirect_uri` na origem pública e erro tratado.
+- Login com Google via `lovable.auth.signInWithOAuth("google", ...)` com `redirect_uri` na origem pública e erro tratado.  
+Plano aprovado! E sim, pode já ativar o login com Google nesse mesmo passo, já que você consegue fazer isso sem eu precisar configurar nada no Google Cloud Console. Pode seguir.

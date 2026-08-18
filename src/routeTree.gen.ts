@@ -11,9 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssistenciaTecnicaRouteImport } from './routes/assistencia-tecnica'
+import { Route as EntrarRouteImport } from './routes/entrar'
+import { Route as MinhaContaRouteImport } from './routes/minha-conta'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as VendaSeuIphoneRouteImport } from './routes/venda-seu-iphone'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminClientesRouteImport } from './routes/admin.clientes'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminProdutosNovoRouteImport } from './routes/admin.produtos.novo'
 import { Route as AdminProdutosIdEditarRouteImport } from './routes/admin.produtos.$id.editar'
@@ -29,6 +32,16 @@ const AssistenciaTecnicaRoute = AssistenciaTecnicaRouteImport.update({
   path: '/assistencia-tecnica',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EntrarRoute = EntrarRouteImport.update({
+  id: '/entrar',
+  path: '/entrar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinhaContaRoute = MinhaContaRouteImport.update({
+  id: '/minha-conta',
+  path: '/minha-conta',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProdutosRoute = ProdutosRouteImport.update({
   id: '/produtos',
   path: '/produtos',
@@ -42,6 +55,11 @@ const VendaSeuIphoneRoute = VendaSeuIphoneRouteImport.update({
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminClientesRoute = AdminClientesRouteImport.update({
+  id: '/admin/clientes',
+  path: '/admin/clientes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
@@ -68,8 +86,11 @@ const ApiPublicFotoSplatRoute = ApiPublicFotoSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
+  '/entrar': typeof EntrarRoute
+  '/minha-conta': typeof MinhaContaRoute
   '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
+  '/admin/clientes': typeof AdminClientesRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
@@ -79,8 +100,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
+  '/entrar': typeof EntrarRoute
+  '/minha-conta': typeof MinhaContaRoute
   '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
+  '/admin/clientes': typeof AdminClientesRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin': typeof AdminIndexRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
@@ -91,8 +115,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
+  '/entrar': typeof EntrarRoute
+  '/minha-conta': typeof MinhaContaRoute
   '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
+  '/admin/clientes': typeof AdminClientesRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
@@ -104,8 +131,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/assistencia-tecnica'
+    | '/entrar'
+    | '/minha-conta'
     | '/produtos'
     | '/venda-seu-iphone'
+    | '/admin/clientes'
     | '/admin/login'
     | '/admin/'
     | '/admin/produtos/novo'
@@ -115,8 +145,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/assistencia-tecnica'
+    | '/entrar'
+    | '/minha-conta'
     | '/produtos'
     | '/venda-seu-iphone'
+    | '/admin/clientes'
     | '/admin/login'
     | '/admin'
     | '/admin/produtos/novo'
@@ -126,8 +159,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/assistencia-tecnica'
+    | '/entrar'
+    | '/minha-conta'
     | '/produtos'
     | '/venda-seu-iphone'
+    | '/admin/clientes'
     | '/admin/login'
     | '/admin/'
     | '/admin/produtos/novo'
@@ -138,8 +174,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssistenciaTecnicaRoute: typeof AssistenciaTecnicaRoute
+  EntrarRoute: typeof EntrarRoute
+  MinhaContaRoute: typeof MinhaContaRoute
   ProdutosRoute: typeof ProdutosRoute
   VendaSeuIphoneRoute: typeof VendaSeuIphoneRoute
+  AdminClientesRoute: typeof AdminClientesRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminProdutosNovoRoute: typeof AdminProdutosNovoRoute
@@ -163,6 +202,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssistenciaTecnicaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/entrar': {
+      id: '/entrar'
+      path: '/entrar'
+      fullPath: '/entrar'
+      preLoaderRoute: typeof EntrarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/minha-conta': {
+      id: '/minha-conta'
+      path: '/minha-conta'
+      fullPath: '/minha-conta'
+      preLoaderRoute: typeof MinhaContaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/produtos': {
       id: '/produtos'
       path: '/produtos'
@@ -182,6 +235,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/clientes': {
+      id: '/admin/clientes'
+      path: '/admin/clientes'
+      fullPath: '/admin/clientes'
+      preLoaderRoute: typeof AdminClientesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/login': {
@@ -218,8 +278,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssistenciaTecnicaRoute: AssistenciaTecnicaRoute,
+  EntrarRoute: EntrarRoute,
+  MinhaContaRoute: MinhaContaRoute,
   ProdutosRoute: ProdutosRoute,
   VendaSeuIphoneRoute: VendaSeuIphoneRoute,
+  AdminClientesRoute: AdminClientesRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminProdutosNovoRoute: AdminProdutosNovoRoute,
