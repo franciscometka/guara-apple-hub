@@ -9,8 +9,7 @@ export const depoimentos: Depoimento[] = [
   {
     nome: "Melissa Dellê Marcondes",
     fonte: "Google",
-    texto:
-      "Atendimento fantástico, produtos originais, preço justo. Super recomendo!!!",
+    texto: "Atendimento fantástico, produtos originais, preço justo. Super recomendo!!!",
   },
   {
     nome: "Lucas Maciel",
@@ -27,8 +26,7 @@ export const depoimentos: Depoimento[] = [
   {
     nome: "Larissa Almeida",
     fonte: "Google",
-    texto:
-      "Melhor atendimento! Melhores preços! Segunda vez que compro e recomendo muito!",
+    texto: "Melhor atendimento! Melhores preços! Segunda vez que compro e recomendo muito!",
   },
   {
     nome: "Dayane Techy",

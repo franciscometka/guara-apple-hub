@@ -58,17 +58,13 @@ function AssistenciaPage() {
         className="relative overflow-hidden bg-ink pt-32 pb-20 md:pt-40 md:pb-24"
       >
         <Container className="relative">
-
           <p className="type-caption text-violet-glow">Assistência técnica</p>
-          <h1
-            id="assistencia-title"
-            className="type-h1 mt-4 max-w-[760px] text-white"
-          >
+          <h1 id="assistencia-title" className="type-h1 mt-4 max-w-[760px] text-white">
             Seu iPhone consertado por quem abre, testa e explica
           </h1>
           <p className="type-body-lg mt-5 max-w-[560px] text-white/65">
-            Diagnóstico antes do serviço, orçamento por escrito no WhatsApp e
-            nada feito sem a sua aprovação.
+            Diagnóstico antes do serviço, orçamento por escrito no WhatsApp e nada feito sem a sua
+            aprovação.
           </p>
           <div className="mt-10">
             <Button
@@ -111,7 +107,6 @@ function AssistenciaPage() {
         <StepsTimeline />
       </Section>
 
-
       <Section variant="tint" labelledBy="garantia">
         <SectionHeading
           id="garantia"
@@ -139,8 +134,8 @@ function AssistenciaPage() {
         <Reveal className="mt-12">
           <p className="max-w-[65ch] text-sm text-muted-foreground">
             {/* TODO: [CONFIRMAR: prazos exatos de garantia por serviço] */}
-            Os prazos de garantia variam conforme o serviço e a peça — sempre
-            informados junto com o orçamento.
+            Os prazos de garantia variam conforme o serviço e a peça — sempre informados junto com o
+            orçamento.
           </p>
         </Reveal>
       </Section>

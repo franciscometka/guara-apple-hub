@@ -57,12 +57,8 @@ function LoginPage() {
         onSubmit={entrar}
         className="w-full max-w-sm rounded-lg border border-border bg-background p-6 shadow-soft"
       >
-        <h1 className="font-display text-xl font-semibold text-foreground">
-          Painel Guara iPhones
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Acesso restrito à equipe.
-        </p>
+        <h1 className="font-display text-xl font-semibold text-foreground">Painel Guara iPhones</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Acesso restrito à equipe.</p>
 
         <label className="mt-6 block text-sm font-medium text-foreground">
           E-mail

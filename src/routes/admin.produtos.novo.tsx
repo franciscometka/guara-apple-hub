@@ -33,8 +33,7 @@ function NovoProduto() {
   const queryClient = useQueryClient();
 
   const criar = useMutation({
-    mutationFn: (v: { dados: DadosProduto; foto: File | null }) =>
-      criarProduto(v.dados, v.foto),
+    mutationFn: (v: { dados: DadosProduto; foto: File | null }) => criarProduto(v.dados, v.foto),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin", "produtos"] });
       queryClient.invalidateQueries({ queryKey: ["produtos"] });

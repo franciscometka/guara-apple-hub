@@ -3,11 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { ProdutoForm } from "@/components/admin/ProdutoForm";
 import { exigirSessaoAdmin } from "@/lib/admin-guard";
-import {
-  atualizarProduto,
-  obterProdutoAdmin,
-  type DadosProduto,
-} from "@/lib/admin-produtos";
+import { atualizarProduto, obterProdutoAdmin, type DadosProduto } from "@/lib/admin-produtos";
 
 export const Route = createFileRoute("/admin/produtos/$id/editar")({
   ssr: false,
@@ -37,7 +33,11 @@ function EditarProduto() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: produto, isPending, error } = useQuery({
+  const {
+    data: produto,
+    isPending,
+    error,
+  } = useQuery({
     queryKey: ["admin", "produto", id],
     queryFn: () => obterProdutoAdmin(id),
   });
@@ -54,14 +54,8 @@ function EditarProduto() {
 
   return (
     <AdminShell titulo="Editar produto">
-      {isPending && (
-        <p className="text-sm text-muted-foreground">Carregando produto…</p>
-      )}
-      {error && (
-        <p className="text-sm text-destructive">
-          Não foi possível carregar esse produto.
-        </p>
-      )}
+      {isPending && <p className="text-sm text-muted-foreground">Carregando produto…</p>}
+      {error && <p className="text-sm text-destructive">Não foi possível carregar esse produto.</p>}
       {produto && (
         <ProdutoForm
           iniciais={{

@@ -90,12 +90,7 @@ export function Hero() {
                 </Button>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
-                <Button
-                  variant="instagram"
-                  size="lg"
-                  href={CONTATO.instagram}
-                  external
-                >
+                <Button variant="instagram" size="lg" href={CONTATO.instagram} external>
                   <InstagramIcon size={20} eager />
                   Seguir no Instagram
                 </Button>
@@ -110,11 +105,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            initial={
-              reduce
-                ? { opacity: 0 }
-                : { opacity: 0, y: 60, rotateZ: finePointer ? -6 : 0 }
-            }
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 60, rotateZ: finePointer ? -6 : 0 }}
             animate={{ opacity: 1, y: 0, rotateZ: 0 }}
             transition={{ duration: 1.1, ease, delay: 0.45 }}
             className="relative min-w-0"
@@ -127,7 +118,9 @@ export function Hero() {
                 acabou de tirar pro caminho principal. Quem tem reduced-motion
                 pode ver um instante de glow antes da imagem chegar; depois
                 disso ela fica pra sempre — o que importa aqui. */}
-            <Suspense fallback={reduce === true ? <HeroFallbackImage /> : <HeroDevicePlaceholder />}>
+            <Suspense
+              fallback={reduce === true ? <HeroFallbackImage /> : <HeroDevicePlaceholder />}
+            >
               <Hero3DDevice />
             </Suspense>
           </motion.div>

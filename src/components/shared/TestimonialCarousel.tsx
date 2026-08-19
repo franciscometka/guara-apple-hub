@@ -32,10 +32,7 @@ export function TestimonialCarousel() {
   const reduce = useReducedMotion();
   const total = depoimentos.length;
 
-  const go = useCallback(
-    (dir: number) => setIndex((i) => (i + dir + total) % total),
-    [total],
-  );
+  const go = useCallback((dir: number) => setIndex((i) => (i + dir + total) % total), [total]);
 
   useEffect(() => {
     if (paused) return;
@@ -60,12 +57,7 @@ export function TestimonialCarousel() {
       aria-label="Avaliações de clientes no Google"
     >
       <div className="relative min-h-[280px] rounded-lg border border-border bg-background p-7 shadow-soft md:min-h-[240px] md:p-10">
-        <Quote
-          size={24}
-          strokeWidth={1.5}
-          className="text-violet"
-          aria-hidden="true"
-        />
+        <Quote size={24} strokeWidth={1.5} className="text-violet" aria-hidden="true" />
         <AnimatePresence mode="wait">
           <motion.blockquote
             key={index}
@@ -84,9 +76,7 @@ export function TestimonialCarousel() {
                 {atual.nome.charAt(0)}
               </span>
               <span className="text-sm">
-                <span className="block font-semibold text-foreground">
-                  {atual.nome}
-                </span>
+                <span className="block font-semibold text-foreground">{atual.nome}</span>
                 <span className="mt-1 inline-flex items-center gap-1.5 text-muted-foreground">
                   <GoogleMark />
                   Avaliação no Google

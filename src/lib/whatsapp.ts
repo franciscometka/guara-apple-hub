@@ -1,31 +1,20 @@
 // Número oficial confirmado pelo cliente (o mesmo da fachada da loja).
 export const WHATSAPP = "5542991621683";
 
-export const waLink = (msg: string) =>
-  `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+export const waLink = (msg: string) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 
 export const WA_MESSAGES = {
   generico: "Olá! Vim pelo site da Guara iPhones e gostaria de mais informações.",
   produto: (produto: string) =>
     `Olá! Vi o ${produto} no site e quero saber a disponibilidade e o valor.`,
-  assistencia: (servico: string) =>
-    `Olá! Preciso de um orçamento para ${servico} no meu iPhone.`,
-  troca:
-    "Olá! Quero saber quanto meu iPhone vale de entrada na troca. Modelo: ",
-  entrega:
-    "Olá! Quero saber se vocês entregam na minha cidade. Moro em: ",
+  assistencia: (servico: string) => `Olá! Preciso de um orçamento para ${servico} no meu iPhone.`,
+  troca: "Olá! Quero saber quanto meu iPhone vale de entrada na troca. Modelo: ",
+  entrega: "Olá! Quero saber se vocês entregam na minha cidade. Moro em: ",
   ctaFinal: "Olá! Vim pelo site e quero falar com um atendente.",
 };
 
 export type WaOrigem =
-  | "hero"
-  | "produto"
-  | "servico"
-  | "cta_final"
-  | "fab"
-  | "navbar"
-  | "rodape"
-  | "localizacao";
+  "hero" | "produto" | "servico" | "cta_final" | "fab" | "navbar" | "rodape" | "localizacao";
 
 /**
  * Dispara os eventos de conversão nas ferramentas de medição.
@@ -52,11 +41,7 @@ export const CONTATO = {
   // TODO: [CONFIRMAR: CEP e bairro]
   endereco: "Av. Manoel Ribas, 1945 — Sala 7 · Guarapuava/PR",
   enderecoMaps: "Av. Manoel Ribas, 1945, Sala 7, Guarapuava, PR",
-  horarios: [
-    "Segunda a sexta: 09h às 19h",
-    "Sábado: 09h às 15h",
-    "Domingo: fechado",
-  ],
+  horarios: ["Segunda a sexta: 09h às 19h", "Sábado: 09h às 15h", "Domingo: fechado"],
   horarioResumo: "Seg a Sex 09h–19h · Sáb 09h–15h",
   instagram: "https://www.instagram.com/guaraiphones?igsh=MnY3Y3didjEwbjA4&utm_source=qr",
   instagramHandle: "@guaraiphones",
@@ -66,6 +51,4 @@ export const CONTATO = {
 };
 
 export const mapsRoute = () =>
-  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-    CONTATO.enderecoMaps,
-  )}`;
+  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(CONTATO.enderecoMaps)}`;

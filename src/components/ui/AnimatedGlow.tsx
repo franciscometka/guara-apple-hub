@@ -15,15 +15,10 @@ export function AnimatedGlow({
   return (
     <motion.div
       aria-hidden="true"
-      className={cn(
-        "glow-radial pointer-events-none absolute inset-x-0 top-0 h-[60vh]",
-        className,
-      )}
+      className={cn("glow-radial pointer-events-none absolute inset-x-0 top-0 h-[60vh]", className)}
       initial={shouldAnimate ? { opacity: 0, scale: 0.7 } : { opacity: 0.35 }}
       animate={{ opacity: 0.35, scale: 1 }}
-      transition={
-        shouldAnimate ? { duration: 1.2, ease: EASE_SOFT } : { duration: 0.2 }
-      }
+      transition={shouldAnimate ? { duration: 1.2, ease: EASE_SOFT } : { duration: 0.2 }}
     />
   );
 }

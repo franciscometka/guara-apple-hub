@@ -4,12 +4,7 @@ import { Section } from "@/components/layout/Section";
 import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
 import { Button } from "@/components/ui/GuaraButton";
 import { Reveal } from "@/components/ui/Reveal";
-import {
-  CONTATO,
-  WA_MESSAGES,
-  trackWhatsApp,
-  waLink,
-} from "@/lib/whatsapp";
+import { CONTATO, WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 
 export function CTASection() {
   return (
@@ -20,8 +15,8 @@ export function CTASection() {
           Ficou com dúvida? Chama no WhatsApp.
         </h2>
         <p className="type-body-lg mx-auto mt-5 text-white/65">
-          Modelo, valor, disponibilidade ou conserto — manda a mensagem que a
-          gente responde no horário de atendimento.
+          Modelo, valor, disponibilidade ou conserto — manda a mensagem que a gente responde no
+          horário de atendimento.
         </p>
         <div className="mt-9 flex justify-center">
           <Button

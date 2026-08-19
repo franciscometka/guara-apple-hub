@@ -1,12 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Container } from "@/components/layout/Container";
-import {
-  cadastrarCliente,
-  entrarCliente,
-  entrarComGoogle,
-  mensagemErroAuth,
-} from "@/lib/conta";
+import { cadastrarCliente, entrarCliente, entrarComGoogle, mensagemErroAuth } from "@/lib/conta";
 
 export const Route = createFileRoute("/entrar")({
   head: () => ({
@@ -67,9 +62,7 @@ function EntrarPage() {
           senha,
         });
         if (precisaConfirmar) {
-          setAviso(
-            "Cadastro criado! Confirme o link que enviamos no seu e-mail para entrar.",
-          );
+          setAviso("Cadastro criado! Confirme o link que enviamos no seu e-mail para entrar.");
         } else {
           navigate({ to: "/minha-conta", replace: true });
         }
@@ -99,8 +92,7 @@ function EntrarPage() {
             {aba === "entrar" ? "Entrar" : "Criar conta"}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            A conta é opcional — você pode navegar e comprar pelo WhatsApp sem
-            cadastro.
+            A conta é opcional — você pode navegar e comprar pelo WhatsApp sem cadastro.
           </p>
 
           <div
@@ -184,20 +176,14 @@ function EntrarPage() {
             </label>
 
             {erro && <p className="mt-4 text-sm text-destructive">{erro}</p>}
-            {aviso && (
-              <p className="mt-4 text-sm text-violet-deep">{aviso}</p>
-            )}
+            {aviso && <p className="mt-4 text-sm text-violet-deep">{aviso}</p>}
 
             <button
               type="submit"
               disabled={enviando}
               className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground transition-opacity disabled:opacity-60"
             >
-              {enviando
-                ? "Enviando…"
-                : aba === "entrar"
-                  ? "Entrar"
-                  : "Criar minha conta"}
+              {enviando ? "Enviando…" : aba === "entrar" ? "Entrar" : "Criar minha conta"}
             </button>
           </form>
 

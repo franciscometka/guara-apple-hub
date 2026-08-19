@@ -66,9 +66,7 @@ export function AdminShell({
 
       <div className="mx-auto max-w-6xl px-4 py-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <h1 className="font-display text-2xl font-semibold text-foreground">
-            {titulo}
-          </h1>
+          <h1 className="font-display text-2xl font-semibold text-foreground">{titulo}</h1>
           {acoes}
         </div>
         <div className="mt-8">{children}</div>

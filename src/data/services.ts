@@ -43,8 +43,7 @@ export const servicos: Servico[] = [
   {
     id: "conector",
     nome: "Conector de carga",
-    descricao:
-      "Não carrega, carrega só em certa posição ou não é reconhecido no computador.",
+    descricao: "Não carrega, carrega só em certa posição ou não é reconhecido no computador.",
     prazo: "Prazo informado no orçamento",
     icon: Cable,
     destaque: true,
@@ -52,8 +51,7 @@ export const servicos: Servico[] = [
   {
     id: "camera",
     nome: "Câmera",
-    descricao:
-      "Foto embaçada, lente trincada, câmera frontal ou traseira sem funcionar.",
+    descricao: "Foto embaçada, lente trincada, câmera frontal ou traseira sem funcionar.",
     prazo: "Prazo informado no orçamento",
     icon: Camera,
     destaque: true,
@@ -79,16 +77,14 @@ export const servicos: Servico[] = [
   {
     id: "botoes",
     nome: "Botões e vibra",
-    descricao:
-      "Botão de volume, power ou silencioso travado, afundado ou sem resposta.",
+    descricao: "Botão de volume, power ou silencioso travado, afundado ou sem resposta.",
     prazo: "Prazo informado no orçamento",
     icon: ToggleLeft,
   },
   {
     id: "alto-falante",
     nome: "Alto-falante e microfone",
-    descricao:
-      "Som baixo, chiado na ligação ou quem está do outro lado não te escuta.",
+    descricao: "Som baixo, chiado na ligação ou quem está do outro lado não te escuta.",
     prazo: "Prazo informado no orçamento",
     icon: Volume2,
   },
@@ -135,12 +131,10 @@ export const GARANTIA = [
   {
     titulo: "Orçamento antes",
     // TODO: [CONFIRMAR: o diagnóstico é realmente gratuito?]
-    texto:
-      "Diagnóstico e orçamento vêm antes do serviço. Você só paga depois de aprovar.",
+    texto: "Diagnóstico e orçamento vêm antes do serviço. Você só paga depois de aprovar.",
   },
   {
     titulo: "Quem vende é quem conserta",
-    texto:
-      "Se o aparelho foi comprado aqui, o pós-venda é aqui mesmo. Sem jogo de empurra.",
+    texto: "Se o aparelho foi comprado aqui, o pós-venda é aqui mesmo. Sem jogo de empurra.",
   },
 ];

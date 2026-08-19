@@ -8,10 +8,7 @@ export function TaglineBanner() {
   const reduce = useReducedMotion();
 
   return (
-    <section
-      aria-labelledby="tagline-banner"
-      className="relative isolate overflow-hidden bg-ink"
-    >
+    <section aria-labelledby="tagline-banner" className="relative isolate overflow-hidden bg-ink">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute top-1/2 left-1/2 h-[60%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--color-violet)_55%,transparent),transparent_70%)] opacity-25 blur-3xl"
@@ -44,11 +41,10 @@ export function TaglineBanner() {
           ))}
         </motion.h2>
         <p className="type-body-lg mx-auto mt-6 max-w-[620px] text-white/65">
-          Não é slogan de marketing. É o que a gente faz o dia inteiro aqui em
-          Guarapuava: vender, cuidar e consertar Apple — e só Apple.
+          Não é slogan de marketing. É o que a gente faz o dia inteiro aqui em Guarapuava: vender,
+          cuidar e consertar Apple — e só Apple.
         </p>
       </Reveal>
     </section>
   );
 }
-

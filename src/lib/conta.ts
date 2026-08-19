@@ -95,8 +95,7 @@ export function mensagemErroAuth(erro: unknown): string {
     return "Já existe uma conta com esse e-mail. Tente entrar.";
   if (/Password should be at least/i.test(msg))
     return "A senha precisa ter pelo menos 6 caracteres.";
-  if (/Email not confirmed/i.test(msg))
-    return "Confirme seu e-mail antes de entrar.";
+  if (/Email not confirmed/i.test(msg)) return "Confirme seu e-mail antes de entrar.";
   if (/provider is not enabled|Unsupported provider|not enabled/i.test(msg))
     return "Entrar com Google ainda não está disponível. Use e-mail e senha.";
   return "Não foi possível concluir. Tente novamente em instantes.";

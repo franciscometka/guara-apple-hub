@@ -42,8 +42,7 @@ export const faq: FaqItem[] = [
   },
 ];
 
-const byQuestion = (q: string): FaqItem =>
-  faq.find((item) => item.q === q) ?? { q, a: "" };
+const byQuestion = (q: string): FaqItem => faq.find((item) => item.q === q) ?? { q, a: "" };
 
 export const faqAssistencia: FaqItem[] = [
   byQuestion("Quanto tempo demora um conserto?"),
@@ -82,4 +81,3 @@ export const faqVenda: FaqItem[] = [
   },
   byQuestion("Onde vocês ficam?"),
 ];
-

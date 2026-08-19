@@ -60,12 +60,7 @@ export function PathCard({
           <h3 className="type-h3 text-foreground">{titulo}</h3>
           <p className="mt-3 flex-1 text-muted-foreground">{texto}</p>
           <div className="mt-7">
-            <Button
-              variant="secondary"
-              href={href}
-              external={external}
-              onClick={onClick}
-            >
+            <Button variant="secondary" href={href} external={external} onClick={onClick}>
               {cta}
               <ArrowRight size={18} strokeWidth={1.5} aria-hidden="true" />
             </Button>

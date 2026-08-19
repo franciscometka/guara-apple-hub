@@ -14,7 +14,9 @@ export const HERO_DEVICE_HEIGHT = "h-[460px] sm:h-[620px] md:h-[820px]";
  */
 export function HeroFallbackImage() {
   return (
-    <div className={`relative mx-auto flex w-full max-w-[520px] items-center justify-center ${HERO_DEVICE_HEIGHT}`}>
+    <div
+      className={`relative mx-auto flex w-full max-w-[520px] items-center justify-center ${HERO_DEVICE_HEIGHT}`}
+    >
       <img
         src={heroFallback}
         alt="iPhone em destaque na Guara iPhones"

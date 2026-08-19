@@ -44,7 +44,11 @@ function AdminClientes() {
   const [erro, setErro] = useState<string | null>(null);
   const excluir = useServerFn(excluirCadastroCliente);
 
-  const { data: clientes = [], isPending, error } = useQuery({
+  const {
+    data: clientes = [],
+    isPending,
+    error,
+  } = useQuery({
     queryKey: ["admin", "clientes"],
     queryFn: listarPerfis,
   });
@@ -55,17 +59,14 @@ function AdminClientes() {
       setErro(null);
       queryClient.invalidateQueries({ queryKey: ["admin", "clientes"] });
     },
-    onError: () =>
-      setErro("Não foi possível excluir esse cadastro. Tente novamente."),
+    onError: () => setErro("Não foi possível excluir esse cadastro. Tente novamente."),
   });
 
   const lista = useMemo(() => {
     const termo = busca.trim().toLowerCase();
     if (!termo) return clientes;
     return clientes.filter((c) =>
-      [c.nome, c.email, c.telefone]
-        .filter(Boolean)
-        .some((v) => v!.toLowerCase().includes(termo)),
+      [c.nome, c.email, c.telefone].filter(Boolean).some((v) => v!.toLowerCase().includes(termo)),
     );
   }, [clientes, busca]);
 
@@ -80,13 +81,9 @@ function AdminClientes() {
         className="min-h-11 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground"
       />
 
-      {isPending && (
-        <p className="mt-8 text-sm text-muted-foreground">Carregando cadastros…</p>
-      )}
+      {isPending && <p className="mt-8 text-sm text-muted-foreground">Carregando cadastros…</p>}
       {error && (
-        <p className="mt-8 text-sm text-destructive">
-          Não foi possível carregar os cadastros.
-        </p>
+        <p className="mt-8 text-sm text-destructive">Não foi possível carregar os cadastros.</p>
       )}
       {erro && <p className="mt-6 text-sm text-destructive">{erro}</p>}
 
@@ -97,12 +94,10 @@ function AdminClientes() {
             className="flex flex-wrap items-center gap-4 rounded-lg border border-border bg-background p-4"
           >
             <div className="min-w-[200px] flex-1">
-              <p className="font-medium text-foreground">
-                {c.nome || "Sem nome informado"}
-              </p>
+              <p className="font-medium text-foreground">{c.nome || "Sem nome informado"}</p>
               <p className="mt-0.5 text-xs text-muted-foreground">
-                {c.email || "sem e-mail"} · {c.telefone || "sem telefone"} ·
-                cadastro em {formatarData(c.criado_em)}
+                {c.email || "sem e-mail"} · {c.telefone || "sem telefone"} · cadastro em{" "}
+                {formatarData(c.criado_em)}
               </p>
             </div>
             <button
@@ -128,9 +123,7 @@ function AdminClientes() {
       </ul>
 
       {!isPending && lista.length === 0 && (
-        <p className="mt-8 text-sm text-muted-foreground">
-          Nenhum cadastro encontrado.
-        </p>
+        <p className="mt-8 text-sm text-muted-foreground">Nenhum cadastro encontrado.</p>
       )}
     </AdminShell>
   );

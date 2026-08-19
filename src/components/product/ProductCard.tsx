@@ -37,9 +37,7 @@ export function ProductCard({ produto }: { produto: ProdutoView }) {
       {...(reduce ? {} : { whileHover: { y: -6 } })}
     >
       <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-background p-6">
-        {!loaded && (
-          <div className="shimmer absolute inset-0 -z-10" aria-hidden="true" />
-        )}
+        {!loaded && <div className="shimmer absolute inset-0 -z-10" aria-hidden="true" />}
         <div className="relative flex aspect-[3/4] h-full max-h-[82%] items-center justify-center">
           <img
             ref={imgRef}
@@ -62,12 +60,8 @@ export function ProductCard({ produto }: { produto: ProdutoView }) {
       </div>
 
       <div className="flex flex-1 flex-col p-5 md:p-6">
-        <h3 className="font-display text-lg font-semibold text-foreground">
-          {produto.nome}
-        </h3>
-        <p className="mt-2 flex-1 text-sm text-muted-foreground">
-          {produto.detalhe}
-        </p>
+        <h3 className="font-display text-lg font-semibold text-foreground">{produto.nome}</h3>
+        <p className="mt-2 flex-1 text-sm text-muted-foreground">{produto.detalhe}</p>
         {info?.preco != null && (
           <p className="mt-2 font-display text-xl font-semibold text-foreground">
             {formatarPreco(info.preco)}

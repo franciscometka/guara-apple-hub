@@ -85,9 +85,7 @@ export function RevealItem({
     <motion.div
       className={cn(className)}
       variants={{
-        hidden: reduce
-          ? { opacity: 0 }
-          : { opacity: 0, y: 40, scale: 0.97 },
+        hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 40, scale: 0.97 },
         show: reduce
           ? { opacity: 1, transition: { duration: 0.2 } }
           : {

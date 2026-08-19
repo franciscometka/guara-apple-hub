@@ -4,11 +4,7 @@ import { useMemo, useState } from "react";
 import { Eye, EyeOff, Pencil, Plus, Trash2 } from "lucide-react";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { exigirSessaoAdmin } from "@/lib/admin-guard";
-import {
-  alternarAtivo,
-  excluirProduto,
-  listarProdutosAdmin,
-} from "@/lib/admin-produtos";
+import { alternarAtivo, excluirProduto, listarProdutosAdmin } from "@/lib/admin-produtos";
 import { CATEGORIAS_DB } from "@/lib/produtos-shared";
 
 export const Route = createFileRoute("/admin/")({
@@ -35,16 +31,18 @@ export const Route = createFileRoute("/admin/")({
 });
 
 const formatarPreco = (valor: number) =>
-  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
-    valor,
-  );
+  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(valor);
 
 function AdminProdutos() {
   const queryClient = useQueryClient();
   const [busca, setBusca] = useState("");
   const [categoria, setCategoria] = useState("Todas");
 
-  const { data: produtos = [], isPending, error } = useQuery({
+  const {
+    data: produtos = [],
+    isPending,
+    error,
+  } = useQuery({
     queryKey: ["admin", "produtos"],
     queryFn: listarProdutosAdmin,
   });
@@ -109,13 +107,9 @@ function AdminProdutos() {
         </select>
       </div>
 
-      {isPending && (
-        <p className="mt-8 text-sm text-muted-foreground">Carregando produtos…</p>
-      )}
+      {isPending && <p className="mt-8 text-sm text-muted-foreground">Carregando produtos…</p>}
       {error && (
-        <p className="mt-8 text-sm text-destructive">
-          Não foi possível carregar os produtos.
-        </p>
+        <p className="mt-8 text-sm text-destructive">Não foi possível carregar os produtos.</p>
       )}
 
       <ul className="mt-6 space-y-3">
@@ -128,11 +122,7 @@ function AdminProdutos() {
           >
             <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md border border-border bg-background">
               {p.fotoUrl ? (
-                <img
-                  src={p.fotoUrl}
-                  alt={p.nome}
-                  className="h-full w-full object-contain p-1"
-                />
+                <img src={p.fotoUrl} alt={p.nome} className="h-full w-full object-contain p-1" />
               ) : (
                 <span className="text-[10px] text-muted-foreground">sem foto</span>
               )}

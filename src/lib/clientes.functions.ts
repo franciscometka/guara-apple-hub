@@ -14,15 +14,12 @@ export const excluirCadastroCliente = createServerFn({ method: "POST" })
     return { id: input.id };
   })
   .handler(async ({ data, context }) => {
-    const { data: ehAdmin, error: erroAdmin } = await context.supabase.rpc(
-      "eh_admin",
-      { _user_id: context.userId },
-    );
+    const { data: ehAdmin, error: erroAdmin } = await context.supabase.rpc("eh_admin", {
+      _user_id: context.userId,
+    });
     if (erroAdmin || !ehAdmin) throw new Error("Acesso restrito.");
 
-    const { supabaseAdmin } = await import(
-      "@/integrations/supabase/client.server"
-    );
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     // Impede que um admin remova a própria conta ou de outro admin por engano.
     const { data: alvoEhAdmin } = await supabaseAdmin.rpc("eh_admin", {

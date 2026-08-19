@@ -10,7 +10,7 @@ import { CategoryFilter } from "@/components/product/CategoryFilter";
 import { ProductCard } from "@/components/product/ProductCard";
 import { CTASection } from "@/components/shared/CTASection";
 import { produtosPublicosQuery } from "@/lib/produtos-query";
-import type { Categoria } from "@/data/products";
+import type { Categoria } from "@/data/categorias";
 import { TrustBar } from "@/components/shared/TrustBar";
 import fachada from "@/assets/images/fachada.webp";
 
@@ -42,9 +42,7 @@ function ProdutosPage() {
   const { data: produtos } = useSuspenseQuery(produtosPublicosQuery());
   const disponiveis = produtos.filter((p) => p.emEstoque);
   const lista =
-    categoria === "Todos"
-      ? disponiveis
-      : disponiveis.filter((p) => p.categoria === categoria);
+    categoria === "Todos" ? disponiveis : disponiveis.filter((p) => p.categoria === categoria);
 
   return (
     <>
@@ -71,8 +69,8 @@ function ProdutosPage() {
             Produtos Apple com procedência
           </h1>
           <p className="type-body-lg mt-5 max-w-[560px] text-white/65">
-            Aparelhos lacrados e seminovos revisados. A condição real vem
-            descrita antes da compra e o valor você consulta no WhatsApp.
+            Aparelhos lacrados e seminovos revisados. A condição real vem descrita antes da compra e
+            o valor você consulta no WhatsApp.
           </p>
         </Container>
       </section>
@@ -98,8 +96,8 @@ function ProdutosPage() {
         </div>
         {lista.length === 0 && (
           <p className="mt-12 text-muted-foreground">
-            Nenhum produto listado nesta categoria agora. Fala com a gente no
-            WhatsApp que verificamos o estoque.
+            Nenhum produto listado nesta categoria agora. Fala com a gente no WhatsApp que
+            verificamos o estoque.
           </p>
         )}
       </Section>

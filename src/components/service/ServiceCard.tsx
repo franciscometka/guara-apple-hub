@@ -43,20 +43,12 @@ export function ServiceCard({
           {servico.nome}
         </h3>
         <p
-          className={cn(
-            "mt-2.5 flex-1 text-sm",
-            dark ? "text-white/60" : "text-muted-foreground",
-          )}
+          className={cn("mt-2.5 flex-1 text-sm", dark ? "text-white/60" : "text-muted-foreground")}
         >
           {servico.descricao}
         </p>
         {/* TODO: [CONFIRMAR: PRAZOS REAIS] */}
-        <p
-          className={cn(
-            "type-caption mt-5",
-            dark ? "text-violet-glow" : "text-violet-deep",
-          )}
-        >
+        <p className={cn("type-caption mt-5", dark ? "text-violet-glow" : "text-violet-deep")}>
           {servico.prazo}
         </p>
         <a
@@ -66,9 +58,7 @@ export function ServiceCard({
           onClick={() => trackWhatsApp("servico")}
           className={cn(
             "mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold transition-colors",
-            dark
-              ? "text-white hover:text-violet-glow"
-              : "text-violet-deep hover:text-violet",
+            dark ? "text-white hover:text-violet-glow" : "text-violet-deep hover:text-violet",
           )}
         >
           <WhatsAppIcon size={18} />

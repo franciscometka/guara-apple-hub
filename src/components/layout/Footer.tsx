@@ -1,22 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import {
-  Instagram,
-  Facebook,
-  MessageCircle,
-  MapPin,
-  Phone,
-  Clock,
-} from "lucide-react";
+import { Instagram, Facebook, MessageCircle, MapPin, Phone, Clock } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { footerNav, footerServicos } from "@/data/navigation";
 import { OpenNowBadge } from "@/components/shared/OpenNowBadge";
 import { useSessao } from "@/hooks/useSessao";
-import {
-  CONTATO,
-  WA_MESSAGES,
-  trackWhatsApp,
-  waLink,
-} from "@/lib/whatsapp";
+import { CONTATO, WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 import logoWhite from "@/assets/images/logo/guara-logo-white.png";
 
 export function Footer() {
@@ -37,12 +25,10 @@ export function Footer() {
               decoding="async"
               className="h-auto w-[190px] object-contain"
             />
-            <p className="type-caption mt-3 text-violet-soft">
-              Somos apaixonados pela Apple
-            </p>
+            <p className="type-caption mt-3 text-violet-soft">Somos apaixonados pela Apple</p>
             <p className="mt-4 text-sm leading-relaxed">
-              Loja Apple e assistência técnica em Guarapuava. Produto original,
-              conserto com garantia e atendimento direto no WhatsApp.
+              Loja Apple e assistência técnica em Guarapuava. Produto original, conserto com
+              garantia e atendimento direto no WhatsApp.
             </p>
             <div className="mt-6 flex gap-3">
               <a
@@ -77,10 +63,7 @@ export function Footer() {
           </div>
 
           <nav aria-labelledby="footer-nav">
-            <h2
-              id="footer-nav"
-              className="type-caption font-semibold text-white"
-            >
+            <h2 id="footer-nav" className="type-caption font-semibold text-white">
               Navegação
             </h2>
             <ul className="mt-3 space-y-2 text-sm">
@@ -168,8 +151,8 @@ export function Footer() {
           <p>© {ano} Guara iPhones. Todos os direitos reservados.</p>
           {/* TODO: [CONFIRMAR: CNPJ e razão social] */}
           <p className="max-w-[65ch] leading-relaxed">
-            Guarapuava/PR · Não somos revenda autorizada Apple. Apple, iPhone,
-            iPad e Mac são marcas da Apple Inc.
+            Guarapuava/PR · Não somos revenda autorizada Apple. Apple, iPhone, iPad e Mac são marcas
+            da Apple Inc.
           </p>
           <Link
             to={logado ? "/minha-conta" : "/entrar"}

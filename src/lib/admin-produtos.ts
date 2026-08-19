@@ -1,10 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
-import {
-  BUCKET_FOTOS,
-  slugify,
-  urlFoto,
-  type ProdutoRow,
-} from "./produtos-shared";
+import { BUCKET_FOTOS, slugify, urlFoto, type ProdutoRow } from "./produtos-shared";
 
 export interface ProdutoAdmin extends ProdutoRow {
   fotoUrl: string;
@@ -27,11 +22,7 @@ export async function listarProdutosAdmin(): Promise<ProdutoAdmin[]> {
 }
 
 export async function obterProdutoAdmin(id: string): Promise<ProdutoAdmin> {
-  const { data, error } = await supabase
-    .from("produtos")
-    .select(SELECT)
-    .eq("id", id)
-    .single();
+  const { data, error } = await supabase.from("produtos").select(SELECT).eq("id", id).single();
   if (error) throw error;
 
   return { ...data, fotoUrl: urlFoto(data.imagem_url) };
@@ -58,10 +49,7 @@ async function subirFoto(slug: string, arquivo: File): Promise<string> {
   return caminho;
 }
 
-export async function criarProduto(
-  dados: DadosProduto,
-  foto: File | null,
-): Promise<string> {
+export async function criarProduto(dados: DadosProduto, foto: File | null): Promise<string> {
   const slug = `${slugify(dados.nome)}-${Date.now().toString(36)}`;
   const imagem_url = foto ? await subirFoto(slug, foto) : null;
   const { data, error } = await supabase

@@ -20,9 +20,7 @@ export function WhatsAppFAB() {
         bottom: "calc(1rem + env(safe-area-inset-bottom))",
       }}
       initial={{ scale: 0, opacity: 0 }}
-      animate={
-        visible ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }
-      }
+      animate={visible ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
       transition={{ duration: reduce ? 0.2 : 0.35, ease: [0.22, 1, 0.36, 1] }}
       {...(reduce ? {} : { whileTap: { scale: 0.95 } })}
     >
@@ -39,7 +37,6 @@ export function WhatsAppFAB() {
         variant="white"
         className="relative z-10 block shrink-0 object-contain"
       />
-
     </motion.a>
   );
 }

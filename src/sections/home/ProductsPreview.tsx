@@ -9,9 +9,7 @@ import { produtosPublicosQuery } from "@/lib/produtos-query";
 
 export function ProductsPreview() {
   const { data: produtos = [] } = useQuery(produtosPublicosQuery());
-  const destaques = produtos
-    .filter((p) => p.destaque && p.emEstoque)
-    .slice(0, 6);
+  const destaques = produtos.filter((p) => p.destaque && p.emEstoque).slice(0, 6);
 
   return (
     <Section labelledBy="produtos-destaque">

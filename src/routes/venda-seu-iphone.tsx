@@ -31,9 +31,7 @@ export const Route = createFileRoute("/venda-seu-iphone")({
       },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [
-      { rel: "canonical", href: "https://guaraiphones.com.br/venda-seu-iphone" },
-    ],
+    links: [{ rel: "canonical", href: "https://guaraiphones.com.br/venda-seu-iphone" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -95,9 +93,8 @@ function VendaSeuIphonePage() {
             Quer vender seu iPhone ou usar como parte do pagamento?
           </h1>
           <p className="type-body-lg mt-5 max-w-[560px] text-white/65">
-            Manda o modelo e o estado do aparelho no WhatsApp. A gente confirma
-            na hora se dá pra abater no valor do próximo iPhone ou comprar
-            direto.
+            Manda o modelo e o estado do aparelho no WhatsApp. A gente confirma na hora se dá pra
+            abater no valor do próximo iPhone ou comprar direto.
           </p>
           <div className="mt-10">
             <Button
@@ -129,18 +126,11 @@ function VendaSeuIphonePage() {
             return (
               <RevealItem key={passo.numero}>
                 <div className="h-full rounded-lg border border-border bg-background p-7 shadow-soft">
-                  <Icone
-                    size={24}
-                    strokeWidth={1.5}
-                    className="text-violet"
-                    aria-hidden="true"
-                  />
+                  <Icone size={24} strokeWidth={1.5} className="text-violet" aria-hidden="true" />
                   <h3 className="font-display mt-5 text-lg font-semibold text-foreground">
                     {passo.numero}. {passo.titulo}
                   </h3>
-                  <p className="mt-2.5 text-sm text-muted-foreground">
-                    {passo.texto}
-                  </p>
+                  <p className="mt-2.5 text-sm text-muted-foreground">{passo.texto}</p>
                 </div>
               </RevealItem>
             );

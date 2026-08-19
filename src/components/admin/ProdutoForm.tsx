@@ -33,9 +33,7 @@ export function ProdutoForm({
   const [categoria, setCategoria] = useState(iniciais.categoria);
   const [condicao, setCondicao] = useState(iniciais.condicao);
   const [detalhe, setDetalhe] = useState(iniciais.detalhe);
-  const [preco, setPreco] = useState(
-    iniciais.preco === null ? "" : String(iniciais.preco),
-  );
+  const [preco, setPreco] = useState(iniciais.preco === null ? "" : String(iniciais.preco));
   const [emEstoque, setEmEstoque] = useState(iniciais.em_estoque);
   const [destaque, setDestaque] = useState(iniciais.destaque);
   const [ativo, setAtivo] = useState(iniciais.ativo);
@@ -70,10 +68,7 @@ export function ProdutoForm({
     "mt-2 min-h-11 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground";
 
   return (
-    <form
-      onSubmit={enviar}
-      className="max-w-2xl rounded-lg border border-border bg-background p-6"
-    >
+    <form onSubmit={enviar} className="max-w-2xl rounded-lg border border-border bg-background p-6">
       <label className="block text-sm font-medium text-foreground">
         Nome *
         <input value={nome} onChange={(e) => setNome(e.target.value)} className={campo} />
@@ -98,11 +93,7 @@ export function ProdutoForm({
 
         <label className="block text-sm font-medium text-foreground">
           Condição
-          <select
-            value={condicao}
-            onChange={(e) => setCondicao(e.target.value)}
-            className={campo}
-          >
+          <select value={condicao} onChange={(e) => setCondicao(e.target.value)} className={campo}>
             {CONDICOES_DB.map((c) => (
               <option key={c} value={c}>
                 {c}
@@ -175,9 +166,7 @@ export function ProdutoForm({
         />
       )}
 
-      {(validacao || erro) && (
-        <p className="mt-5 text-sm text-destructive">{validacao ?? erro}</p>
-      )}
+      {(validacao || erro) && <p className="mt-5 text-sm text-destructive">{validacao ?? erro}</p>}
 
       <div className="mt-7 flex flex-wrap gap-3">
         <button

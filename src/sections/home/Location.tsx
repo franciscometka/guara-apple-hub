@@ -25,9 +25,7 @@ export function Location() {
               <p className="mt-1 text-foreground">{CONTATO.endereco}</p>
             </div>
             <div>
-              <p className="type-caption text-muted-foreground">
-                Horário de atendimento
-              </p>
+              <p className="type-caption text-muted-foreground">Horário de atendimento</p>
               <div className="mt-1 text-foreground">
                 {CONTATO.horarios.map((h) => (
                   <p key={h}>{h}</p>
@@ -43,15 +41,12 @@ export function Location() {
                   className="shrink-0 text-violet"
                   aria-hidden="true"
                 />
-                Retirada na loja ou entrega combinada — fale com a gente pelo
-                WhatsApp.
+                Retirada na loja ou entrega combinada — fale com a gente pelo WhatsApp.
               </p>
             </div>
             <div>
               <p className="type-caption text-muted-foreground">Telefone</p>
-              <p className="mt-1 text-foreground">
-                {CONTATO.telefoneExibicao}
-              </p>
+              <p className="mt-1 text-foreground">{CONTATO.telefoneExibicao}</p>
             </div>
           </div>
           <div className="mt-9">
@@ -77,7 +72,6 @@ export function Location() {
             className="aspect-4/5 w-full rounded-lg bg-muted object-cover"
           />
         </Reveal>
-
       </div>
     </Section>
   );

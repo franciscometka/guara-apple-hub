@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
-import { CATEGORIAS, type Categoria } from "@/data/products";
+import { CATEGORIAS, type Categoria } from "@/data/categorias";
 import { cn } from "@/lib/utils";
 
 export function CategoryFilter({

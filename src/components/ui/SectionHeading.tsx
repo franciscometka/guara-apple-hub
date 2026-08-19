@@ -22,11 +22,7 @@ export function SectionHeading({
 }) {
   return (
     <Reveal
-      className={cn(
-        "max-w-[720px]",
-        align === "center" && "mx-auto text-center",
-        className,
-      )}
+      className={cn("max-w-[720px]", align === "center" && "mx-auto text-center", className)}
       y={40}
     >
       {eyebrow && (
@@ -39,13 +35,7 @@ export function SectionHeading({
           {eyebrow}
         </p>
       )}
-      <h2
-        id={id}
-        className={cn(
-          "type-h2",
-          tone === "dark" ? "text-white" : "text-foreground",
-        )}
-      >
+      <h2 id={id} className={cn("type-h2", tone === "dark" ? "text-white" : "text-foreground")}>
         {title}
       </h2>
       <motion.span

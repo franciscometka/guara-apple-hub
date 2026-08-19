@@ -1,9 +1,4 @@
-import {
-  createFileRoute,
-  redirect,
-  useNavigate,
-  Link,
-} from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { LogOut, Package, Users } from "lucide-react";
@@ -23,8 +18,7 @@ export const Route = createFileRoute("/minha-conta")({
       { title: "Minha conta — Guara iPhones" },
       {
         name: "description",
-        content:
-          "Veja e atualize seus dados de contato na Guara iPhones: nome, telefone e e-mail.",
+        content: "Veja e atualize seus dados de contato na Guara iPhones: nome, telefone e e-mail.",
       },
       { property: "og:title", content: "Minha conta — Guara iPhones" },
       {
@@ -151,10 +145,7 @@ function MinhaConta() {
               aria-labelledby="area-equipe"
               className="mt-10 rounded-lg border border-border bg-muted/30 p-5"
             >
-              <h2
-                id="area-equipe"
-                className="font-display text-base font-semibold text-foreground"
-              >
+              <h2 id="area-equipe" className="font-display text-base font-semibold text-foreground">
                 Área da equipe
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">

@@ -24,8 +24,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
   const { pathname } = useLocation();
-  const semHeroEscuro =
-    PAGINAS_SEM_HERO_ESCURO.includes(pathname) || pathname.startsWith("/admin");
+  const semHeroEscuro = PAGINAS_SEM_HERO_ESCURO.includes(pathname) || pathname.startsWith("/admin");
   const solid = scrolled || open || semHeroEscuro;
   const logado = useSessao();
   const ehAdmin = useEhAdmin();
@@ -48,11 +47,7 @@ export function Navbar() {
     >
       <Container>
         <div className="flex h-16 items-center justify-between md:h-18">
-          <Link
-            to="/"
-            className="flex min-h-11 items-center gap-2"
-            onClick={() => setOpen(false)}
-          >
+          <Link to="/" className="flex min-h-11 items-center gap-2" onClick={() => setOpen(false)}>
             <img
               src={solid ? markBlack : markWhite}
               alt="Guara iPhones"
@@ -142,11 +137,7 @@ export function Navbar() {
               solid ? "text-foreground" : "text-white",
             )}
           >
-            {open ? (
-              <X size={24} strokeWidth={1.5} />
-            ) : (
-              <Menu size={24} strokeWidth={1.5} />
-            )}
+            {open ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
           </button>
         </div>
       </Container>

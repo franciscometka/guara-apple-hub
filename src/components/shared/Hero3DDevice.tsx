@@ -1,4 +1,12 @@
-import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { useReducedMotion } from "motion/react";

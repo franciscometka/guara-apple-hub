@@ -62,12 +62,7 @@ export function StepsTimeline({ tone = "dark" }: { tone?: "dark" | "light" }) {
           >
             {passo.titulo}
           </h3>
-          <p
-            className={cn(
-              "mt-2 text-sm",
-              dark ? "text-white/60" : "text-muted-foreground",
-            )}
-          >
+          <p className={cn("mt-2 text-sm", dark ? "text-white/60" : "text-muted-foreground")}>
             {passo.texto}
           </p>
         </motion.li>

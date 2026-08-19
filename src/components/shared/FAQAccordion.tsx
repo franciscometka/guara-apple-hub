@@ -22,9 +22,7 @@ export function FAQAccordion({ items }: { items: FaqItem[] }) {
                 id={`faq-button-${i}`}
                 className="flex w-full items-center justify-between gap-6 py-6 text-left"
               >
-                <span className="text-base font-semibold text-foreground md:text-lg">
-                  {item.q}
-                </span>
+                <span className="text-base font-semibold text-foreground md:text-lg">{item.q}</span>
                 <motion.span
                   aria-hidden="true"
                   animate={{ rotate: isOpen ? 45 : 0 }}
@@ -50,9 +48,7 @@ export function FAQAccordion({ items }: { items: FaqItem[] }) {
                   }}
                   className="overflow-hidden"
                 >
-                  <p className="max-w-[640px] pb-7 text-muted-foreground">
-                    {item.a}
-                  </p>
+                  <p className="max-w-[640px] pb-7 text-muted-foreground">{item.a}</p>
                 </motion.div>
               )}
             </AnimatePresence>

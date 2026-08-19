@@ -16,8 +16,7 @@ const buttonVariants = cva(
           "border border-border bg-transparent text-foreground hover:border-violet hover:text-violet-deep",
         outlineDark:
           "border border-white/20 bg-transparent text-white hover:border-violet-glow hover:text-violet-glow",
-        ghost:
-          "link-underline bg-transparent px-0 text-violet-deep hover:text-violet",
+        ghost: "link-underline bg-transparent px-0 text-violet-deep hover:text-violet",
       },
       size: {
         sm: "px-5 py-2.5 text-sm",
@@ -37,7 +36,7 @@ export interface ButtonProps extends VariantProps<typeof buttonVariants> {
   magnetic?: boolean | undefined;
   full?: boolean | undefined;
   onClick?: ((e: MouseEvent<HTMLElement>) => void) | undefined;
-  
+
   type?: "button" | "submit" | undefined;
   disabled?: boolean | undefined;
   ariaLabel?: string | undefined;
@@ -84,9 +83,7 @@ export function Button({
         }
       : {};
 
-  const hoverProps = reduce
-    ? {}
-    : { whileHover: { y: -2 }, whileTap: { scale: 0.97 } };
+  const hoverProps = reduce ? {} : { whileHover: { y: -2 }, whileTap: { scale: 0.97 } };
 
   const classes = cn(buttonVariants({ variant, size }), full && "w-full", className);
   const ariaProps = {
