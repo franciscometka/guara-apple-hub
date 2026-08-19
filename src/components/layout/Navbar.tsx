@@ -1,6 +1,6 @@
 import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/data/navigation";
@@ -14,11 +14,19 @@ import { cn } from "@/lib/utils";
 import markBlack from "@/assets/images/logo/guara-mark-black.png";
 import markWhite from "@/assets/images/logo/guara-mark-white.png";
 
+// Páginas sem hero escuro no topo — o header precisa nascer sólido nelas,
+// senão o texto branco (pensado pra ficar sobre a imagem/gradiente escuro
+// do hero) fica ilegível contra o fundo claro.
+const PAGINAS_SEM_HERO_ESCURO = ["/entrar", "/minha-conta"];
+
 export function Navbar() {
   const scrolled = useScrolledPast(24);
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
-  const solid = scrolled || open;
+  const { pathname } = useLocation();
+  const semHeroEscuro =
+    PAGINAS_SEM_HERO_ESCURO.includes(pathname) || pathname.startsWith("/admin");
+  const solid = scrolled || open || semHeroEscuro;
   const logado = useSessao();
   const ehAdmin = useEhAdmin();
 
