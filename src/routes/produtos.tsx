@@ -10,7 +10,12 @@ import { CategoryFilter } from "@/components/product/CategoryFilter";
 import { ProductCard } from "@/components/product/ProductCard";
 import { CTASection } from "@/components/shared/CTASection";
 import { produtosPublicosQuery } from "@/lib/produtos-query";
-import type { Categoria } from "@/data/categorias";
+import {
+  FILTRO_PADRAO,
+  combinaComFiltro,
+  filtroPorId,
+  type FiltroCatalogoId,
+} from "@/data/categorias";
 import { TrustBar } from "@/components/shared/TrustBar";
 import fachada from "@/assets/images/fachada.webp";
 
@@ -38,11 +43,10 @@ export const Route = createFileRoute("/produtos")({
 });
 
 function ProdutosPage() {
-  const [categoria, setCategoria] = useState<Categoria | "Todos">("Todos");
+  const [filtroId, setFiltroId] = useState<FiltroCatalogoId>(FILTRO_PADRAO);
   const { data: produtos } = useSuspenseQuery(produtosPublicosQuery());
-  const disponiveis = produtos.filter((p) => p.emEstoque);
-  const lista =
-    categoria === "Todos" ? disponiveis : disponiveis.filter((p) => p.categoria === categoria);
+  const filtro = filtroPorId(filtroId);
+  const lista = produtos.filter((p) => p.emEstoque && combinaComFiltro(p, filtro));
 
   return (
     <>
@@ -85,7 +89,7 @@ function ProdutosPage() {
           subtitle="Estoque rotativo — se não achar o modelo aqui, pergunta no WhatsApp que a gente confirma a disponibilidade."
         />
         <div className="mt-10">
-          <CategoryFilter ativa={categoria} onChange={setCategoria} />
+          <CategoryFilter ativa={filtroId} onChange={setFiltroId} />
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">

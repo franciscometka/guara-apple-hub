@@ -9,6 +9,7 @@ export const CATEGORIAS_DB = [
   "AirPods",
   "Mac",
   "Acessórios",
+  "Carregadores",
 ] as const;
 export type CategoriaDB = (typeof CATEGORIAS_DB)[number];
 
