@@ -15,10 +15,10 @@ export interface FiltroCatalogo {
 
 export const FILTROS_CATALOGO = [
   { id: "todos", rotulo: "Todos" },
-  { id: "iphone-lacrado", rotulo: "iPhone lacrado", categoria: "iPhone", condicoes: ["Lacrado"] },
+  { id: "iphone-lacrado", rotulo: "iPhones lacrados", categoria: "iPhone", condicoes: ["Lacrado"] },
   {
     id: "iphone-seminovos",
-    rotulo: "iPhone seminovos",
+    rotulo: "iPhones seminovos",
     categoria: "iPhone",
     // "Vitrine" entra aqui: não é lacrado, então acompanha os seminovos.
     condicoes: ["Seminovo", "Vitrine"],
