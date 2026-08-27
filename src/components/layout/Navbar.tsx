@@ -19,13 +19,20 @@ import markWhite from "@/assets/images/logo/guara-mark-white.png";
 // do hero) fica ilegível contra o fundo claro.
 const PAGINAS_SEM_HERO_ESCURO = ["/entrar", "/minha-conta"];
 
+function ehPaginaSemHeroEscuro(pathname: string): boolean {
+  if (PAGINAS_SEM_HERO_ESCURO.includes(pathname)) return true;
+  if (pathname.startsWith("/admin")) return true;
+  // Página individual de produto (/produtos/<slug>) abre com fundo claro.
+  // O catálogo (/produtos) tem hero escuro e por isso fica de fora.
+  return /^\/produtos\/.+/.test(pathname);
+}
+
 export function Navbar() {
   const scrolled = useScrolledPast(24);
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
   const { pathname } = useLocation();
-  const semHeroEscuro = PAGINAS_SEM_HERO_ESCURO.includes(pathname) || pathname.startsWith("/admin");
-  const solid = scrolled || open || semHeroEscuro;
+  const solid = scrolled || open || ehPaginaSemHeroEscuro(pathname);
   const logado = useSessao();
   const ehAdmin = useEhAdmin();
 

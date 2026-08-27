@@ -151,9 +151,6 @@ function ProdutoDetalhe({ produto, todos }: { produto: ProdutoView; todos: Produ
                   Consulte o valor
                 </span>
               )}
-              <p className="mt-2 text-sm text-muted-foreground">
-                Parcelamos em até 21x no cartão. Condições confirmadas no atendimento.
-              </p>
             </div>
 
             {cores.length > 0 && <SeletorCor cores={cores} />}
