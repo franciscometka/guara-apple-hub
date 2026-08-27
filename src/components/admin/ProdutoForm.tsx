@@ -16,6 +16,11 @@ const vazio: ValoresIniciais = {
   em_estoque: true,
   destaque: false,
   ativo: true,
+  sku: null,
+  bateria: null,
+  cor: null,
+  em_promocao: false,
+  preco_promocional: null,
 };
 
 export function ProdutoForm({
@@ -37,9 +42,18 @@ export function ProdutoForm({
   const [emEstoque, setEmEstoque] = useState(iniciais.em_estoque);
   const [destaque, setDestaque] = useState(iniciais.destaque);
   const [ativo, setAtivo] = useState(iniciais.ativo);
+  const [sku, setSku] = useState(iniciais.sku ?? "");
+  const [bateria, setBateria] = useState(iniciais.bateria === null ? "" : String(iniciais.bateria));
+  const [cor, setCor] = useState(iniciais.cor ?? "");
+  const [emPromocao, setEmPromocao] = useState(iniciais.em_promocao);
+  const [precoPromocional, setPrecoPromocional] = useState(
+    iniciais.preco_promocional === null ? "" : String(iniciais.preco_promocional),
+  );
   const [foto, setFoto] = useState<File | null>(null);
   const [previa, setPrevia] = useState(iniciais.fotoUrl ?? "");
   const [validacao, setValidacao] = useState<string | null>(null);
+
+  const ehSeminovo = condicao === "Seminovo";
 
   function enviar(e: React.FormEvent) {
     e.preventDefault();
@@ -48,6 +62,20 @@ export function ProdutoForm({
     const valor = preco.trim() === "" ? null : Number(preco.replace(",", "."));
     if (valor !== null && (isNaN(valor) || valor < 0))
       return setValidacao("O preço precisa ser um número maior ou igual a zero.");
+
+    const valorBateria = !ehSeminovo || bateria.trim() === "" ? null : Number(bateria);
+    if (valorBateria !== null && (isNaN(valorBateria) || valorBateria < 0 || valorBateria > 100))
+      return setValidacao("A bateria precisa ser um número entre 0 e 100.");
+
+    const valorPromocional =
+      !emPromocao || precoPromocional.trim() === ""
+        ? null
+        : Number(precoPromocional.replace(",", "."));
+    if (emPromocao && valorPromocional === null)
+      return setValidacao("Informe o preço promocional ou desative a promoção.");
+    if (valorPromocional !== null && (isNaN(valorPromocional) || valorPromocional < 0))
+      return setValidacao("O preço promocional precisa ser um número maior ou igual a zero.");
+
     setValidacao(null);
     onSubmit(
       {
@@ -59,6 +87,11 @@ export function ProdutoForm({
         em_estoque: emEstoque,
         destaque,
         ativo,
+        sku: sku.trim() === "" ? null : sku.trim(),
+        bateria: valorBateria,
+        cor: cor.trim() === "" ? null : cor.trim(),
+        em_promocao: emPromocao,
+        preco_promocional: valorPromocional,
       },
       foto,
     );
@@ -103,6 +136,36 @@ export function ProdutoForm({
         </label>
       </div>
 
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <label className="block text-sm font-medium text-foreground">
+          SKU — opcional
+          <input
+            value={sku}
+            onChange={(e) => setSku(e.target.value)}
+            placeholder="Código de referência"
+            className={campo}
+          />
+        </label>
+
+        <label className="block text-sm font-medium text-foreground">
+          Cor — opcional
+          <input value={cor} onChange={(e) => setCor(e.target.value)} className={campo} />
+        </label>
+      </div>
+
+      {ehSeminovo && (
+        <label className="mt-4 block text-sm font-medium text-foreground">
+          Bateria (%) — opcional
+          <input
+            value={bateria}
+            onChange={(e) => setBateria(e.target.value)}
+            inputMode="numeric"
+            placeholder="Ex.: 87"
+            className={campo}
+          />
+        </label>
+      )}
+
       <label className="mt-4 block text-sm font-medium text-foreground">
         Detalhe
         <textarea
@@ -143,6 +206,30 @@ export function ProdutoForm({
             {t.label}
           </label>
         ))}
+      </div>
+
+      <div className="mt-5 rounded-md border border-border p-4">
+        <label className="flex items-center gap-3 text-sm font-medium text-foreground">
+          <input
+            type="checkbox"
+            checked={emPromocao}
+            onChange={(e) => setEmPromocao(e.target.checked)}
+            className="h-5 w-5 rounded border-input"
+          />
+          Em promoção?
+        </label>
+
+        {emPromocao && (
+          <label className="mt-4 block text-sm font-medium text-foreground">
+            Preço promocional (R$) *
+            <input
+              value={precoPromocional}
+              onChange={(e) => setPrecoPromocional(e.target.value)}
+              inputMode="decimal"
+              className={campo}
+            />
+          </label>
+        )}
       </div>
 
       <label className="mt-5 block text-sm font-medium text-foreground">

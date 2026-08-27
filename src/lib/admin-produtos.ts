@@ -6,7 +6,7 @@ export interface ProdutoAdmin extends ProdutoRow {
 }
 
 const SELECT =
-  "id, slug, nome, categoria, condicao, detalhe, preco, em_estoque, destaque, ativo, imagem_url, criado_em, atualizado_em";
+  "id, slug, nome, categoria, condicao, detalhe, preco, em_estoque, destaque, ativo, imagem_url, criado_em, atualizado_em, sku, bateria, cor, em_promocao, preco_promocional";
 
 export async function listarProdutosAdmin(): Promise<ProdutoAdmin[]> {
   const { data, error } = await supabase
@@ -37,6 +37,11 @@ export interface DadosProduto {
   em_estoque: boolean;
   destaque: boolean;
   ativo: boolean;
+  sku: string | null;
+  bateria: number | null;
+  cor: string | null;
+  em_promocao: boolean;
+  preco_promocional: number | null;
 }
 
 async function subirFoto(slug: string, arquivo: File): Promise<string> {

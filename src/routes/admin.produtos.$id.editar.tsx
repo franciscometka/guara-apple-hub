@@ -67,6 +67,12 @@ function EditarProduto() {
             em_estoque: produto.em_estoque,
             destaque: produto.destaque,
             ativo: produto.ativo,
+            sku: produto.sku,
+            bateria: produto.bateria,
+            cor: produto.cor,
+            em_promocao: produto.em_promocao,
+            preco_promocional:
+              produto.preco_promocional === null ? null : Number(produto.preco_promocional),
             fotoUrl: produto.fotoUrl,
           }}
           salvando={salvar.isPending}

@@ -18,6 +18,10 @@ export function ProductCard({ produto }: { produto: ProdutoView }) {
   const imgRef = useRef<HTMLImageElement>(null);
   const info = { preco: produto.preco, emEstoque: produto.emEstoque };
   const emEstoque = produto.emEstoque;
+  const promo =
+    produto.emPromocao && produto.precoPromocional != null && produto.preco != null
+      ? { precoPromocional: produto.precoPromocional, precoOriginal: produto.preco }
+      : null;
 
   // Imagem em cache já pode estar completa antes do onLoad ser anexado.
   useEffect(() => {
@@ -57,15 +61,31 @@ export function ProductCard({ produto }: { produto: ProdutoView }) {
             <GuaraBadge tone="dark">Fora de estoque</GuaraBadge>
           )}
         </div>
+        {promo && (
+          <div className="absolute top-4 right-4">
+            <GuaraBadge tone="success">Promoção</GuaraBadge>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col p-5 md:p-6">
         <h3 className="font-display text-lg font-semibold text-foreground">{produto.nome}</h3>
         <p className="mt-2 flex-1 text-sm text-muted-foreground">{produto.detalhe}</p>
-        {info?.preco != null && (
-          <p className="mt-2 font-display text-xl font-semibold text-foreground">
-            {formatarPreco(info.preco)}
+        {promo ? (
+          <p className="mt-2 flex flex-wrap items-baseline gap-2">
+            <span className="font-display text-xl font-semibold text-foreground">
+              {formatarPreco(promo.precoPromocional)}
+            </span>
+            <span className="text-sm text-muted-foreground line-through">
+              {formatarPreco(promo.precoOriginal)}
+            </span>
           </p>
+        ) : (
+          info?.preco != null && (
+            <p className="mt-2 font-display text-xl font-semibold text-foreground">
+              {formatarPreco(info.preco)}
+            </p>
+          )
         )}
         {emEstoque && (
           <a

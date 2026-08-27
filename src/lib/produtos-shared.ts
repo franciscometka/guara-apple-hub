@@ -30,6 +30,11 @@ export interface ProdutoView {
   preco: number | null;
   emEstoque: boolean;
   destaque: boolean;
+  sku: string | null;
+  bateria: number | null;
+  cor: string | null;
+  emPromocao: boolean;
+  precoPromocional: number | null;
 }
 
 /**
@@ -53,6 +58,11 @@ export function paraProdutoView(row: ProdutoRow): ProdutoView {
     preco: row.preco === null ? null : Number(row.preco),
     emEstoque: row.em_estoque,
     destaque: row.destaque,
+    sku: row.sku,
+    bateria: row.bateria,
+    cor: row.cor,
+    emPromocao: row.em_promocao,
+    precoPromocional: row.preco_promocional === null ? null : Number(row.preco_promocional),
   };
 }
 

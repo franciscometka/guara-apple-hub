@@ -26,7 +26,7 @@ export const listarProdutosPublicos = createServerFn({
   const { data, error } = await cliente
     .from("produtos")
     .select(
-      "id, slug, nome, categoria, condicao, detalhe, preco, em_estoque, destaque, ativo, imagem_url, criado_em, atualizado_em",
+      "id, slug, nome, categoria, condicao, detalhe, preco, em_estoque, destaque, ativo, imagem_url, criado_em, atualizado_em, sku, bateria, cor, em_promocao, preco_promocional",
     )
     .eq("ativo", true)
     .order("destaque", { ascending: false })
