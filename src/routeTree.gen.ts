@@ -13,11 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssistenciaTecnicaRouteImport } from './routes/assistencia-tecnica'
 import { Route as EntrarRouteImport } from './routes/entrar'
 import { Route as MinhaContaRouteImport } from './routes/minha-conta'
-import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as VendaSeuIphoneRouteImport } from './routes/venda-seu-iphone'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminClientesRouteImport } from './routes/admin.clientes'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as ProdutosIndexRouteImport } from './routes/produtos.index'
+import { Route as ProdutosSlugRouteImport } from './routes/produtos.$slug'
 import { Route as AdminProdutosNovoRouteImport } from './routes/admin.produtos.novo'
 import { Route as AdminProdutosIdEditarRouteImport } from './routes/admin.produtos.$id.editar'
 import { Route as ApiPublicFotoSplatRouteImport } from './routes/api/public/foto.$'
@@ -42,11 +43,6 @@ const MinhaContaRoute = MinhaContaRouteImport.update({
   path: '/minha-conta',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProdutosRoute = ProdutosRouteImport.update({
-  id: '/produtos',
-  path: '/produtos',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const VendaSeuIphoneRoute = VendaSeuIphoneRouteImport.update({
   id: '/venda-seu-iphone',
   path: '/venda-seu-iphone',
@@ -65,6 +61,16 @@ const AdminClientesRoute = AdminClientesRouteImport.update({
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdutosIndexRoute = ProdutosIndexRouteImport.update({
+  id: '/produtos/',
+  path: '/produtos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdutosSlugRoute = ProdutosSlugRouteImport.update({
+  id: '/produtos/$slug',
+  path: '/produtos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminProdutosNovoRoute = AdminProdutosNovoRouteImport.update({
@@ -88,11 +94,12 @@ export interface FileRoutesByFullPath {
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/entrar': typeof EntrarRoute
   '/minha-conta': typeof MinhaContaRoute
-  '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
   '/admin/clientes': typeof AdminClientesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/produtos/': typeof ProdutosIndexRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
@@ -102,11 +109,12 @@ export interface FileRoutesByTo {
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/entrar': typeof EntrarRoute
   '/minha-conta': typeof MinhaContaRoute
-  '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
   '/admin/clientes': typeof AdminClientesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/produtos': typeof ProdutosIndexRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
@@ -117,11 +125,12 @@ export interface FileRoutesById {
   '/assistencia-tecnica': typeof AssistenciaTecnicaRoute
   '/entrar': typeof EntrarRoute
   '/minha-conta': typeof MinhaContaRoute
-  '/produtos': typeof ProdutosRoute
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
   '/admin/clientes': typeof AdminClientesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/produtos/': typeof ProdutosIndexRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
@@ -133,11 +142,12 @@ export interface FileRouteTypes {
     | '/assistencia-tecnica'
     | '/entrar'
     | '/minha-conta'
-    | '/produtos'
     | '/venda-seu-iphone'
     | '/admin/clientes'
     | '/admin/login'
+    | '/produtos/$slug'
     | '/admin/'
+    | '/produtos/'
     | '/admin/produtos/novo'
     | '/admin/produtos/$id/editar'
     | '/api/public/foto/$'
@@ -147,11 +157,12 @@ export interface FileRouteTypes {
     | '/assistencia-tecnica'
     | '/entrar'
     | '/minha-conta'
-    | '/produtos'
     | '/venda-seu-iphone'
     | '/admin/clientes'
     | '/admin/login'
+    | '/produtos/$slug'
     | '/admin'
+    | '/produtos'
     | '/admin/produtos/novo'
     | '/admin/produtos/$id/editar'
     | '/api/public/foto/$'
@@ -161,11 +172,12 @@ export interface FileRouteTypes {
     | '/assistencia-tecnica'
     | '/entrar'
     | '/minha-conta'
-    | '/produtos'
     | '/venda-seu-iphone'
     | '/admin/clientes'
     | '/admin/login'
+    | '/produtos/$slug'
     | '/admin/'
+    | '/produtos/'
     | '/admin/produtos/novo'
     | '/admin/produtos/$id/editar'
     | '/api/public/foto/$'
@@ -176,11 +188,12 @@ export interface RootRouteChildren {
   AssistenciaTecnicaRoute: typeof AssistenciaTecnicaRoute
   EntrarRoute: typeof EntrarRoute
   MinhaContaRoute: typeof MinhaContaRoute
-  ProdutosRoute: typeof ProdutosRoute
   VendaSeuIphoneRoute: typeof VendaSeuIphoneRoute
   AdminClientesRoute: typeof AdminClientesRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  ProdutosSlugRoute: typeof ProdutosSlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  ProdutosIndexRoute: typeof ProdutosIndexRoute
   AdminProdutosNovoRoute: typeof AdminProdutosNovoRoute
   AdminProdutosIdEditarRoute: typeof AdminProdutosIdEditarRoute
   ApiPublicFotoSplatRoute: typeof ApiPublicFotoSplatRoute
@@ -216,13 +229,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MinhaContaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/produtos': {
-      id: '/produtos'
-      path: '/produtos'
-      fullPath: '/produtos'
-      preLoaderRoute: typeof ProdutosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/venda-seu-iphone': {
       id: '/venda-seu-iphone'
       path: '/venda-seu-iphone'
@@ -249,6 +255,20 @@ declare module '@tanstack/react-router' {
       path: '/admin/login'
       fullPath: '/admin/login'
       preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produtos/': {
+      id: '/produtos/'
+      path: '/produtos'
+      fullPath: '/produtos/'
+      preLoaderRoute: typeof ProdutosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produtos/$slug': {
+      id: '/produtos/$slug'
+      path: '/produtos/$slug'
+      fullPath: '/produtos/$slug'
+      preLoaderRoute: typeof ProdutosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/produtos/novo': {
@@ -280,11 +300,12 @@ const rootRouteChildren: RootRouteChildren = {
   AssistenciaTecnicaRoute: AssistenciaTecnicaRoute,
   EntrarRoute: EntrarRoute,
   MinhaContaRoute: MinhaContaRoute,
-  ProdutosRoute: ProdutosRoute,
   VendaSeuIphoneRoute: VendaSeuIphoneRoute,
   AdminClientesRoute: AdminClientesRoute,
   AdminLoginRoute: AdminLoginRoute,
+  ProdutosSlugRoute: ProdutosSlugRoute,
   AdminIndexRoute: AdminIndexRoute,
+  ProdutosIndexRoute: ProdutosIndexRoute,
   AdminProdutosNovoRoute: AdminProdutosNovoRoute,
   AdminProdutosIdEditarRoute: AdminProdutosIdEditarRoute,
   ApiPublicFotoSplatRoute: ApiPublicFotoSplatRoute,

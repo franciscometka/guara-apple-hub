@@ -1,4 +1,5 @@
 import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
+import { Link } from "@tanstack/react-router";
 import { motion, useReducedMotion } from "motion/react";
 
 import { useEffect, useRef, useState } from "react";
@@ -42,7 +43,13 @@ export function ProductCard({ produto }: { produto: ProdutoView }) {
     >
       <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-background p-6">
         {!loaded && <div className="shimmer absolute inset-0 -z-10" aria-hidden="true" />}
-        <div className="relative flex aspect-[3/4] h-full max-h-[82%] items-center justify-center">
+        <Link
+          to="/produtos/$slug"
+          params={{ slug: produto.slug }}
+          tabIndex={-1}
+          aria-hidden="true"
+          className="relative flex aspect-[3/4] h-full max-h-[82%] items-center justify-center"
+        >
           <img
             ref={imgRef}
             src={produto.imagem}
@@ -53,7 +60,7 @@ export function ProductCard({ produto }: { produto: ProdutoView }) {
             onLoad={() => setLoaded(true)}
             className="h-full w-full object-contain transition-transform duration-400 group-hover:scale-105"
           />
-        </div>
+        </Link>
         <div className="absolute top-4 left-4">
           {emEstoque ? (
             <GuaraBadge>{produto.condicao}</GuaraBadge>
@@ -69,7 +76,15 @@ export function ProductCard({ produto }: { produto: ProdutoView }) {
       </div>
 
       <div className="flex flex-1 flex-col p-5 md:p-6">
-        <h3 className="font-display text-lg font-semibold text-foreground">{produto.nome}</h3>
+        <h3 className="font-display text-lg font-semibold text-foreground">
+          <Link
+            to="/produtos/$slug"
+            params={{ slug: produto.slug }}
+            className="transition-colors hover:text-violet-deep"
+          >
+            {produto.nome}
+          </Link>
+        </h3>
         <p className="mt-2 flex-1 text-sm text-muted-foreground">{produto.detalhe}</p>
         {promo ? (
           <p className="mt-2 flex flex-wrap items-baseline gap-2">

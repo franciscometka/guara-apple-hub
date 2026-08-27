@@ -1,15 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
-import { paraProdutoView, type ProdutoView } from "./produtos-shared";
+import { paraProdutoView, urlFoto, type ProdutoView } from "./produtos-shared";
 
-export const listarProdutosPublicos = createServerFn({
-  method: "GET",
-}).handler(async (): Promise<ProdutoView[]> => {
+function clientePublico() {
   const url = process.env["SUPABASE_URL"]!;
   const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
 
-  const cliente = createClient<Database>(url, key, {
+  return createClient<Database>(url, key, {
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
     global: {
       fetch: (input, init) => {
@@ -22,8 +20,12 @@ export const listarProdutosPublicos = createServerFn({
       },
     },
   });
+}
 
-  const { data, error } = await cliente
+export const listarProdutosPublicos = createServerFn({
+  method: "GET",
+}).handler(async (): Promise<ProdutoView[]> => {
+  const { data, error } = await clientePublico()
     .from("produtos")
     .select(
       "id, slug, nome, categoria, condicao, detalhe, preco, em_estoque, destaque, ativo, imagem_url, criado_em, atualizado_em, sku, bateria, cor, em_promocao, preco_promocional",
@@ -39,3 +41,21 @@ export const listarProdutosPublicos = createServerFn({
 
   return (data ?? []).map((row) => paraProdutoView(row));
 });
+
+/** Fotos extras da galeria (a principal continua em `produtos.imagem_url`). */
+export const listarFotosProduto = createServerFn({ method: "GET" })
+  .inputValidator((produtoId: string) => produtoId)
+  .handler(async ({ data: produtoId }): Promise<string[]> => {
+    const { data, error } = await clientePublico()
+      .from("produto_fotos")
+      .select("caminho, ordem")
+      .eq("produto_id", produtoId)
+      .order("ordem", { ascending: true });
+
+    if (error) {
+      console.error("[produtos] falha ao listar fotos:", error.message);
+      return [];
+    }
+
+    return (data ?? []).map((f) => urlFoto(f.caminho));
+  });

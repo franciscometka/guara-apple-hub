@@ -50,6 +50,38 @@ export type Database = {
         };
         Relationships: [];
       };
+      produto_fotos: {
+        Row: {
+          caminho: string;
+          criado_em: string;
+          id: string;
+          ordem: number;
+          produto_id: string;
+        };
+        Insert: {
+          caminho: string;
+          criado_em?: string;
+          id?: string;
+          ordem?: number;
+          produto_id: string;
+        };
+        Update: {
+          caminho?: string;
+          criado_em?: string;
+          id?: string;
+          ordem?: number;
+          produto_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "produto_fotos_produto_id_fkey";
+            columns: ["produto_id"];
+            isOneToOne: false;
+            referencedRelation: "produtos";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       produtos: {
         Row: {
           ativo: boolean;

@@ -44,9 +44,9 @@ export interface DadosProduto {
   preco_promocional: number | null;
 }
 
-async function subirFoto(slug: string, arquivo: File): Promise<string> {
+async function subirFoto(slug: string, arquivo: File, sufixo = ""): Promise<string> {
   const ext = arquivo.name.split(".").pop()?.toLowerCase() || "webp";
-  const caminho = `${slug}-${Date.now()}.${ext}`;
+  const caminho = `${slug}-${Date.now()}${sufixo}.${ext}`;
   const { error } = await supabase.storage
     .from(BUCKET_FOTOS)
     .upload(caminho, arquivo, { contentType: arquivo.type, upsert: true });
@@ -54,7 +54,55 @@ async function subirFoto(slug: string, arquivo: File): Promise<string> {
   return caminho;
 }
 
-export async function criarProduto(dados: DadosProduto, foto: File | null): Promise<string> {
+/** Fotos extras da galeria, já como URL servida por /api/public/foto. */
+export interface FotoGaleria {
+  id: string;
+  url: string;
+}
+
+export async function listarFotosGaleria(produtoId: string): Promise<FotoGaleria[]> {
+  const { data, error } = await supabase
+    .from("produto_fotos")
+    .select("id, caminho")
+    .eq("produto_id", produtoId)
+    .order("ordem", { ascending: true });
+  if (error) throw error;
+  return (data ?? []).map((f) => ({ id: f.id, url: urlFoto(f.caminho) }));
+}
+
+async function subirGaleria(produtoId: string, slug: string, fotos: File[]): Promise<void> {
+  if (fotos.length === 0) return;
+
+  // A ordem continua de onde a galeria atual parou, para não embaralhar
+  // as fotos já cadastradas.
+  const { data: existentes } = await supabase
+    .from("produto_fotos")
+    .select("ordem")
+    .eq("produto_id", produtoId)
+    .order("ordem", { ascending: false })
+    .limit(1);
+  const base = (existentes?.[0]?.ordem ?? -1) + 1;
+
+  const linhas = [];
+  for (const [i, arquivo] of fotos.entries()) {
+    const caminho = await subirFoto(slug, arquivo, `-g${i}`);
+    linhas.push({ produto_id: produtoId, caminho, ordem: base + i });
+  }
+
+  const { error } = await supabase.from("produto_fotos").insert(linhas);
+  if (error) throw error;
+}
+
+export async function excluirFotoGaleria(id: string): Promise<void> {
+  const { error } = await supabase.from("produto_fotos").delete().eq("id", id);
+  if (error) throw error;
+}
+
+export async function criarProduto(
+  dados: DadosProduto,
+  foto: File | null,
+  galeria: File[] = [],
+): Promise<string> {
   const slug = `${slugify(dados.nome)}-${Date.now().toString(36)}`;
   const imagem_url = foto ? await subirFoto(slug, foto) : null;
   const { data, error } = await supabase
@@ -63,6 +111,8 @@ export async function criarProduto(dados: DadosProduto, foto: File | null): Prom
     .select("id")
     .single();
   if (error) throw error;
+
+  await subirGaleria(data.id, slug, galeria);
   return data.id;
 }
 
@@ -71,11 +121,14 @@ export async function atualizarProduto(
   slug: string,
   dados: DadosProduto,
   foto: File | null,
+  galeria: File[] = [],
 ): Promise<void> {
   const imagem_url = foto ? await subirFoto(slug, foto) : null;
   const patch = imagem_url ? { ...dados, imagem_url } : { ...dados };
   const { error } = await supabase.from("produtos").update(patch).eq("id", id);
   if (error) throw error;
+
+  await subirGaleria(id, slug, galeria);
 }
 
 export async function alternarAtivo(id: string, ativo: boolean): Promise<void> {

@@ -23,7 +23,7 @@ const title = "Produtos Apple em Guarapuava — Guara iPhones";
 const description =
   "iPhone, iPad, Apple Watch, AirPods, Mac e acessórios em Guarapuava/PR. Lacrados e seminovos revisados, com nota fiscal e garantia.";
 
-export const Route = createFileRoute("/produtos")({
+export const Route = createFileRoute("/produtos/")({
   loader: ({ context }) => {
     context.queryClient.ensureQueryData(produtosPublicosQuery());
   },

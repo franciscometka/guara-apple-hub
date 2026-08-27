@@ -33,7 +33,8 @@ function NovoProduto() {
   const queryClient = useQueryClient();
 
   const criar = useMutation({
-    mutationFn: (v: { dados: DadosProduto; foto: File | null }) => criarProduto(v.dados, v.foto),
+    mutationFn: (v: { dados: DadosProduto; foto: File | null; galeria: File[] }) =>
+      criarProduto(v.dados, v.foto, v.galeria),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin", "produtos"] });
       queryClient.invalidateQueries({ queryKey: ["produtos"] });
@@ -46,7 +47,7 @@ function NovoProduto() {
       <ProdutoForm
         salvando={criar.isPending}
         erro={criar.error ? "Não foi possível salvar o produto." : null}
-        onSubmit={(dados, foto) => criar.mutate({ dados, foto })}
+        onSubmit={(dados, foto, galeria) => criar.mutate({ dados, foto, galeria })}
       />
     </AdminShell>
   );

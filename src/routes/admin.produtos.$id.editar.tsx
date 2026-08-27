@@ -43,8 +43,8 @@ function EditarProduto() {
   });
 
   const salvar = useMutation({
-    mutationFn: (v: { dados: DadosProduto; foto: File | null }) =>
-      atualizarProduto(id, produto!.slug, v.dados, v.foto),
+    mutationFn: (v: { dados: DadosProduto; foto: File | null; galeria: File[] }) =>
+      atualizarProduto(id, produto!.slug, v.dados, v.foto, v.galeria),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin"] });
       queryClient.invalidateQueries({ queryKey: ["produtos"] });
@@ -77,7 +77,7 @@ function EditarProduto() {
           }}
           salvando={salvar.isPending}
           erro={salvar.error ? "Não foi possível salvar as alterações." : null}
-          onSubmit={(dados, foto) => salvar.mutate({ dados, foto })}
+          onSubmit={(dados, foto, galeria) => salvar.mutate({ dados, foto, galeria })}
         />
       )}
     </AdminShell>

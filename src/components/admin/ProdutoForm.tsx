@@ -32,7 +32,7 @@ export function ProdutoForm({
   iniciais?: ValoresIniciais;
   salvando: boolean;
   erro?: string | null;
-  onSubmit: (dados: DadosProduto, foto: File | null) => void;
+  onSubmit: (dados: DadosProduto, foto: File | null, galeria: File[]) => void;
 }) {
   const [nome, setNome] = useState(iniciais.nome);
   const [categoria, setCategoria] = useState(iniciais.categoria);
@@ -51,6 +51,7 @@ export function ProdutoForm({
   );
   const [foto, setFoto] = useState<File | null>(null);
   const [previa, setPrevia] = useState(iniciais.fotoUrl ?? "");
+  const [galeria, setGaleria] = useState<File[]>([]);
   const [validacao, setValidacao] = useState<string | null>(null);
 
   const ehSeminovo = condicao === "Seminovo";
@@ -94,6 +95,7 @@ export function ProdutoForm({
         preco_promocional: valorPromocional,
       },
       foto,
+      galeria,
     );
   }
 
@@ -251,6 +253,22 @@ export function ProdutoForm({
           alt="Prévia da foto do produto"
           className="mt-3 h-32 w-32 rounded-md border border-border object-contain p-1"
         />
+      )}
+
+      <label className="mt-5 block text-sm font-medium text-foreground">
+        Fotos adicionais da galeria — opcional
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={(e) => setGaleria(Array.from(e.target.files ?? []))}
+          className="mt-2 block w-full text-sm text-muted-foreground"
+        />
+      </label>
+      {galeria.length > 0 && (
+        <p className="mt-2 text-sm text-muted-foreground">
+          {galeria.length} foto(s) serão adicionadas à galeria ao salvar.
+        </p>
       )}
 
       {(validacao || erro) && <p className="mt-5 text-sm text-destructive">{validacao ?? erro}</p>}
