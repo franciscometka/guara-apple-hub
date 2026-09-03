@@ -74,3 +74,27 @@ export function slugify(valor: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
+
+/** Min\u00fasculas e sem acento \u2014 o cliente digita "pelicula", acha "Pel\u00edcula". */
+function normalizarBusca(valor: string): string {
+  return valor
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+/**
+ * Busca do cat\u00e1logo p\u00fablico, por nome e SKU. Cada palavra digitada precisa
+ * aparecer em algum lugar do produto, em qualquer ordem: "13 pink" encontra
+ * "IPHONE 13 PINK 128GB SEMINOVO". Termo vazio n\u00e3o filtra nada.
+ */
+export function combinaComBusca(
+  produto: Pick<ProdutoView, "nome" | "sku">,
+  termo: string,
+): boolean {
+  const palavras = normalizarBusca(termo).split(/\s+/).filter(Boolean);
+  if (palavras.length === 0) return true;
+
+  const alvo = normalizarBusca(`${produto.nome} ${produto.sku ?? ""}`);
+  return palavras.every((p) => alvo.includes(p));
+}

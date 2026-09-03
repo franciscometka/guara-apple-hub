@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
+import { Search } from "lucide-react";
 import { useState } from "react";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
@@ -10,6 +11,7 @@ import { CategoryFilter } from "@/components/product/CategoryFilter";
 import { ProductCard } from "@/components/product/ProductCard";
 import { CTASection } from "@/components/shared/CTASection";
 import { produtosPublicosQuery } from "@/lib/produtos-query";
+import { combinaComBusca } from "@/lib/produtos-shared";
 import {
   FILTRO_PADRAO,
   combinaComFiltro,
@@ -44,9 +46,13 @@ export const Route = createFileRoute("/produtos/")({
 
 function ProdutosPage() {
   const [filtroId, setFiltroId] = useState<FiltroCatalogoId>(FILTRO_PADRAO);
+  const [busca, setBusca] = useState("");
   const { data: produtos } = useSuspenseQuery(produtosPublicosQuery());
   const filtro = filtroPorId(filtroId);
-  const lista = produtos.filter((p) => p.emEstoque && combinaComFiltro(p, filtro));
+  const lista = produtos.filter(
+    (p) => p.emEstoque && combinaComFiltro(p, filtro) && combinaComBusca(p, busca),
+  );
+  const buscando = busca.trim() !== "";
 
   return (
     <>
@@ -88,7 +94,28 @@ function ProdutosPage() {
           title="Catálogo"
           subtitle="Estoque rotativo — se não achar o modelo aqui, pergunta no WhatsApp que a gente confirma a disponibilidade."
         />
-        <div className="mt-10">
+        <div className="mt-10 max-w-[420px]">
+          <label htmlFor="busca-produto" className="sr-only">
+            Buscar produto
+          </label>
+          <div className="relative">
+            <Search
+              size={18}
+              strokeWidth={1.5}
+              aria-hidden="true"
+              className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-muted-foreground"
+            />
+            <input
+              id="busca-produto"
+              type="search"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              placeholder="Buscar produto"
+              className="min-h-11 w-full rounded-full border border-border bg-background py-2.5 pr-5 pl-11 text-sm text-foreground transition-colors placeholder:text-muted-foreground hover:border-violet focus:border-violet focus:outline-none"
+            />
+          </div>
+        </div>
+        <div className="mt-4">
           <CategoryFilter ativa={filtroId} onChange={setFiltroId} />
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -98,12 +125,18 @@ function ProdutosPage() {
             ))}
           </AnimatePresence>
         </div>
-        {lista.length === 0 && (
-          <p className="mt-12 text-muted-foreground">
-            Nenhum produto listado nesta categoria agora. Fala com a gente no WhatsApp que
-            verificamos o estoque.
-          </p>
-        )}
+        {lista.length === 0 &&
+          (buscando ? (
+            <p className="mt-12 text-muted-foreground">
+              Nenhum produto encontrado para “{busca.trim()}”. Tenta outro termo ou fala com a gente
+              no WhatsApp que verificamos o estoque.
+            </p>
+          ) : (
+            <p className="mt-12 text-muted-foreground">
+              Nenhum produto listado nesta categoria agora. Fala com a gente no WhatsApp que
+              verificamos o estoque.
+            </p>
+          ))}
       </Section>
 
       <CTASection />
