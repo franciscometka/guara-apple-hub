@@ -1,9 +1,14 @@
 import type { ProdutoView } from "./produtos-shared";
 
 /**
- * Cor e capacidade não têm coluna própria preenchida no banco — hoje vivem
- * dentro do `nome` ("IPHONE 13 PINK 128GB SEMINOVO"). Estas funções derivam
- * essas informações do nome para montar os seletores da página de produto.
+ * Capacidade não tem coluna própria no banco — vive dentro do `nome`
+ * ("IPHONE 13 PINK 128GB SEMINOVO"). Cor tem coluna (`produtos.cor`), mas
+ * só os cadastros mais recentes vêm com ela preenchida; para os produtos
+ * antigos ainda é preciso adivinhar a cor a partir do nome, contra uma
+ * lista fixa — por isso `extrairVariante` aceita a cor do banco como dica
+ * e só cai para a lista fixa quando essa dica não vem ou não bate com o
+ * nome. Isso evita depender de a lista fixa conhecer toda cor nova (ex.:
+ * "BURGUNDY", "GLACIER") que passe a existir só no cadastro.
  *
  * Se um nome fugir do padrão, o produto simplesmente não ganha seletor —
  * nunca quebra a página.
@@ -65,6 +70,8 @@ const HEX_CORES: Record<string, string> = {
   SAGE: "#9aa88f",
   GOLD: "#e0c9a6",
   RED: "#b8302f",
+  BURGUNDY: "#6d2332",
+  GLACIER: "#dce6ea",
 };
 
 export interface VarianteProduto {
@@ -89,7 +96,13 @@ export function hexDaCor(cor: string): string {
   return HEX_CORES[cor] ?? "#9ca3af";
 }
 
-export function extrairVariante(nome: string): VarianteProduto {
+/**
+ * @param corCadastrada Valor da coluna `produtos.cor`, quando o cadastro já
+ * traz cor estruturada. Tem prioridade sobre a lista fixa `CORES` — assim
+ * uma cor nova no catálogo (ex.: de um lançamento) agrupa corretamente
+ * mesmo antes de alguém lembrar de adicioná-la na lista fixa.
+ */
+export function extrairVariante(nome: string, corCadastrada?: string | null): VarianteProduto {
   let resto = ` ${nome.toUpperCase().replace(/[()]/g, " ").replace(/\s+/g, " ")} `;
 
   // A condição já vive na coluna `condicao`; no nome é ruído para o agrupamento.
@@ -101,11 +114,17 @@ export function extrairVariante(nome: string): VarianteProduto {
   if (capMatch) resto = resto.replace(capMatch[0], " ");
 
   let cor: string | null = null;
-  for (const c of CORES) {
-    if (resto.includes(` ${c} `)) {
-      cor = c;
-      resto = resto.replace(` ${c} `, " ");
-      break;
+  const corNormalizada = corCadastrada?.trim().replace(/\s+/g, " ").toUpperCase() || null;
+  if (corNormalizada && resto.includes(` ${corNormalizada} `)) {
+    cor = corNormalizada;
+    resto = resto.replace(` ${corNormalizada} `, " ");
+  } else {
+    for (const c of CORES) {
+      if (resto.includes(` ${c} `)) {
+        cor = c;
+        resto = resto.replace(` ${c} `, " ");
+        break;
+      }
     }
   }
 
@@ -151,12 +170,12 @@ export interface OpcaoVariante {
  * aberto. Cada opção aponta para o slug da melhor unidade daquela cor.
  */
 export function coresIrmas(atual: ProdutoView, todos: ProdutoView[]): OpcaoVariante[] {
-  const base = extrairVariante(atual.nome);
+  const base = extrairVariante(atual.nome, atual.cor);
   if (!base.cor) return [];
 
   const porCor = new Map<string, ProdutoView[]>();
   for (const p of todos) {
-    const v = extrairVariante(p.nome);
+    const v = extrairVariante(p.nome, p.cor);
     if (!v.cor) continue;
     if (v.modelo !== base.modelo) continue;
     if (v.capacidade !== base.capacidade) continue;
@@ -186,12 +205,12 @@ export function coresIrmas(atual: ProdutoView, todos: ProdutoView[]): OpcaoVaria
  * Ordena numericamente (128GB antes de 256GB), não alfabeticamente.
  */
 export function capacidadesIrmas(atual: ProdutoView, todos: ProdutoView[]): OpcaoVariante[] {
-  const base = extrairVariante(atual.nome);
+  const base = extrairVariante(atual.nome, atual.cor);
   if (!base.capacidade) return [];
 
   const porCapacidade = new Map<string, ProdutoView[]>();
   for (const p of todos) {
-    const v = extrairVariante(p.nome);
+    const v = extrairVariante(p.nome, p.cor);
     if (!v.capacidade) continue;
     if (v.modelo !== base.modelo) continue;
     if (v.cor !== base.cor) continue;
