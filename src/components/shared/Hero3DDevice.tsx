@@ -117,10 +117,12 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
         if (!(material instanceof THREE.MeshStandardMaterial)) return material;
 
         if (material.name === SCREEN_MATERIAL) {
+          material.color.setRGB(0.004, 0.006, 0.012);
           material.metalness = 0.92;
-          material.roughness = 0.035;
-          material.envMapIntensity = 1.65;
+          material.roughness = 0.045;
+          material.envMapIntensity = 1.25;
         } else if (LENS_MATERIALS.has(material.name)) {
+          material.color.setRGB(0.002, 0.004, 0.012);
           material.metalness = 0.98;
           material.roughness = 0.025;
           material.envMapIntensity = 1.9;
