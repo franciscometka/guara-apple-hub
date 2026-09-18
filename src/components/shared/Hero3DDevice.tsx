@@ -33,6 +33,56 @@ const ENTRY_ANGLE = THREE.MathUtils.degToRad(65);
 const ENTRY_DURATION = 1.1; // segundos — mesma duração da entrada do Hero (Hero.tsx)
 const SCREEN_MATERIAL = "17ProMax_glass";
 const LENS_MATERIALS = new Set(["17ProMax_Lens", "17ProMax_Lens2.001"]);
+/**
+ * Corpo e laterais. No .glb esses materiais vêm sem `metallicFactor`, que no
+ * glTF significa 1.0 — ou seja, metal puro. Metal não tem componente difusa,
+ * então luz ambiente e direcional quase não os atingem: quem define o brilho
+ * deles é o reflexo do environment map. Por isso o ajuste aqui é em
+ * envMapIntensity, e não em intensidade de luz.
+ */
+const BODY_MATERIALS = new Set(["17ProMax_color", "17ProMax_color2", "17ProMax_color3"]);
+
+/**
+ * Lente de câmera não é um material padrão: é vidro de safira sobre um
+ * interior escuro, com revestimento antirreflexo. O que dá o aspecto real é
+ * a combinação de três coisas que o MeshStandardMaterial não faz:
+ *
+ * - `clearcoat`: a lâmina de safira por cima, com brilho próprio e mais
+ *   nítido que o do vidro de baixo;
+ * - `iridescence`: interferência de película fina — literalmente o que é o
+ *   revestimento antirreflexo, e de onde vem o reflexo azul/violeta que
+ *   aparece na lente de verdade conforme o ângulo muda;
+ *   `iridescenceThicknessRange` é a espessura em nanômetros, e é ela que
+ *   decide a cor: mais fina puxa pro violeta, mais grossa pro azul/verde;
+ * - `ior` de 1.77: índice de refração da safira, mais alto que o do vidro
+ *   comum (1.5), o que intensifica o Fresnel nas bordas da lente.
+ *
+ * Mantido discreto de propósito: iridescência no talo vira arco-íris de
+ * bijuteria, não lente de câmera.
+ */
+function criarMaterialLente(nome: string): THREE.MeshPhysicalMaterial {
+  const interno = nome === "17ProMax_Lens2.001";
+
+  const material = new THREE.MeshPhysicalMaterial({
+    // O escuro vem do interior da lente, nunca de um metal preto.
+    color: interno
+      ? new THREE.Color(0.010, 0.016, 0.075)
+      : new THREE.Color(0.005, 0.009, 0.028),
+    metalness: 0,
+    roughness: interno ? 0.05 : 0.07,
+    ior: 1.77,
+    specularIntensity: 1,
+    clearcoat: 1,
+    clearcoatRoughness: 0.02,
+    iridescence: interno ? 0.85 : 0.55,
+    iridescenceIOR: 1.35,
+    envMapIntensity: 2.6,
+  });
+
+  material.iridescenceThicknessRange = interno ? [180, 420] : [140, 320];
+  material.name = nome;
+  return material;
+}
 
 // Início do download do .glb assim que este módulo é avaliado no browser —
 // em paralelo com o resto do carregamento, em vez de esperar o Canvas
@@ -113,6 +163,10 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
       }
 
       const polishedMaterials = sourceMaterials.map((source) => {
+        // Substituição, não ajuste: safira e antirreflexo precisam de um
+        // MeshPhysicalMaterial, que o material do .glb não é.
+        if (LENS_MATERIALS.has(source.name)) return criarMaterialLente(source.name);
+
         const material = source.clone();
         if (!(material instanceof THREE.MeshStandardMaterial)) return material;
 
@@ -121,11 +175,9 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
           material.metalness = 0.92;
           material.roughness = 0.045;
           material.envMapIntensity = 1.25;
-        } else if (LENS_MATERIALS.has(material.name)) {
-          material.color.setRGB(0.002, 0.004, 0.012);
-          material.metalness = 0.98;
-          material.roughness = 0.025;
-          material.envMapIntensity = 1.9;
+        } else if (BODY_MATERIALS.has(material.name)) {
+          // Só o reflexo — a cor de fábrica do aparelho fica intacta.
+          material.envMapIntensity = 2.2;
         }
 
         material.needsUpdate = true;
@@ -208,8 +260,10 @@ function Scene({ interactive, mobile }: { interactive: boolean; mobile: boolean 
         <Device onEntryComplete={() => setControlsEnabled(true)} />
       </Suspense>
       {/* Estúdio local de reflexos: não depende de HDR externo e mantém vidro,
-          lentes e alumínio vivos mesmo em conexões móveis instáveis. */}
-      <Environment resolution={256}>
+          lentes e alumínio vivos mesmo em conexões móveis instáveis.
+          environmentIntensity é o dial de exposição desse estúdio — e é ele,
+          não as luzes abaixo, que governa o brilho das peças metálicas. */}
+      <Environment resolution={256} environmentIntensity={2.1}>
         <Lightformer intensity={2.4} position={[0, 4, 2]} scale={[5, 2, 1]} />
         <Lightformer
           intensity={2}
@@ -224,8 +278,8 @@ function Scene({ interactive, mobile }: { interactive: boolean; mobile: boolean 
           scale={[4, 1, 1]}
         />
       </Environment>
-      <ambientLight intensity={mobile ? 0.5 : 0.25} />
-      <directionalLight position={[2, 3, 4]} intensity={mobile ? 0.9 : 0.6} />
+      <ambientLight intensity={mobile ? 0.62 : 0.34} />
+      <directionalLight position={[2, 3, 4]} intensity={mobile ? 1.15 : 0.85} />
 
       <OrbitControls
         enabled={controlsEnabled && interactive}
@@ -285,7 +339,17 @@ export default function Hero3DDevice() {
       <Canvas
         frameloop="demand"
         camera={{ position: [0, 0, 4.2], fov: 35 }}
-        gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+        gl={{
+          alpha: true,
+          antialias: true,
+          powerPreference: "high-performance",
+          // O padrão do R3F é ACES Filmic, feito pra cinema: comprime os tons
+          // médios e deixa o aparelho murcho. O Neutral (Khronos PBR Neutral)
+          // existe justamente pra visualização de produto — preserva a cor de
+          // fábrica e os médios, sem estourar o brilho das partes polidas.
+          toneMapping: THREE.NeutralToneMapping,
+          toneMappingExposure: 1.3,
+        }}
         dpr={mobile ? [1, 1.75] : [1, 2]}
 
         style={{ background: "transparent", touchAction: "pan-y" }}
