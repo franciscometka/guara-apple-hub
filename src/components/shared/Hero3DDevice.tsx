@@ -93,17 +93,19 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
   const [fitted, setFitted] = useState(false);
   const handleFit = useCallback(() => setFitted(true), []);
 
-  // O arquivo .glb contém duas cópias do mesmo iPhone (iphone17promax_0 e
-  // iphone17promax.001_1). Removemos a duplicata antes de medir/enquadrar,
-  // senão a cena mostra dois aparelhos lado a lado e cada um parece menor.
+  // Limpa objetos auxiliares antes de medir/enquadrar. O modelo atual inclui
+  // uma base de exposição muito maior que o aparelho; se ela entrasse no
+  // cálculo, o iPhone ficaria minúsculo no Hero.
   const cleanedScene = useMemo(() => {
     const clone = scene.clone();
-    // O arquivo .glb contém duas cópias do mesmo iPhone. O nome do nó
-    // duplicado perde o ponto na importação do Three.js, então coletamos
-    // fora do traverse e removemos depois para evitar mutação durante iteração.
     const toRemove: THREE.Object3D[] = [];
     clone.traverse((obj) => {
-      if (obj.name === "iphone17promax001_1") {
+      const material = obj instanceof THREE.Mesh ? obj.material : undefined;
+      const materialNames = Array.isArray(material)
+        ? material.map((item) => item.name)
+        : [material?.name];
+
+      if (obj.name === "iphone17promax001_1" || materialNames.includes("Material.003")) {
         toRemove.push(obj);
       }
     });
