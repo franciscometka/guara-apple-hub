@@ -35,6 +35,7 @@ export interface ProdutoView {
   cor: string | null;
   emPromocao: boolean;
   precoPromocional: number | null;
+  criadoEm: string;
 }
 
 /**
@@ -63,6 +64,7 @@ export function paraProdutoView(row: ProdutoRow): ProdutoView {
     cor: row.cor,
     emPromocao: row.em_promocao,
     precoPromocional: row.preco_promocional === null ? null : Number(row.preco_promocional),
+    criadoEm: row.criado_em,
   };
 }
 

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/sections/home/Hero";
+import { DestaqueLancamentoSection } from "@/sections/home/DestaqueLancamentoSection";
 import { TrustBar } from "@/components/shared/TrustBar";
 import { TwoPaths } from "@/sections/home/TwoPaths";
 import { ProductsPreview } from "@/sections/home/ProductsPreview";
@@ -69,9 +70,7 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-  loader: ({ context }) => {
-    context.queryClient.prefetchQuery(produtosPublicosQuery());
-  },
+  loader: ({ context }) => context.queryClient.ensureQueryData(produtosPublicosQuery()),
   component: HomePage,
 });
 
@@ -79,6 +78,7 @@ function HomePage() {
   return (
     <>
       <Hero />
+      <DestaqueLancamentoSection />
       <TrustBar />
       <TwoPaths />
       <ProductsPreview />
