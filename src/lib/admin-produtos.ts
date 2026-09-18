@@ -65,7 +65,7 @@ export interface FotoGaleria {
 }
 
 export async function listarFotosGaleria(produtoId: string): Promise<FotoGaleria[]> {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseComGaleria
     .from("produto_fotos")
     .select("id, caminho")
     .eq("produto_id", produtoId)
