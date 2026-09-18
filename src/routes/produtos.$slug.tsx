@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { GuaraBadge } from "@/components/ui/GuaraBadge";
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { ProductColorSelector } from "@/components/product/ProductColorSelector";
 import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
 import { CTASection } from "@/components/shared/CTASection";
 import { fotosProdutoQuery, produtosPublicosQuery } from "@/lib/produtos-query";
@@ -11,8 +12,6 @@ import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 import {
   capacidadesIrmas,
   coresIrmas,
-  formatarCor,
-  hexDaCor,
   percentualDesconto,
 } from "@/lib/produto-variantes";
 import type { ProdutoView } from "@/lib/produtos-shared";
@@ -153,7 +152,7 @@ function ProdutoDetalhe({ produto, todos }: { produto: ProdutoView; todos: Produ
               )}
             </div>
 
-            {cores.length > 0 && <SeletorCor cores={cores} />}
+            <ProductColorSelector cores={cores} />
 
             {capacidades.length > 0 && <SeletorCapacidade capacidades={capacidades} />}
 
@@ -201,37 +200,6 @@ function ProdutoDetalhe({ produto, todos }: { produto: ProdutoView; todos: Produ
 
       <CTASection />
     </>
-  );
-}
-
-function SeletorCor({ cores }: { cores: ReturnType<typeof coresIrmas> }) {
-  return (
-    <div className="mt-8">
-      <h2 className="text-sm font-semibold text-foreground">Escolha a Cor</h2>
-      <div className="mt-3 flex flex-wrap gap-3">
-        {cores.map((c) => (
-          <Link
-            key={c.valor}
-            to="/produtos/$slug"
-            params={{ slug: c.slug }}
-            title={formatarCor(c.valor)}
-            aria-label={formatarCor(c.valor)}
-            aria-current={c.atual ? "true" : undefined}
-            className={cn(
-              "flex h-11 w-11 items-center justify-center rounded-full border-2 transition-colors",
-              c.atual ? "border-violet" : "border-border hover:border-violet-glow",
-              c.emEstoque ? "" : "opacity-40",
-            )}
-          >
-            <span
-              aria-hidden="true"
-              className="h-7 w-7 rounded-full border border-black/10"
-              style={{ backgroundColor: hexDaCor(c.valor) }}
-            />
-          </Link>
-        ))}
-      </div>
-    </div>
   );
 }
 
