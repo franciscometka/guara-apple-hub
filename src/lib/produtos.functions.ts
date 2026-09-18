@@ -1,13 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
-import type { Database } from "@/integrations/supabase/types";
+import type { DatabaseComProdutoFotos } from "./database-extensions";
 import { paraProdutoView, urlFoto, type ProdutoView } from "./produtos-shared";
 
 function clientePublico() {
   const url = process.env["SUPABASE_URL"]!;
   const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
 
-  return createClient<Database>(url, key, {
+  return createClient<DatabaseComProdutoFotos>(url, key, {
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
     global: {
       fetch: (input, init) => {

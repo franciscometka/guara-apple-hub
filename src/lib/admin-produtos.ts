@@ -1,5 +1,9 @@
 import { supabase } from "@/integrations/supabase/client";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { DatabaseComProdutoFotos } from "./database-extensions";
 import { BUCKET_FOTOS, slugify, urlFoto, type ProdutoRow } from "./produtos-shared";
+
+const supabaseComGaleria = supabase as unknown as SupabaseClient<DatabaseComProdutoFotos>;
 
 export interface ProdutoAdmin extends ProdutoRow {
   fotoUrl: string;
@@ -9,7 +13,7 @@ const SELECT =
   "id, slug, nome, categoria, condicao, detalhe, preco, em_estoque, destaque, ativo, imagem_url, criado_em, atualizado_em, sku, bateria, cor, em_promocao, preco_promocional";
 
 export async function listarProdutosAdmin(): Promise<ProdutoAdmin[]> {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseComGaleria
     .from("produtos")
     .select(SELECT)
     .order("criado_em", { ascending: false });
@@ -75,7 +79,7 @@ async function subirGaleria(produtoId: string, slug: string, fotos: File[]): Pro
 
   // A ordem continua de onde a galeria atual parou, para não embaralhar
   // as fotos já cadastradas.
-  const { data: existentes } = await supabase
+  const { data: existentes } = await supabaseComGaleria
     .from("produto_fotos")
     .select("ordem")
     .eq("produto_id", produtoId)
@@ -89,12 +93,12 @@ async function subirGaleria(produtoId: string, slug: string, fotos: File[]): Pro
     linhas.push({ produto_id: produtoId, caminho, ordem: base + i });
   }
 
-  const { error } = await supabase.from("produto_fotos").insert(linhas);
+  const { error } = await supabaseComGaleria.from("produto_fotos").insert(linhas);
   if (error) throw error;
 }
 
 export async function excluirFotoGaleria(id: string): Promise<void> {
-  const { error } = await supabase.from("produto_fotos").delete().eq("id", id);
+  const { error } = await supabaseComGaleria.from("produto_fotos").delete().eq("id", id);
   if (error) throw error;
 }
 
