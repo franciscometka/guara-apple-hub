@@ -30,6 +30,7 @@ export interface ProdutoView {
   preco: number | null;
   emEstoque: boolean;
   destaque: boolean;
+  ativo: boolean;
   sku: string | null;
   bateria: number | null;
   cor: string | null;
@@ -59,6 +60,7 @@ export function paraProdutoView(row: ProdutoRow): ProdutoView {
     preco: row.preco === null ? null : Number(row.preco),
     emEstoque: row.em_estoque,
     destaque: row.destaque,
+    ativo: row.ativo,
     sku: row.sku,
     bateria: row.bateria,
     cor: row.cor,
