@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
+import { Environment, Lightformer, OrbitControls, useGLTF } from "@react-three/drei";
 import { useReducedMotion } from "motion/react";
 import * as THREE from "three";
 import { useFinePointer, useMediaQuery } from "@/hooks/useMediaQuery";
@@ -31,6 +31,8 @@ const FILL = 0.88;
 /** Animação de entrada: o aparelho "chega" girado e assenta na posição de descanso. */
 const ENTRY_ANGLE = THREE.MathUtils.degToRad(65);
 const ENTRY_DURATION = 1.1; // segundos — mesma duração da entrada do Hero (Hero.tsx)
+const SCREEN_MATERIAL = "17ProMax_glass";
+const LENS_MATERIALS = new Set(["17ProMax_Lens", "17ProMax_Lens2.001"]);
 
 // Início do download do .glb assim que este módulo é avaliado no browser —
 // em paralelo com o resto do carregamento, em vez de esperar o Canvas
@@ -100,14 +102,35 @@ function Device({ onEntryComplete }: { onEntryComplete: () => void }) {
     const clone = scene.clone();
     const toRemove: THREE.Object3D[] = [];
     clone.traverse((obj) => {
-      const material = obj instanceof THREE.Mesh ? obj.material : undefined;
-      const materialNames = Array.isArray(material)
-        ? material.map((item) => item.name)
-        : [material?.name];
+      if (!(obj instanceof THREE.Mesh)) return;
+
+      const sourceMaterials = Array.isArray(obj.material) ? obj.material : [obj.material];
+      const materialNames = sourceMaterials.map((material) => material.name);
 
       if (obj.name === "iphone17promax001_1" || materialNames.includes("Material.003")) {
         toRemove.push(obj);
+        return;
       }
+
+      const polishedMaterials = sourceMaterials.map((source) => {
+        const material = source.clone();
+        if (!(material instanceof THREE.MeshStandardMaterial)) return material;
+
+        if (material.name === SCREEN_MATERIAL) {
+          material.metalness = 0.92;
+          material.roughness = 0.035;
+          material.envMapIntensity = 1.65;
+        } else if (LENS_MATERIALS.has(material.name)) {
+          material.metalness = 0.98;
+          material.roughness = 0.025;
+          material.envMapIntensity = 1.9;
+        }
+
+        material.needsUpdate = true;
+        return material;
+      });
+
+      obj.material = Array.isArray(obj.material) ? polishedMaterials : polishedMaterials[0];
     });
     toRemove.forEach((obj) => obj.removeFromParent());
     return clone;
@@ -182,14 +205,23 @@ function Scene({ interactive, mobile }: { interactive: boolean; mobile: boolean 
       <Suspense fallback={null}>
         <Device onEntryComplete={() => setControlsEnabled(true)} />
       </Suspense>
-      {/* Boundary própria: o mapa de ambiente vem de um HDR hospedado fora
-          do nosso build (raw.githack.com, via drei) — não pode travar a
-          revelação do aparelho se esse download for lento ou falhar.
-          Também é ele que dá vidro/alumínio ao aparelho: sem env map a tela
-          fica preta e o corpo sem reflexo, então mantemos no mobile também. */}
-      <Suspense fallback={null}>
-        <Environment preset="city" />
-      </Suspense>
+      {/* Estúdio local de reflexos: não depende de HDR externo e mantém vidro,
+          lentes e alumínio vivos mesmo em conexões móveis instáveis. */}
+      <Environment resolution={256}>
+        <Lightformer intensity={2.4} position={[0, 4, 2]} scale={[5, 2, 1]} />
+        <Lightformer
+          intensity={2}
+          position={[-4, 0, 1]}
+          rotation={[0, Math.PI / 2, 0]}
+          scale={[6, 1.5, 1]}
+        />
+        <Lightformer
+          intensity={1.6}
+          position={[4, -1, 0]}
+          rotation={[0, -Math.PI / 2, 0]}
+          scale={[4, 1, 1]}
+        />
+      </Environment>
       <ambientLight intensity={mobile ? 0.5 : 0.25} />
       <directionalLight position={[2, 3, 4]} intensity={mobile ? 0.9 : 0.6} />
 
