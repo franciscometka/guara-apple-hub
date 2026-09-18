@@ -6,7 +6,6 @@ import { motion, useReducedMotion } from "motion/react";
 import { Container } from "@/components/layout/Container";
 import { ProductColorSelector } from "@/components/product/ProductColorSelector";
 import { WhatsAppIcon } from "@/components/shared/WhatsAppIcon";
-import { AnimatedGlow } from "@/components/ui/AnimatedGlow";
 import { GuaraBadge } from "@/components/ui/GuaraBadge";
 import { coresIrmas, precoEfetivo } from "@/lib/produto-variantes";
 import { produtosPublicosQuery } from "@/lib/produtos-query";
@@ -23,7 +22,7 @@ export function DestaqueLancamentoSection() {
   const elegiveis = useMemo(
     () =>
       produtos
-        .filter((produto) => produto.destaque && produto.emEstoque)
+        .filter((produto) => produto.destaque && produto.ativo && produto.emEstoque)
         .sort((a, b) => b.criadoEm.localeCompare(a.criadoEm)),
     [produtos],
   );
@@ -50,7 +49,6 @@ export function DestaqueLancamentoSection() {
       aria-labelledby="destaque-lancamento-title"
       className="relative overflow-hidden bg-ink py-24 md:py-32 lg:py-36"
     >
-      <AnimatedGlow className="top-1/2 h-full -translate-y-1/2" />
       <Container className="relative">
         <div className="grid items-center gap-14 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20">
           <motion.div
