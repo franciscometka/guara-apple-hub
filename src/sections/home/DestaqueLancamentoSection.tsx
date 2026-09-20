@@ -15,12 +15,18 @@ import { WA_MESSAGES, trackWhatsApp, waLink } from "@/lib/whatsapp";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 /**
- * Foto de família (as quatro cores juntas), mostrada enquanto ninguém
- * escolheu uma cor. Vive no bucket de fotos, mas não pertence a nenhum
- * produto — por isso é constante aqui, e não um campo da tabela. Trocar o
- * aparelho em destaque exige trocar este arquivo junto.
+ * Foto de família (várias cores juntas) por modelo, mostrada enquanto
+ * ninguém escolheu uma cor. Essas fotos vivem no bucket mas não pertencem a
+ * nenhum produto, por isso ficam aqui e não numa coluna.
+ *
+ * A chave é o modelo como `extrairVariante` o devolve. Modelo sem entrada
+ * aqui simplesmente abre na foto do próprio produto em destaque — assim
+ * destacar outro aparelho nunca faz a seção mostrar a foto de um modelo
+ * que não é o dele.
  */
-const FOTO_FAMILIA_LANCAMENTO = "iphone-18-pro-max-cores-destaque.png";
+const FOTOS_FAMILIA: Record<string, string> = {
+  "IPHONE 18 PRO MAX": "iphone-18-pro-max-cores-destaque.png",
+};
 
 const formatarPreco = (valor: number) =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(valor);
@@ -48,19 +54,25 @@ export function DestaqueLancamentoSection() {
     : null;
   const base = escolhido ?? principal;
 
-  const cores = coresIrmas(base, produtos).map((cor) => ({
-    ...cor,
-    atual: escolhido !== null && cor.slug === base.slug,
-  }));
-
   const variante = extrairVariante(principal.nome, principal.cor);
-  const nomeFamilia = [variante.modelo, variante.capacidade].filter(Boolean).join(" ");
+  const fotoFamilia = FOTOS_FAMILIA[variante.modelo];
+  const irmas = coresIrmas(base, produtos);
+
+  // Só abre na família se existe foto pra esse modelo e há mais de uma cor
+  // pra escolher. Fora disso a seção se comporta como antes, mostrando a
+  // unidade em destaque.
+  const abreNaFamilia = escolhido === null && fotoFamilia !== undefined && irmas.length > 1;
+
+  const cores = irmas.map((cor) => ({
+    ...cor,
+    atual: !abreNaFamilia && cor.slug === base.slug,
+  }));
 
   // Sem cor escolhida só dá pra anunciar preço se todas as cores tiverem o
   // mesmo — senão o número mostrado seria o de uma unidade que o visitante
   // ainda não escolheu.
   const precoUniforme = (() => {
-    const precos = cores.map((cor) => {
+    const precos = irmas.map((cor) => {
       const produto = produtos.find((p) => p.slug === cor.slug);
       return produto ? precoEfetivo(produto) : null;
     });
@@ -69,9 +81,10 @@ export function DestaqueLancamentoSection() {
     return resto.every((p) => p === primeiro) ? (primeiro ?? null) : null;
   })();
 
-  const titulo = escolhido ? escolhido.nome : nomeFamilia;
-  const imagem = escolhido ? escolhido.imagem : urlFoto(FOTO_FAMILIA_LANCAMENTO);
-  const preco = escolhido ? precoEfetivo(escolhido) : precoUniforme;
+  const nomeFamilia = [variante.modelo, variante.capacidade].filter(Boolean).join(" ");
+  const titulo = abreNaFamilia ? nomeFamilia : base.nome;
+  const imagem = abreNaFamilia && fotoFamilia ? urlFoto(fotoFamilia) : base.imagem;
+  const preco = abreNaFamilia ? precoUniforme : precoEfetivo(base);
   const item = {
     hidden: { opacity: 0, y: reduce ? 0 : 16 },
     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
