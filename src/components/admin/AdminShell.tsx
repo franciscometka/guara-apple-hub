@@ -51,6 +51,13 @@ export function AdminShell({
               >
                 Clientes
               </Link>
+              <Link
+                to="/admin/contratos"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                activeProps={{ className: "text-foreground" }}
+              >
+                Contratos
+              </Link>
             </nav>
           </div>
           <button
