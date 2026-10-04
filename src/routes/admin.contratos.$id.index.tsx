@@ -9,12 +9,16 @@ import {
   Loader2,
   Lock,
   Pencil,
+  Smartphone,
   Upload,
 } from "lucide-react";
 import { toast } from "sonner";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { exigirSessaoAdmin } from "@/lib/admin-guard";
-import { StatusBadge } from "@/components/contratos/StatusBadge";
+import { DossieBadge, StatusBadge } from "@/components/contratos/StatusBadge";
+import { PainelAnexos } from "@/components/contratos/PainelAnexos";
+import { listarAnexos, pendenciasDeAnexo } from "@/lib/contratos/anexos";
+import { nomeDoAparelho } from "@/lib/contratos/dossies";
 import {
   baixarArquivo,
   cancelarContrato,
@@ -57,6 +61,13 @@ function DetalheContrato() {
   const { data: loja } = useQuery({
     queryKey: ["contratos", "loja-config"],
     queryFn: carregarDadosLoja,
+  });
+
+  const dossieId = data?.contrato.dossie_id ?? null;
+  const { data: anexos } = useQuery({
+    queryKey: ["contratos", "anexos", dossieId],
+    queryFn: () => listarAnexos(dossieId as string),
+    enabled: Boolean(dossieId),
   });
 
   const recarregar = () => {
@@ -204,6 +215,46 @@ function DetalheContrato() {
               </section>
             );
           })}
+
+          {data.dossie && (
+            <section className="rounded-lg border border-border bg-background p-5">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h2 className="flex items-center gap-2 font-display text-base font-semibold text-foreground">
+                    <Smartphone size={16} strokeWidth={1.5} aria-hidden="true" />
+                    Dossiê do aparelho
+                  </h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {nomeDoAparelho(data.dossie)}
+                    {data.dossie.imei1 ? ` · IMEI ${data.dossie.imei1}` : ""}
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  {anexos && <DossieBadge completo={pendenciasDeAnexo(anexos).length === 0} />}
+                  <Link
+                    to="/admin/dossies/$id"
+                    params={{ id: data.dossie.id }}
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet"
+                  >
+                    Abrir dossiê
+                  </Link>
+                </div>
+              </div>
+
+              <p className="mt-3 text-sm text-muted-foreground">
+                Anexe aqui a nota fiscal de entrada e as fotos do aparelho. Os arquivos ficam no
+                dossiê, não no contrato — valem para todos os contratos deste aparelho.
+              </p>
+
+              <div className="mt-4">
+                <PainelAnexos
+                  dossieId={data.dossie.id}
+                  anexos={anexos ?? []}
+                  contratoId={contrato.id}
+                />
+              </div>
+            </section>
+          )}
         </div>
 
         <aside className="space-y-4">

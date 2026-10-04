@@ -269,6 +269,9 @@ export async function enviarAssinado(
   arquivo: File,
   principal = true,
 ): Promise<void> {
+  // O dossiê nasce na geração do PDF; sem ele o arquivo não tem onde morar.
+  if (!contrato.dossie_id) throw new Error("Gere o PDF antes de enviar o assinado.");
+
   const caminho = `dossies/${contrato.dossie_id}/contratos/${contrato.id}-${etapa.etapa}-assinado.pdf`;
 
   const { error: erroUpload } = await db.storage

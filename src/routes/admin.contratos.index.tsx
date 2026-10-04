@@ -208,7 +208,7 @@ function ListaContratos() {
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   <StatusBadge status={contrato.status} />
-                  <DossieBadge completo={false} />
+                  {contrato.dossie_id && <DossieBadge completo={contrato.dossieCompleto} />}
                 </div>
               </Link>
             </li>

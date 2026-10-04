@@ -22,9 +22,11 @@ import { Route as ProdutosSlugRouteImport } from './routes/produtos.$slug'
 import { Route as AdminContratosIndexRouteImport } from './routes/admin.contratos.index'
 import { Route as AdminContratosConfiguracaoRouteImport } from './routes/admin.contratos.configuracao'
 import { Route as AdminContratosNovoRouteImport } from './routes/admin.contratos.novo'
+import { Route as AdminDossiesIndexRouteImport } from './routes/admin.dossies.index'
 import { Route as AdminProdutosNovoRouteImport } from './routes/admin.produtos.novo'
 import { Route as AdminContratosIdIndexRouteImport } from './routes/admin.contratos.$id.index'
 import { Route as AdminContratosIdPreencherRouteImport } from './routes/admin.contratos.$id.preencher'
+import { Route as AdminDossiesIdIndexRouteImport } from './routes/admin.dossies.$id.index'
 import { Route as AdminProdutosIdEditarRouteImport } from './routes/admin.produtos.$id.editar'
 import { Route as ApiPublicFotoSplatRouteImport } from './routes/api/public/foto.$'
 
@@ -94,6 +96,11 @@ const AdminContratosNovoRoute = AdminContratosNovoRouteImport.update({
   path: '/admin/contratos/novo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminDossiesIndexRoute = AdminDossiesIndexRouteImport.update({
+  id: '/admin/dossies/',
+  path: '/admin/dossies/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminProdutosNovoRoute = AdminProdutosNovoRouteImport.update({
   id: '/admin/produtos/novo',
   path: '/admin/produtos/novo',
@@ -110,6 +117,11 @@ const AdminContratosIdPreencherRoute =
     path: '/admin/contratos/$id/preencher',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AdminDossiesIdIndexRoute = AdminDossiesIdIndexRouteImport.update({
+  id: '/admin/dossies/$id/',
+  path: '/admin/dossies/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminProdutosIdEditarRoute = AdminProdutosIdEditarRouteImport.update({
   id: '/admin/produtos/$id/editar',
   path: '/admin/produtos/$id/editar',
@@ -136,10 +148,12 @@ export interface FileRoutesByFullPath {
   '/admin/contratos/novo': typeof AdminContratosNovoRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
+  '/admin/dossies/': typeof AdminDossiesIndexRoute
   '/admin/contratos/$id/preencher': typeof AdminContratosIdPreencherRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
   '/admin/contratos/$id/': typeof AdminContratosIdIndexRoute
+  '/admin/dossies/$id/': typeof AdminDossiesIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -156,10 +170,12 @@ export interface FileRoutesByTo {
   '/admin/contratos/novo': typeof AdminContratosNovoRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/contratos': typeof AdminContratosIndexRoute
+  '/admin/dossies': typeof AdminDossiesIndexRoute
   '/admin/contratos/$id/preencher': typeof AdminContratosIdPreencherRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
   '/admin/contratos/$id': typeof AdminContratosIdIndexRoute
+  '/admin/dossies/$id': typeof AdminDossiesIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -177,10 +193,12 @@ export interface FileRoutesById {
   '/admin/contratos/novo': typeof AdminContratosNovoRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
+  '/admin/dossies/': typeof AdminDossiesIndexRoute
   '/admin/contratos/$id/preencher': typeof AdminContratosIdPreencherRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
   '/admin/contratos/$id/': typeof AdminContratosIdIndexRoute
+  '/admin/dossies/$id/': typeof AdminDossiesIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -199,10 +217,12 @@ export interface FileRouteTypes {
     | '/admin/contratos/novo'
     | '/admin/produtos/novo'
     | '/admin/contratos/'
+    | '/admin/dossies/'
     | '/admin/contratos/$id/preencher'
     | '/admin/produtos/$id/editar'
     | '/api/public/foto/$'
     | '/admin/contratos/$id/'
+    | '/admin/dossies/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -219,10 +239,12 @@ export interface FileRouteTypes {
     | '/admin/contratos/novo'
     | '/admin/produtos/novo'
     | '/admin/contratos'
+    | '/admin/dossies'
     | '/admin/contratos/$id/preencher'
     | '/admin/produtos/$id/editar'
     | '/api/public/foto/$'
     | '/admin/contratos/$id'
+    | '/admin/dossies/$id'
   id:
     | '__root__'
     | '/'
@@ -239,10 +261,12 @@ export interface FileRouteTypes {
     | '/admin/contratos/novo'
     | '/admin/produtos/novo'
     | '/admin/contratos/'
+    | '/admin/dossies/'
     | '/admin/contratos/$id/preencher'
     | '/admin/produtos/$id/editar'
     | '/api/public/foto/$'
     | '/admin/contratos/$id/'
+    | '/admin/dossies/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -260,10 +284,12 @@ export interface RootRouteChildren {
   AdminContratosNovoRoute: typeof AdminContratosNovoRoute
   AdminProdutosNovoRoute: typeof AdminProdutosNovoRoute
   AdminContratosIndexRoute: typeof AdminContratosIndexRoute
+  AdminDossiesIndexRoute: typeof AdminDossiesIndexRoute
   AdminContratosIdPreencherRoute: typeof AdminContratosIdPreencherRoute
   AdminProdutosIdEditarRoute: typeof AdminProdutosIdEditarRoute
   ApiPublicFotoSplatRoute: typeof ApiPublicFotoSplatRoute
   AdminContratosIdIndexRoute: typeof AdminContratosIdIndexRoute
+  AdminDossiesIdIndexRoute: typeof AdminDossiesIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -359,6 +385,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminContratosNovoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/dossies/': {
+      id: '/admin/dossies/'
+      path: '/admin/dossies'
+      fullPath: '/admin/dossies/'
+      preLoaderRoute: typeof AdminDossiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/produtos/novo': {
       id: '/admin/produtos/novo'
       path: '/admin/produtos/novo'
@@ -378,6 +411,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/contratos/$id/preencher'
       fullPath: '/admin/contratos/$id/preencher'
       preLoaderRoute: typeof AdminContratosIdPreencherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/dossies/$id/': {
+      id: '/admin/dossies/$id/'
+      path: '/admin/dossies/$id'
+      fullPath: '/admin/dossies/$id/'
+      preLoaderRoute: typeof AdminDossiesIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/produtos/$id/editar': {
@@ -412,10 +452,12 @@ const rootRouteChildren: RootRouteChildren = {
   AdminContratosNovoRoute: AdminContratosNovoRoute,
   AdminProdutosNovoRoute: AdminProdutosNovoRoute,
   AdminContratosIndexRoute: AdminContratosIndexRoute,
+  AdminDossiesIndexRoute: AdminDossiesIndexRoute,
   AdminContratosIdPreencherRoute: AdminContratosIdPreencherRoute,
   AdminProdutosIdEditarRoute: AdminProdutosIdEditarRoute,
   ApiPublicFotoSplatRoute: ApiPublicFotoSplatRoute,
   AdminContratosIdIndexRoute: AdminContratosIdIndexRoute,
+  AdminDossiesIdIndexRoute: AdminDossiesIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

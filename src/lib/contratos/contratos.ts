@@ -1,9 +1,12 @@
 import { db, type ContratoRow, type DossieRow, type StatusContrato } from "./database";
+import { anexosCompletos } from "./anexos";
 
 /** Lista de contratos com o aparelho do dossiê, para a tela /admin/contratos. */
 
 export interface ContratoDaLista extends ContratoRow {
   dossie: Pick<DossieRow, "id" | "modelo" | "marca" | "imei1" | "token_ativo"> | null;
+  /** Nota fiscal de entrada e as três fotos já anexadas? */
+  dossieCompleto: boolean;
 }
 
 export const POR_PAGINA = 20;
@@ -55,7 +58,30 @@ export async function listarContratos(filtros: FiltrosContratos = {}): Promise<P
   const { data, error, count } = await consulta;
   if (error) throw error;
 
-  return { itens: (data ?? []) as unknown as ContratoDaLista[], total: count ?? 0 };
+  return { itens: await comCompletude(data ?? []), total: count ?? 0 };
+}
+
+/**
+ * O selo de dossiê completo depende dos anexos, que vivem em outra tabela.
+ * Uma consulta só, restrita aos dossiês da página.
+ */
+async function comCompletude(linhas: unknown[]): Promise<ContratoDaLista[]> {
+  const itens = linhas as ContratoDaLista[];
+  const ids = [...new Set(itens.map((c) => c.dossie_id).filter((id): id is string => Boolean(id)))];
+  if (ids.length === 0) return itens.map((c) => ({ ...c, dossieCompleto: false }));
+
+  const { data: anexos, error } = await db
+    .from("contrato_anexos")
+    .select("dossie_id, tipo")
+    .in("dossie_id", ids);
+  if (error) throw error;
+
+  return itens.map((contrato) => ({
+    ...contrato,
+    dossieCompleto:
+      contrato.dossie_id !== null &&
+      anexosCompletos((anexos ?? []).filter((a) => a.dossie_id === contrato.dossie_id)),
+  }));
 }
 
 /**
@@ -84,5 +110,5 @@ export async function buscarPorImei(imei: string): Promise<ContratoDaLista[]> {
     .limit(POR_PAGINA);
   if (error) throw error;
 
-  return (data ?? []) as unknown as ContratoDaLista[];
+  return comCompletude(data ?? []);
 }
