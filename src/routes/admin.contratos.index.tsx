@@ -88,15 +88,13 @@ function ListaContratos() {
             <Building2 size={16} strokeWidth={1.5} aria-hidden="true" />
             Dados da loja
           </Link>
-          <button
-            type="button"
-            disabled
-            title="O assistente de preenchimento entra na próxima etapa do projeto."
-            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+          <Link
+            to="/admin/contratos/novo"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
           >
             <Plus size={16} strokeWidth={2} aria-hidden="true" />
             Novo contrato
-          </button>
+          </Link>
         </div>
       }
     >
@@ -191,25 +189,28 @@ function ListaContratos() {
       {itens.length > 0 && (
         <ul className="mt-6 space-y-3">
           {itens.map((contrato) => (
-            <li
-              key={contrato.id}
-              className="flex flex-wrap items-center gap-4 rounded-lg border border-border bg-background p-4"
-            >
-              <div className="min-w-[200px] flex-1">
-                <p className="font-medium text-foreground">
-                  {contrato.numero} · {nomeDoModelo(contrato.modelo_slug)}
-                </p>
-                <p className="mt-0.5 text-xs text-muted-foreground">
-                  {contrato.cliente_nome ?? "Cliente não informado"}
-                  {contrato.dossie?.modelo ? ` · ${contrato.dossie.modelo}` : ""}
-                  {contrato.dossie?.imei1 ? ` · IMEI ${contrato.dossie.imei1}` : ""}
-                  {` · ${dataParaBR(contrato.criado_em)}`}
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center gap-2">
-                <StatusBadge status={contrato.status} />
-                <DossieBadge completo={false} />
-              </div>
+            <li key={contrato.id}>
+              <Link
+                to="/admin/contratos/$id"
+                params={{ id: contrato.id }}
+                className="flex flex-wrap items-center gap-4 rounded-lg border border-border bg-background p-4 transition-colors hover:border-violet"
+              >
+                <div className="min-w-[200px] flex-1">
+                  <p className="font-medium text-foreground">
+                    {contrato.numero} · {nomeDoModelo(contrato.modelo_slug)}
+                  </p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    {contrato.cliente_nome ?? "Cliente não informado"}
+                    {contrato.dossie?.modelo ? ` · ${contrato.dossie.modelo}` : ""}
+                    {contrato.dossie?.imei1 ? ` · IMEI ${contrato.dossie.imei1}` : ""}
+                    {` · ${dataParaBR(contrato.criado_em)}`}
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <StatusBadge status={contrato.status} />
+                  <DossieBadge completo={false} />
+                </div>
+              </Link>
             </li>
           ))}
         </ul>

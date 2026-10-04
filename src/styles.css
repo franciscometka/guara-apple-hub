@@ -252,3 +252,15 @@
     scroll-behavior: auto;
   }
 }
+
+/* Troca de passo do assistente de contratos: fade com 12 px de deslocamento. */
+@keyframes passo {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
