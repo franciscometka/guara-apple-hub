@@ -7,7 +7,7 @@ import {
   type EtapaContrato,
 } from "./database";
 import type { DadosContrato } from "./campos/tipos";
-import type { DefModelo } from "./modelos/tipos";
+import type { DefEtapaModelo, DefModelo, ProdutoDoCatalogo } from "./modelos/tipos";
 import { gerarPdf, type PdfGerado } from "./gerar-pdf";
 import { gerarToken } from "./token";
 import type { DadosLoja } from "./loja-config";
@@ -30,7 +30,10 @@ async function usuarioAtual(): Promise<string | null> {
 }
 
 /** Cria o contrato em rascunho e a etapa principal vazia. */
-export async function criarContrato(modelo: DefModelo): Promise<string> {
+export async function criarContrato(
+  modelo: DefModelo,
+  produto?: ProdutoDoCatalogo | undefined,
+): Promise<string> {
   const criadoPor = await usuarioAtual();
 
   const { data: contrato, error } = await db
@@ -45,16 +48,58 @@ export async function criarContrato(modelo: DefModelo): Promise<string> {
     .single();
   if (error) throw error;
 
+  const principal = modelo.etapas[0];
+  if (!principal) throw new Error("Modelo sem etapas.");
+
+  // Sementes do rascunho: numeração própria do modelo (ordem de serviço) e os
+  // valores que já nascem preenchidos, como a data e a hora de agora.
+  const dados: DadosContrato = {
+    ...(modelo.padroes?.() ?? {}),
+    ...(produto ? (modelo.doProduto?.(produto) ?? {}) : {}),
+  };
+  if (modelo.semente) {
+    const { data: numero, error: erroNumero } = await db.rpc("proximo_numero", {
+      _escopo: modelo.semente.escopo,
+    });
+    if (erroNumero) throw erroNumero;
+    dados[modelo.semente.campo] = numero;
+  }
+
   const { error: erroEtapa } = await db.from("contrato_etapas").insert({
     contrato_id: contrato.id,
-    etapa: modelo.etapa,
+    etapa: principal.etapa,
     status: "rascunho",
-    dados: {},
+    dados,
     passo_atual: 0,
   });
   if (erroEtapa) throw erroEtapa;
 
   return contrato.id;
+}
+
+/**
+ * Cria a linha da etapa seguinte na hora em que ela é aberta pela primeira vez
+ * (entrega, diagnóstico, conclusão).
+ */
+export async function abrirEtapa(
+  contratoId: string,
+  etapa: EtapaContrato,
+): Promise<ContratoEtapaRow> {
+  const { data: existente } = await db
+    .from("contrato_etapas")
+    .select("*")
+    .eq("contrato_id", contratoId)
+    .eq("etapa", etapa)
+    .maybeSingle();
+  if (existente) return existente;
+
+  const { data, error } = await db
+    .from("contrato_etapas")
+    .insert({ contrato_id: contratoId, etapa, status: "rascunho", dados: {}, passo_atual: 0 })
+    .select("*")
+    .single();
+  if (error) throw error;
+  return data;
 }
 
 export async function carregarContrato(id: string): Promise<ContratoCompleto> {
@@ -158,13 +203,14 @@ export async function gerarEGravarPdf(
   contrato: ContratoRow,
   etapa: ContratoEtapaRow,
   modelo: DefModelo,
+  etapaModelo: DefEtapaModelo,
   dados: DadosContrato,
   loja: DadosLoja,
   produtoId: string | null = null,
 ): Promise<ResultadoGeracao> {
   const dossieId = contrato.dossie_id ?? (await dossieDoAparelho(modelo, dados, produtoId));
 
-  const pdf = await gerarPdf(modelo, dados, loja.razao_social);
+  const pdf = await gerarPdf(modelo, etapaModelo, dados, loja.razao_social);
   const caminho = `dossies/${dossieId}/contratos/${contrato.id}-${etapa.etapa}.pdf`;
 
   const { error: erroUpload } = await db.storage
@@ -186,14 +232,22 @@ export async function gerarEGravarPdf(
     .eq("id", etapa.id);
   if (erroEtapa) throw erroEtapa;
 
-  const identificacao = modelo.identificacao?.(dados);
+  const principal = etapaModelo.etapa === modelo.etapas[0]?.etapa;
+  const identificacao = principal ? modelo.identificacao?.(dados) : undefined;
+
+  // Só a etapa principal move o status do contrato; as demais (entrega,
+  // diagnóstico, conclusão) andam com status próprio.
   const { error: erroContrato } = await db
     .from("contratos")
     .update({
       dossie_id: dossieId,
-      status: "pdf_gerado",
-      cliente_nome: identificacao?.nome ?? null,
-      cliente_cpf: identificacao?.cpf ?? null,
+      ...(principal
+        ? {
+            status: "pdf_gerado" as const,
+            cliente_nome: identificacao?.nome ?? null,
+            cliente_cpf: identificacao?.cpf ?? null,
+          }
+        : {}),
     })
     .eq("id", contrato.id);
   if (erroContrato) throw erroContrato;
@@ -213,6 +267,7 @@ export async function enviarAssinado(
   contrato: ContratoRow,
   etapa: ContratoEtapaRow,
   arquivo: File,
+  principal = true,
 ): Promise<void> {
   const caminho = `dossies/${contrato.dossie_id}/contratos/${contrato.id}-${etapa.etapa}-assinado.pdf`;
 
@@ -228,11 +283,13 @@ export async function enviarAssinado(
     .eq("id", etapa.id);
   if (erroEtapa) throw erroEtapa;
 
-  const { error: erroContrato } = await db
-    .from("contratos")
-    .update({ status: "assinado", assinado_em: agora })
-    .eq("id", contrato.id);
-  if (erroContrato) throw erroContrato;
+  if (principal) {
+    const { error: erroContrato } = await db
+      .from("contratos")
+      .update({ status: "assinado", assinado_em: agora })
+      .eq("id", contrato.id);
+    if (erroContrato) throw erroContrato;
+  }
 }
 
 export async function cancelarContrato(id: string): Promise<void> {

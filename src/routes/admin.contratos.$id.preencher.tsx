@@ -6,23 +6,32 @@ import { toast } from "sonner";
 import { exigirSessaoAdmin } from "@/lib/admin-guard";
 import { StepCard, WizardShell } from "@/components/contratos/WizardShell";
 import { CampoDinamico } from "@/components/contratos/CampoDinamico";
-import { carregarContrato, etapaDe, salvarRascunho } from "@/lib/contratos/assistente";
-import { obterModelo } from "@/lib/contratos/campos";
+import { abrirEtapa, carregarContrato, salvarRascunho } from "@/lib/contratos/assistente";
+import { obterEtapaModelo, obterModelo } from "@/lib/contratos/campos";
 import {
   camposVisiveis,
   passosVisiveis,
-  textoDe,
   validarPasso,
+  valorLegivel,
   type DadosContrato,
   type DefPasso,
   type ValorCampo,
 } from "@/lib/contratos/campos/tipos";
 import { carregarDadosLoja, configuracaoCompleta } from "@/lib/contratos/loja-config";
-import { nomeDoModelo } from "@/lib/contratos/modelos/catalogo";
+import { nomeDoModelo, ROTULO_ETAPA } from "@/lib/contratos/modelos/catalogo";
+import type { EtapaContrato } from "@/lib/contratos/database";
+
+const ETAPAS_VALIDAS: EtapaContrato[] = ["principal", "entrega", "diagnostico", "conclusao"];
 
 export const Route = createFileRoute("/admin/contratos/$id/preencher")({
   ssr: false,
   beforeLoad: exigirSessaoAdmin,
+  validateSearch: (busca: Record<string, unknown>): { etapa?: EtapaContrato } => {
+    const etapa = busca["etapa"];
+    return typeof etapa === "string" && ETAPAS_VALIDAS.includes(etapa as EtapaContrato)
+      ? { etapa: etapa as EtapaContrato }
+      : {};
+  },
   head: () => ({
     meta: [
       { title: "Preencher contrato — Painel Guara iPhones" },
@@ -37,8 +46,10 @@ const INTERVALO_SALVAMENTO = 1500;
 
 function Assistente() {
   const { id } = Route.useParams();
+  const { etapa: etapaBuscada } = Route.useSearch();
+  const etapaAlvo: EtapaContrato = etapaBuscada ?? "principal";
 
-  const { data, isPending, error } = useQuery({
+  const { data, isPending, error, refetch } = useQuery({
     queryKey: ["contratos", "contrato", id],
     queryFn: () => carregarContrato(id),
   });
@@ -47,39 +58,55 @@ function Assistente() {
     queryFn: carregarDadosLoja,
   });
 
+  // A etapa pedida pode ainda não existir no banco: ela nasce aqui, na
+  // primeira vez que alguém a abre.
+  const [criandoEtapa, setCriandoEtapa] = useState(false);
+  const existente = data?.etapas.find((e) => e.etapa === etapaAlvo);
+
+  useEffect(() => {
+    if (!data || existente || criandoEtapa) return;
+    setCriandoEtapa(true);
+    void abrirEtapa(id, etapaAlvo)
+      .then(() => refetch())
+      .catch(() => toast.error("Não foi possível abrir esta etapa."))
+      .finally(() => setCriandoEtapa(false));
+  }, [data, existente, criandoEtapa, id, etapaAlvo, refetch]);
+
   if (isPending || !loja) {
     return <p className="p-8 text-sm text-muted-foreground">Carregando contrato…</p>;
   }
   if (error || !data) {
     return <p className="p-8 text-sm text-destructive">Não foi possível abrir este contrato.</p>;
   }
-
   if (!configuracaoCompleta(loja)) {
     return <Navigate to="/admin/contratos/configuracao" />;
   }
-
-  const modelo = obterModelo(data.contrato.modelo_slug);
-  const etapa = etapaDe(data, modelo.etapa);
-  if (!etapa) {
-    return <p className="p-8 text-sm text-destructive">Etapa do contrato não encontrada.</p>;
+  if (!existente) {
+    return <p className="p-8 text-sm text-muted-foreground">Abrindo a etapa…</p>;
   }
 
   // Depois de gerado o PDF os dados estão travados: o lugar de olhar é o detalhe.
-  if (etapa.status !== "rascunho") {
+  if (existente.status !== "rascunho") {
     return <Navigate to="/admin/contratos/$id" params={{ id }} />;
   }
 
+  const modelo = obterModelo(data.contrato.modelo_slug);
+  const daPrincipal = data.etapas.find((e) => e.etapa === "principal");
+
   return (
     <Preenchimento
-      key={etapa.id}
+      key={existente.id}
       contratoId={id}
       numero={data.contrato.numero}
       modeloSlug={data.contrato.modelo_slug}
-      etapaId={etapa.id}
-      passoInicial={etapa.passo_atual}
+      etapa={etapaAlvo}
+      etapaId={existente.id}
+      passoInicial={existente.passo_atual}
       dadosIniciais={{
         ...(modelo.daLoja?.(loja) ?? {}),
-        ...((etapa.dados as DadosContrato) ?? {}),
+        // A etapa posterior enxerga o que já foi preenchido na principal.
+        ...((daPrincipal?.dados as DadosContrato) ?? {}),
+        ...((existente.dados as DadosContrato) ?? {}),
       }}
     />
   );
@@ -89,6 +116,7 @@ function Preenchimento({
   contratoId,
   numero,
   modeloSlug,
+  etapa,
   etapaId,
   passoInicial,
   dadosIniciais,
@@ -96,12 +124,14 @@ function Preenchimento({
   contratoId: string;
   numero: string;
   modeloSlug: string;
+  etapa: EtapaContrato;
   etapaId: string;
   passoInicial: number;
   dadosIniciais: DadosContrato;
 }) {
   const navigate = useNavigate();
   const modelo = obterModelo(modeloSlug);
+  const etapaModelo = obterEtapaModelo(modelo, etapa);
 
   const [dados, setDados] = useState<DadosContrato>(dadosIniciais);
   const [indice, setIndice] = useState(passoInicial);
@@ -110,7 +140,10 @@ function Preenchimento({
   const [salvoEm, setSalvoEm] = useState<Date | null>(null);
   const primeiroCampo = useRef<HTMLDivElement>(null);
 
-  const passos = useMemo(() => passosVisiveis(modelo.passos, dados), [modelo.passos, dados]);
+  const passos = useMemo(
+    () => passosVisiveis(etapaModelo.passos, dados),
+    [etapaModelo.passos, dados],
+  );
   const posicao = Math.min(indice, passos.length - 1);
   const passo = passos[posicao] as DefPasso;
   const ultimoAntesDaRevisao = posicao === passos.length - 2;
@@ -172,7 +205,7 @@ function Preenchimento({
 
   async function sairSalvando() {
     await salvar(dados, posicao);
-    navigate({ to: "/admin/contratos" });
+    navigate({ to: "/admin/contratos/$id", params: { id: contratoId } });
   }
 
   // Enter avança quando o passo está válido, exceto dentro de textarea.
@@ -183,9 +216,14 @@ function Preenchimento({
     if (podeContinuar) continuar();
   }
 
+  const nome =
+    modelo.etapas.length > 1
+      ? `${nomeDoModelo(modeloSlug)} · ${ROTULO_ETAPA[etapa]}`
+      : nomeDoModelo(modeloSlug);
+
   return (
     <WizardShell
-      modelo={nomeDoModelo(modeloSlug)}
+      modelo={nome}
       numero={numero}
       passoAtual={posicao}
       total={passos.length}
@@ -282,7 +320,7 @@ function Revisao({
                 >
                   <dt className="text-sm text-muted-foreground">{campo.rotulo}</dt>
                   <dd className="text-sm font-medium text-foreground">
-                    {textoDe(dados, campo.nome) || "—"}
+                    {valorLegivel(campo, dados) || "—"}
                   </dd>
                 </div>
               ))}

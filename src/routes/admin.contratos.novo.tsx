@@ -8,10 +8,15 @@ import { MODELOS } from "@/lib/contratos/modelos/catalogo";
 import { modeloImplementado, obterModelo } from "@/lib/contratos/campos";
 import { criarContrato } from "@/lib/contratos/assistente";
 import { carregarDadosLoja, faltaNaConfiguracao } from "@/lib/contratos/loja-config";
+import { obterProdutoAdmin } from "@/lib/admin-produtos";
 
 export const Route = createFileRoute("/admin/contratos/novo")({
   ssr: false,
   beforeLoad: exigirSessaoAdmin,
+  validateSearch: (busca: Record<string, unknown>): { produto?: string } => {
+    const produto = busca["produto"];
+    return typeof produto === "string" && produto !== "" ? { produto } : {};
+  },
   head: () => ({
     meta: [
       { title: "Novo contrato — Painel Guara iPhones" },
@@ -24,6 +29,15 @@ export const Route = createFileRoute("/admin/contratos/novo")({
 
 function EscolherModelo() {
   const navigate = useNavigate();
+  const { produto: produtoId } = Route.useSearch();
+
+  // Quando veio de "Gerar contrato deste aparelho", o catálogo preenche o que
+  // já sabe sobre o produto.
+  const { data: produto } = useQuery({
+    queryKey: ["admin", "produto", produtoId],
+    queryFn: () => obterProdutoAdmin(produtoId as string),
+    enabled: Boolean(produtoId),
+  });
 
   const { data: loja, isPending } = useQuery({
     queryKey: ["contratos", "loja-config"],
@@ -33,7 +47,23 @@ function EscolherModelo() {
   const bloqueado = Boolean(loja) && faltando.length > 0;
 
   const criar = useMutation({
-    mutationFn: (slug: string) => criarContrato(obterModelo(slug)),
+    mutationFn: (slug: string) =>
+      criarContrato(
+        obterModelo(slug),
+        produto
+          ? {
+              id: produto.id,
+              nome: produto.nome,
+              cor: produto.cor ?? "",
+              condicao: produto.condicao,
+              preco: Number(
+                produto.em_promocao && produto.preco_promocional !== null
+                  ? produto.preco_promocional
+                  : (produto.preco ?? 0),
+              ),
+            }
+          : undefined,
+      ),
     onSuccess: (id) => navigate({ to: "/admin/contratos/$id/preencher", params: { id } }),
     onError: () => toast.error("Não foi possível criar o contrato."),
   });
@@ -54,6 +84,12 @@ function EscolherModelo() {
       <p className="max-w-2xl text-sm text-muted-foreground">
         Escolha o modelo. Vamos perguntar tudo passo a passo e gerar o PDF no final.
       </p>
+
+      {produto && (
+        <p className="mt-3 inline-flex rounded-full border border-violet/40 bg-accent px-3 py-1 text-sm text-accent-foreground">
+          Aproveitando os dados de “{produto.nome}” do catálogo.
+        </p>
+      )}
 
       {bloqueado && (
         <div className="mt-6 rounded-lg border border-amber-500/40 bg-amber-50 p-4">

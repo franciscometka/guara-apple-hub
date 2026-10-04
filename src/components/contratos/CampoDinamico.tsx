@@ -7,14 +7,17 @@ import { ImeiInput } from "./inputs/ImeiInput";
 import { MoneyInput } from "./inputs/MoneyInput";
 import { PhoneInput } from "./inputs/PhoneInput";
 import { SimNaoToggle } from "./inputs/SimNaoToggle";
+import { ChecklistTable } from "./ChecklistTable";
 import {
+  gravarChecklist,
+  lerChecklist,
   numeroDe,
   textoDe,
   type DadosContrato,
   type DefCampo,
   type ValorCampo,
 } from "@/lib/contratos/campos/tipos";
-import { UFS } from "@/lib/contratos/validadores";
+import { formatarDinheiro, UFS } from "@/lib/contratos/validadores";
 import { cn } from "@/lib/utils";
 
 /**
@@ -49,6 +52,22 @@ export function CampoDinamico({
   const mudar = (novo: ValorCampo) => aoMudar(def.nome, novo);
   const sair = () => aoSair(def.nome);
   const classe = cn("col-span-6", LARGURAS[def.largura ?? "cheia"]);
+
+  if (def.tipo === "checklist") {
+    return (
+      <ChecklistTable
+        rotulo={def.rotulo}
+        ajuda={def.ajuda}
+        erro={erro}
+        linhas={def.linhas ?? []}
+        valores={lerChecklist(dados, def.nome)}
+        aoMudar={(valores) => {
+          aoMudar(def.nome, gravarChecklist(valores));
+          aoSair(def.nome);
+        }}
+      />
+    );
+  }
 
   // Campo com dispensa explícita: a escolha vem antes do valor, e escolher
   // "não se aplica" já deixa o campo válido com o texto que vai no PDF.
@@ -287,13 +306,16 @@ function CampoBase({
         />
       );
 
-    case "leitura":
+    case "leitura": {
+      const bruto = dados[def.nome];
+      const mostrado = typeof bruto === "number" ? formatarDinheiro(bruto) : valor;
       return (
         <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border py-2">
           <span className="text-sm text-muted-foreground">{def.rotulo}</span>
-          <span className="text-sm font-medium text-foreground">{valor || "—"}</span>
+          <span className="text-sm font-medium text-foreground">{mostrado || "—"}</span>
         </div>
       );
+    }
 
     default:
       return (

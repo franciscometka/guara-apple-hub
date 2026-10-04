@@ -1,7 +1,8 @@
 import type { DadosContrato } from "./campos/tipos";
-import type { BlocoDoc, DefModelo } from "./modelos/tipos";
+import type { BlocoDoc, DefEtapaModelo, DefModelo } from "./modelos/tipos";
 import { CREDITO_MODELO } from "./modelos/tipos";
-import { textoDe } from "./campos/tipos";
+import { lerChecklist, NAO_SE_APLICA, SITUACOES, textoDe } from "./campos/tipos";
+import { formatarValor } from "./validadores";
 import { sha256 } from "./hash";
 
 /**
@@ -77,17 +78,43 @@ export const paraWinAnsi = (texto: string): string =>
 /** Troca {{campo}} pelo valor preenchido. Lacuna sem valor nunca fica vazia. */
 export function preencher(texto: string, dados: DadosContrato): string {
   const substituido = texto.replace(/\{\{(\w+)\}\}/g, (_, nome: string) => {
+    // Valor monetário é guardado como número: sai com a máscara brasileira,
+    // já que os modelos escrevem o "R$ " antes do marcador.
+    const bruto = dados[nome];
+    if (typeof bruto === "number") return formatarValor(bruto);
+
     const valor = textoDe(dados, nome).trim();
     return valor === "" ? "—" : valor;
   });
   return paraWinAnsi(substituido);
 }
 
-/** Junta o que foi digitado com o que é calculado na hora de imprimir. */
-export const dadosParaImpressao = (modelo: DefModelo, dados: DadosContrato): DadosContrato => ({
-  ...dados,
-  ...(modelo.derivados?.(dados) ?? {}),
-});
+/**
+ * Junta o que foi digitado com o que é calculado na hora de imprimir.
+ *
+ * Campo cujo passo ou cuja condição não se aplica a este contrato entra no PDF
+ * como "não se aplica": é a regra de nunca deixar lacuna em branco no
+ * documento, já que o texto das cláusulas imprime a linha de todo jeito.
+ */
+export function dadosParaImpressao(
+  modelo: DefModelo,
+  etapaModelo: DefEtapaModelo,
+  dados: DadosContrato,
+): DadosContrato {
+  const completos: DadosContrato = { ...dados };
+
+  for (const passo of etapaModelo.passos) {
+    const passoVale = !passo.quando || passo.quando(dados);
+    for (const campo of passo.campos) {
+      if (campo.tipo === "leitura") continue;
+      const campoVale = passoVale && (!campo.quando || campo.quando(dados));
+      const vazio = completos[campo.nome] === undefined || completos[campo.nome] === "";
+      if (!campoVale && vazio) completos[campo.nome] = NAO_SE_APLICA;
+    }
+  }
+
+  return { ...completos, ...(modelo.derivados?.(completos) ?? {}) };
+}
 
 export interface PdfGerado {
   blob: Blob;
@@ -97,11 +124,12 @@ export interface PdfGerado {
 
 export async function gerarPdf(
   modelo: DefModelo,
+  etapaModelo: DefEtapaModelo,
   dadosBrutos: DadosContrato,
   nomeLoja: string,
 ): Promise<PdfGerado> {
   const { jsPDF } = await import("jspdf");
-  const dados = dadosParaImpressao(modelo, dadosBrutos);
+  const dados = dadosParaImpressao(modelo, etapaModelo, dadosBrutos);
 
   const doc = new jsPDF({ unit: "mm", format: "a4", compress: true });
   let y = MARGEM_TOPO;
@@ -257,6 +285,54 @@ export async function gerarPdf(
         break;
       }
 
+      case "checklist": {
+        const marcados = lerChecklist(dados, b.campo);
+        const passo = alturaLinha(TAM_CORPO);
+        const colSituacao = 58;
+        const larguraItem = LARGURA_TEXTO - colSituacao;
+
+        garantirEspaco(passo * 2);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(TAM_CORPO - 0.5);
+        doc.text("Componente ou teste", MARGEM_X, y);
+        SITUACOES.forEach((situacao, i) => {
+          doc.text(situacao.texto, MARGEM_X + larguraItem + i * 14, y);
+        });
+        y += passo + 0.5;
+        doc.setLineWidth(0.2);
+        doc.line(MARGEM_X, y - 2, LARGURA_A4 - MARGEM_X, y - 2);
+
+        doc.setFont("helvetica", "normal");
+        for (const linha of b.linhas) {
+          const item = marcados[linha.id];
+          const rotulo = doc.splitTextToSize(
+            paraWinAnsi(linha.rotulo),
+            larguraItem - 4,
+          ) as string[];
+
+          garantirEspaco(passo * rotulo.length);
+          const topo = y;
+          rotulo.forEach((parte, i) => {
+            doc.text(parte, MARGEM_X, topo + i * passo);
+          });
+
+          SITUACOES.forEach((situacao, i) => {
+            const marcado = item?.s === situacao.valor;
+            doc.text(marcado ? "[X]" : "[  ]", MARGEM_X + larguraItem + i * 14, topo);
+          });
+
+          y = topo + rotulo.length * passo;
+
+          // O detalhe desce para a linha seguinte, com recuo.
+          if (item?.d?.trim()) {
+            escrever(`Detalhes: ${item.d.trim()}`, { tamanho: TAM_CORPO - 1, recuo: 4 });
+          }
+          y += 1;
+        }
+        y += 2;
+        break;
+      }
+
       case "espaco":
         y += b.altura ?? 3;
         break;
@@ -271,7 +347,7 @@ export async function gerarPdf(
     }
   }
 
-  for (const b of modelo.documento) bloco(b);
+  for (const b of etapaModelo.documento) bloco(b);
 
   // Cabeçalho da loja e rodapé com a linha de crédito, em todas as páginas.
   const paginas = doc.getNumberOfPages();

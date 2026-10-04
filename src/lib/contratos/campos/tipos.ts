@@ -1,4 +1,5 @@
 import {
+  formatarDinheiro,
   cepValido,
   cnpjValido,
   cpfValido,
@@ -46,12 +47,61 @@ export type TipoCampo =
   | "uf"
   | "opcoes"
   | "ultimos4"
+  /** Tabela Regular / Falha / N/T / N/A com coluna de detalhes. */
+  | "checklist"
   /** Mostrado no passo de conferência, nunca editado ali. */
   | "leitura";
 
 export interface OpcaoCampo {
   valor: string;
   texto: string;
+}
+
+/** Uma linha da tabela de checklist. */
+export interface LinhaChecklist {
+  id: string;
+  rotulo: string;
+}
+
+export type SituacaoChecklist = "regular" | "falha" | "nt" | "na";
+
+export const SITUACOES: readonly { valor: SituacaoChecklist; texto: string }[] = [
+  { valor: "regular", texto: "Regular" },
+  { valor: "falha", texto: "Falha" },
+  { valor: "nt", texto: "N/T" },
+  { valor: "na", texto: "N/A" },
+];
+
+/** "Falha" e "N/T" exigem texto na coluna Detalhes. */
+export const EXIGE_DETALHE: readonly SituacaoChecklist[] = ["falha", "nt"];
+
+export interface ItemChecklist {
+  /** Situação marcada. */
+  s?: SituacaoChecklist;
+  /** Detalhes. */
+  d?: string;
+}
+
+export type ValoresChecklist = Record<string, ItemChecklist>;
+
+/** O checklist é guardado como JSON dentro de um único campo. */
+export function lerChecklist(dados: DadosContrato, nome: string): ValoresChecklist {
+  const bruto = dados[nome];
+  if (typeof bruto !== "string" || bruto === "") return {};
+  try {
+    return JSON.parse(bruto) as ValoresChecklist;
+  } catch {
+    return {};
+  }
+}
+
+export const gravarChecklist = (valores: ValoresChecklist): string => JSON.stringify(valores);
+
+/** Texto legível de uma linha, para a revisão e para o PDF. */
+export function descreverChecklist(item: ItemChecklist | undefined): string {
+  if (!item?.s) return "—";
+  const rotulo = SITUACOES.find((o) => o.valor === item.s)?.texto ?? item.s;
+  return item.d ? `${rotulo} — ${item.d}` : rotulo;
 }
 
 export interface SaidaNaoSeAplica {
@@ -69,6 +119,8 @@ export interface DefCampo {
   opcoes?: readonly OpcaoCampo[] | undefined;
   /** Quando presente, a tela oferece o botão explícito de dispensa. */
   naoSeAplica?: SaidaNaoSeAplica | undefined;
+  /** Linhas da tabela, quando o tipo é "checklist". */
+  linhas?: readonly LinhaChecklist[] | undefined;
   largura?: "cheia" | "meia" | "terco" | undefined;
   /** Validação extra que depende dos outros campos já preenchidos. */
   validar?: ((valor: string, dados: DadosContrato) => string | null) | undefined;
@@ -117,6 +169,18 @@ export function validarCampo(def: DefCampo, dados: DadosContrato): string | null
 
   // Dispensa explícita satisfaz o campo e imprime o texto combinado no PDF.
   if (def.naoSeAplica && valor === def.naoSeAplica.texto) return null;
+
+  if (def.tipo === "checklist") {
+    const marcados = lerChecklist(dados, def.nome);
+    for (const linha of def.linhas ?? []) {
+      const item = marcados[linha.id];
+      if (!item?.s) return "Marque uma situação em cada linha da tabela.";
+      if (EXIGE_DETALHE.includes(item.s) && !item.d?.trim()) {
+        return "Falha e N/T precisam de detalhe em todas as linhas marcadas.";
+      }
+    }
+    return null;
+  }
 
   if (def.tipo === "dinheiro") {
     const numero = typeof valor === "number" ? valor : Number(valor);
@@ -192,6 +256,23 @@ export function validarPasso(passo: DefPasso, dados: DadosContrato): Record<stri
   }
 
   return { ...erros, ...(passo.validar?.(dados) ?? {}) };
+}
+
+/**
+ * Valor do campo em texto legível, para a tela de revisão e para o detalhe do
+ * contrato: dinheiro com máscara e checklist resumido linha a linha.
+ */
+export function valorLegivel(def: DefCampo, dados: DadosContrato): string {
+  if (def.tipo === "checklist") {
+    const marcados = lerChecklist(dados, def.nome);
+    const preenchidas = (def.linhas ?? []).filter((l) => marcados[l.id]?.s).length;
+    const total = (def.linhas ?? []).length;
+    return `${preenchidas} de ${total} linhas marcadas`;
+  }
+
+  const bruto = dados[def.nome];
+  if (typeof bruto === "number") return formatarDinheiro(bruto);
+  return textoDe(dados, def.nome);
 }
 
 export const passoValido = (passo: DefPasso, dados: DadosContrato): boolean =>

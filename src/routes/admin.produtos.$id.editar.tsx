@@ -1,4 +1,5 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { FileText } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { ProdutoForm } from "@/components/admin/ProdutoForm";
@@ -53,7 +54,19 @@ function EditarProduto() {
   });
 
   return (
-    <AdminShell titulo="Editar produto">
+    <AdminShell
+      titulo="Editar produto"
+      acoes={
+        <Link
+          to="/admin/contratos/novo"
+          search={{ produto: id }}
+          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet"
+        >
+          <FileText size={16} strokeWidth={1.5} aria-hidden="true" />
+          Gerar contrato deste aparelho
+        </Link>
+      }
+    >
       {isPending && <p className="text-sm text-muted-foreground">Carregando produto…</p>}
       {error && <p className="text-sm text-destructive">Não foi possível carregar esse produto.</p>}
       {produto && (

@@ -1,7 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { ArrowLeft, Download, FileCheck2, FileText, Loader2, Pencil, Upload } from "lucide-react";
+import {
+  ArrowLeft,
+  Download,
+  FileCheck2,
+  FileText,
+  Loader2,
+  Lock,
+  Pencil,
+  Upload,
+} from "lucide-react";
 import { toast } from "sonner";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { exigirSessaoAdmin } from "@/lib/admin-guard";
@@ -11,15 +20,15 @@ import {
   cancelarContrato,
   carregarContrato,
   enviarAssinado,
-  etapaDe,
   gerarEGravarPdf,
 } from "@/lib/contratos/assistente";
-import { obterModelo } from "@/lib/contratos/campos";
-import { camposVisiveis, passosVisiveis, textoDe } from "@/lib/contratos/campos/tipos";
+import { etapaPrincipal, obterEtapaModelo, obterModelo } from "@/lib/contratos/campos";
+import { camposVisiveis, passosVisiveis, valorLegivel } from "@/lib/contratos/campos/tipos";
 import type { DadosContrato } from "@/lib/contratos/campos/tipos";
 import { baixarPdf } from "@/lib/contratos/gerar-pdf";
 import { carregarDadosLoja } from "@/lib/contratos/loja-config";
 import { nomeDoModelo, ROTULO_ETAPA } from "@/lib/contratos/modelos/catalogo";
+import type { ContratoEtapaRow, EtapaContrato } from "@/lib/contratos/database";
 import { LIMITE_ARQUIVO_BYTES } from "@/lib/contratos/database";
 import { ERROS } from "@/lib/contratos/validadores";
 
@@ -39,8 +48,7 @@ export const Route = createFileRoute("/admin/contratos/$id/")({
 function DetalheContrato() {
   const { id } = Route.useParams();
   const queryClient = useQueryClient();
-  const entradaAssinado = useRef<HTMLInputElement>(null);
-  const [gerando, setGerando] = useState(false);
+  const [gerando, setGerando] = useState<EtapaContrato | null>(null);
 
   const { data, isPending, error } = useQuery({
     queryKey: ["contratos", "contrato", id],
@@ -57,26 +65,36 @@ function DetalheContrato() {
   };
 
   const gerar = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (etapa: EtapaContrato) => {
       if (!data || !loja) throw new Error("Contrato não carregado.");
       const modelo = obterModelo(data.contrato.modelo_slug);
-      const etapa = etapaDe(data, modelo.etapa);
-      if (!etapa) throw new Error("Etapa não encontrada.");
+      const etapaModelo = obterEtapaModelo(modelo, etapa);
+      const linha = data.etapas.find((e) => e.etapa === etapa);
+      if (!linha) throw new Error("Etapa ainda não foi aberta.");
+
+      // A etapa posterior imprime também o que veio da principal.
+      const daPrincipal =
+        (data.etapas.find((e) => e.etapa === "principal")?.dados as DadosContrato) ?? {};
+      const dados: DadosContrato = {
+        ...daPrincipal,
+        ...((linha.dados as DadosContrato) ?? {}),
+      };
 
       const resultado = await gerarEGravarPdf(
         data.contrato,
-        etapa,
+        linha,
         modelo,
-        (etapa.dados as DadosContrato) ?? {},
+        etapaModelo,
+        dados,
         loja,
       );
-      baixarPdf(resultado.pdf.blob, `${data.contrato.numero}-${modelo.slug}.pdf`);
+      baixarPdf(resultado.pdf.blob, `${data.contrato.numero}-${etapa}.pdf`);
       return resultado;
     },
-    onMutate: () => setGerando(true),
-    onSettled: () => setGerando(false),
+    onMutate: (etapa) => setGerando(etapa),
+    onSettled: () => setGerando(null),
     onSuccess: () => {
-      toast.success("PDF gerado. Os dados do contrato estão travados a partir de agora.");
+      toast.success("PDF gerado. Os dados desta etapa estão travados a partir de agora.");
       recarregar();
     },
     onError: (e: Error) => toast.error(e.message || "Não foi possível gerar o PDF."),
@@ -91,13 +109,16 @@ function DetalheContrato() {
   });
 
   const assinar = useMutation({
-    mutationFn: async (arquivo: File) => {
+    mutationFn: async ({ linha, arquivo }: { linha: ContratoEtapaRow; arquivo: File }) => {
       if (!data) throw new Error("Contrato não carregado.");
-      const modelo = obterModelo(data.contrato.modelo_slug);
-      const etapa = etapaDe(data, modelo.etapa);
-      if (!etapa) throw new Error("Etapa não encontrada.");
       if (arquivo.size > LIMITE_ARQUIVO_BYTES) throw new Error(ERROS.arquivoGrande);
-      await enviarAssinado(data.contrato, etapa, arquivo);
+      const modelo = obterModelo(data.contrato.modelo_slug);
+      await enviarAssinado(
+        data.contrato,
+        linha,
+        arquivo,
+        linha.etapa === etapaPrincipal(modelo).etapa,
+      );
     },
     onSuccess: () => {
       toast.success("PDF assinado enviado.");
@@ -132,9 +153,8 @@ function DetalheContrato() {
 
   const { contrato } = data;
   const modelo = obterModelo(contrato.modelo_slug);
-  const etapa = etapaDe(data, modelo.etapa);
-  const dados = ((etapa?.dados as DadosContrato) ?? {}) as DadosContrato;
-  const rascunho = contrato.status === "rascunho";
+  const principal = data.etapas.find((e) => e.etapa === etapaPrincipal(modelo).etapa);
+  const dadosPrincipal = ((principal?.dados as DadosContrato) ?? {}) as DadosContrato;
   const cancelado = contrato.status === "cancelado";
 
   return (
@@ -157,10 +177,10 @@ function DetalheContrato() {
         </span>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_20rem]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_22rem]">
         <div className="space-y-4">
-          {passosVisiveis(modelo.passos, dados).map((passo) => {
-            const campos = camposVisiveis(passo, dados);
+          {passosVisiveis(etapaPrincipal(modelo).passos, dadosPrincipal).map((passo) => {
+            const campos = camposVisiveis(passo, dadosPrincipal);
             if (campos.length === 0 || passo.tipo === "revisao") return null;
 
             return (
@@ -176,7 +196,7 @@ function DetalheContrato() {
                     >
                       <dt className="text-sm text-muted-foreground">{campo.rotulo}</dt>
                       <dd className="text-sm font-medium text-foreground">
-                        {textoDe(dados, campo.nome) || "—"}
+                        {valorLegivel(campo, dadosPrincipal) || "—"}
                       </dd>
                     </div>
                   ))}
@@ -187,98 +207,37 @@ function DetalheContrato() {
         </div>
 
         <aside className="space-y-4">
-          <section className="rounded-lg border border-border bg-background p-5">
-            <h2 className="font-display text-base font-semibold text-foreground">
-              {ROTULO_ETAPA[modelo.etapa]}
-            </h2>
+          {modelo.etapas.map((etapaModelo) => {
+            const linha = data.etapas.find((e) => e.etapa === etapaModelo.etapa);
+            const anterior = etapaModelo.dependeDe
+              ? data.etapas.find((e) => e.etapa === etapaModelo.dependeDe)
+              : undefined;
+            const bloqueada = Boolean(
+              etapaModelo.dependeDe && (!anterior || anterior.status === "rascunho"),
+            );
 
-            <div className="mt-4 space-y-3">
-              {rascunho && (
-                <>
-                  <Link
-                    to="/admin/contratos/$id/preencher"
-                    params={{ id }}
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet"
-                  >
-                    <Pencil size={15} strokeWidth={1.5} aria-hidden="true" />
-                    Continuar preenchimento
-                  </Link>
-
-                  <button
-                    type="button"
-                    onClick={() => gerar.mutate()}
-                    disabled={gerando}
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-60"
-                  >
-                    {gerando ? (
-                      <Loader2
-                        size={15}
-                        strokeWidth={1.5}
-                        aria-hidden="true"
-                        className="motion-safe:animate-spin"
-                      />
-                    ) : (
-                      <FileText size={15} strokeWidth={1.5} aria-hidden="true" />
-                    )}
-                    {gerando ? "Gerando…" : "Gerar PDF"}
-                  </button>
-                </>
-              )}
-
-              {etapa?.pdf_path && (
-                <button
-                  type="button"
-                  onClick={() => baixar.mutate(etapa.pdf_path as string)}
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet"
-                >
-                  <Download size={15} strokeWidth={1.5} aria-hidden="true" />
-                  Baixar PDF
-                </button>
-              )}
-
-              {etapa?.pdf_path && !cancelado && (
-                <>
-                  <input
-                    ref={entradaAssinado}
-                    type="file"
-                    accept="application/pdf"
-                    className="sr-only"
-                    onChange={(e) => {
-                      const arquivo = e.target.files?.[0];
-                      if (arquivo) assinar.mutate(arquivo);
-                      e.target.value = "";
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => entradaAssinado.current?.click()}
-                    disabled={assinar.isPending}
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet disabled:opacity-60"
-                  >
-                    <Upload size={15} strokeWidth={1.5} aria-hidden="true" />
-                    {assinar.isPending ? "Enviando…" : "Enviar PDF assinado"}
-                  </button>
-                </>
-              )}
-
-              {etapa?.assinado_path && (
-                <button
-                  type="button"
-                  onClick={() => baixar.mutate(etapa.assinado_path as string)}
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet"
-                >
-                  <FileCheck2 size={15} strokeWidth={1.5} aria-hidden="true" />
-                  Baixar assinado
-                </button>
-              )}
-            </div>
-
-            {etapa?.pdf_sha256 && (
-              <p className="mt-4 break-all text-xs text-muted-foreground">
-                SHA-256 do PDF: {etapa.pdf_sha256}
-              </p>
-            )}
-          </section>
+            return (
+              <CartaoEtapa
+                key={etapaModelo.etapa}
+                contratoId={id}
+                etapa={etapaModelo.etapa}
+                titulo={ROTULO_ETAPA[etapaModelo.etapa]}
+                quando={etapaModelo.quando}
+                linha={linha}
+                bloqueada={bloqueada}
+                dependeDe={etapaModelo.dependeDe}
+                rascunho={!linha || linha.status === "rascunho"}
+                cancelado={cancelado}
+                gerando={gerando === etapaModelo.etapa}
+                enviando={assinar.isPending}
+                aoGerar={() => gerar.mutate(etapaModelo.etapa)}
+                aoBaixar={(caminho) => baixar.mutate(caminho)}
+                aoAssinar={(arquivo) => {
+                  if (linha) assinar.mutate({ linha, arquivo });
+                }}
+              />
+            );
+          })}
 
           {!cancelado && (
             <section className="rounded-lg border border-border bg-background p-5">
@@ -307,5 +266,145 @@ function DetalheContrato() {
         </aside>
       </div>
     </AdminShell>
+  );
+}
+
+/** Um bloco por etapa: preencher, gerar PDF, baixar e enviar o assinado. */
+function CartaoEtapa({
+  contratoId,
+  etapa,
+  titulo,
+  quando,
+  linha,
+  bloqueada,
+  dependeDe,
+  rascunho,
+  cancelado,
+  gerando,
+  enviando,
+  aoGerar,
+  aoBaixar,
+  aoAssinar,
+}: {
+  contratoId: string;
+  etapa: EtapaContrato;
+  titulo: string;
+  quando: string | undefined;
+  linha: ContratoEtapaRow | undefined;
+  bloqueada: boolean;
+  dependeDe: EtapaContrato | undefined;
+  rascunho: boolean;
+  cancelado: boolean;
+  gerando: boolean;
+  enviando: boolean;
+  aoGerar: () => void;
+  aoBaixar: (caminho: string) => void;
+  aoAssinar: (arquivo: File) => void;
+}) {
+  const entrada = useRef<HTMLInputElement>(null);
+
+  return (
+    <section className="rounded-lg border border-border bg-background p-5">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="font-display text-base font-semibold text-foreground">{titulo}</h2>
+        {linha && <StatusBadge status={linha.status} />}
+      </div>
+      {quando && <p className="mt-1 text-sm text-muted-foreground">{quando}</p>}
+
+      {bloqueada ? (
+        <p className="mt-4 flex items-start gap-2 text-sm text-muted-foreground">
+          <Lock size={15} strokeWidth={1.5} aria-hidden="true" className="mt-0.5 shrink-0" />
+          Liberada depois que “{dependeDe ? ROTULO_ETAPA[dependeDe] : ""}” gerar o PDF.
+        </p>
+      ) : (
+        <div className="mt-4 space-y-3">
+          {rascunho && !cancelado && (
+            <>
+              <Link
+                to="/admin/contratos/$id/preencher"
+                params={{ id: contratoId }}
+                search={{ etapa }}
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet"
+              >
+                <Pencil size={15} strokeWidth={1.5} aria-hidden="true" />
+                {linha ? "Continuar preenchimento" : "Preencher"}
+              </Link>
+
+              {linha && (
+                <button
+                  type="button"
+                  onClick={aoGerar}
+                  disabled={gerando}
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-60"
+                >
+                  {gerando ? (
+                    <Loader2
+                      size={15}
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                      className="motion-safe:animate-spin"
+                    />
+                  ) : (
+                    <FileText size={15} strokeWidth={1.5} aria-hidden="true" />
+                  )}
+                  {gerando ? "Gerando…" : "Gerar PDF"}
+                </button>
+              )}
+            </>
+          )}
+
+          {linha?.pdf_path && (
+            <button
+              type="button"
+              onClick={() => aoBaixar(linha.pdf_path as string)}
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet"
+            >
+              <Download size={15} strokeWidth={1.5} aria-hidden="true" />
+              Baixar PDF
+            </button>
+          )}
+
+          {linha?.pdf_path && !cancelado && (
+            <>
+              <input
+                ref={entrada}
+                type="file"
+                accept="application/pdf"
+                className="sr-only"
+                onChange={(e) => {
+                  const arquivo = e.target.files?.[0];
+                  if (arquivo) aoAssinar(arquivo);
+                  e.target.value = "";
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => entrada.current?.click()}
+                disabled={enviando}
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet disabled:opacity-60"
+              >
+                <Upload size={15} strokeWidth={1.5} aria-hidden="true" />
+                {enviando ? "Enviando…" : "Enviar PDF assinado"}
+              </button>
+            </>
+          )}
+
+          {linha?.assinado_path && (
+            <button
+              type="button"
+              onClick={() => aoBaixar(linha.assinado_path as string)}
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border px-4 text-sm font-semibold text-foreground transition-colors hover:border-violet"
+            >
+              <FileCheck2 size={15} strokeWidth={1.5} aria-hidden="true" />
+              Baixar assinado
+            </button>
+          )}
+
+          {linha?.pdf_sha256 && (
+            <p className="break-all text-xs text-muted-foreground">SHA-256: {linha.pdf_sha256}</p>
+          )}
+        </div>
+      )}
+    </section>
   );
 }

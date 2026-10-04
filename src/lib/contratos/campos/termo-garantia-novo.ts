@@ -1,7 +1,7 @@
 import { NAO_POSSUI, NAO_SE_APLICA, textoDe, type DefPasso } from "./tipos";
 import type { DefModelo } from "../modelos/tipos";
 import { DOCUMENTO, TITULO, VERSAO } from "../modelos/termo-garantia-novo";
-import { dataParaBR } from "../validadores";
+import { dataOuTexto } from "../validadores";
 
 /**
  * Passos do Modelo A — Termo de Garantia de Aparelho Novo.
@@ -135,10 +135,16 @@ const PASSOS: DefPasso[] = [
 export const MODELO_TERMO_GARANTIA: DefModelo = {
   slug: "termo-garantia-novo",
   versao: VERSAO,
-  etapa: "principal",
   titulo: TITULO,
-  passos: PASSOS,
-  documento: DOCUMENTO,
+
+  etapas: [
+    {
+      etapa: "principal",
+      titulo: TITULO,
+      passos: PASSOS,
+      documento: DOCUMENTO,
+    },
+  ],
 
   daLoja: (loja) => ({
     loja_razao_social: loja.razao_social,
@@ -152,6 +158,11 @@ export const MODELO_TERMO_GARANTIA: DefModelo = {
     canal_endereco: loja.endereco_atendimento,
     cidade: loja.cidade,
     uf: loja.uf,
+  }),
+
+  doProduto: (produto) => ({
+    aparelho_marca: "Apple",
+    aparelho_modelo: produto.nome,
   }),
 
   identificacao: (dados) => ({
@@ -176,8 +187,8 @@ export const MODELO_TERMO_GARANTIA: DefModelo = {
     const iso = textoDe(dados, "data_fechamento");
     const mes = Number(iso.slice(5, 7));
     return {
-      data_compra: dataParaBR(textoDe(dados, "data_compra")),
-      data_entrega_termo: dataParaBR(textoDe(dados, "data_entrega_termo")),
+      data_compra: dataOuTexto(textoDe(dados, "data_compra")),
+      data_entrega_termo: dataOuTexto(textoDe(dados, "data_entrega_termo")),
       dia: iso.slice(8, 10),
       mes_extenso: MESES[mes - 1] ?? "",
       ano: iso.slice(0, 4),
