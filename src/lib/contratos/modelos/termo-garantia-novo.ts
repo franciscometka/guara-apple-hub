@@ -10,7 +10,7 @@ import type { BlocoDoc } from "./tipos";
  * continuam guardando a versão com que foram gerados.
  */
 
-export const VERSAO = "2026-01";
+export const VERSAO = "2026-10";
 
 export const TITULO = "Termo de Garantia de Aparelho Celular Novo";
 
