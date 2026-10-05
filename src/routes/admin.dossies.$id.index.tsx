@@ -7,6 +7,7 @@ import { AdminShell } from "@/components/admin/AdminShell";
 import { exigirSessaoAdmin } from "@/lib/admin-guard";
 import { DossieBadge, StatusBadge } from "@/components/contratos/StatusBadge";
 import { PainelAnexos } from "@/components/contratos/PainelAnexos";
+import { BlocoQrCode } from "@/components/contratos/BlocoQrCode";
 import { CampoTexto } from "@/components/contratos/inputs/Campo";
 import { ImeiInput } from "@/components/contratos/inputs/ImeiInput";
 import { DateTimeField } from "@/components/contratos/inputs/DateTimeField";
@@ -116,6 +117,7 @@ function DetalheDossie() {
         </div>
 
         <aside className="space-y-4">
+          <BlocoQrCode dossie={data.dossie} />
           <FichaDoAparelho completo={data} />
           <ContratosDoDossie completo={data} />
         </aside>

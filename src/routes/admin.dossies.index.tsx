@@ -131,6 +131,11 @@ function ListaDossies() {
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
+                  {!dossie.token_ativo && (
+                    <span className="inline-flex items-center rounded-full border border-border bg-muted px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+                      QR desativado
+                    </span>
+                  )}
                   {dossie.faltando > 0 && (
                     <span className="text-xs text-muted-foreground">
                       {dossie.faltando} {dossie.faltando === 1 ? "anexo" : "anexos"} faltando

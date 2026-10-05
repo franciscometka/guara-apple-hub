@@ -17,6 +17,7 @@ import { Route as VendaSeuIphoneRouteImport } from './routes/venda-seu-iphone'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminClientesRouteImport } from './routes/admin.clientes'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as DTokenRouteImport } from './routes/d.$token'
 import { Route as ProdutosIndexRouteImport } from './routes/produtos.index'
 import { Route as ProdutosSlugRouteImport } from './routes/produtos.$slug'
 import { Route as AdminContratosIndexRouteImport } from './routes/admin.contratos.index'
@@ -27,6 +28,7 @@ import { Route as AdminProdutosNovoRouteImport } from './routes/admin.produtos.n
 import { Route as AdminContratosIdIndexRouteImport } from './routes/admin.contratos.$id.index'
 import { Route as AdminContratosIdPreencherRouteImport } from './routes/admin.contratos.$id.preencher'
 import { Route as AdminDossiesIdIndexRouteImport } from './routes/admin.dossies.$id.index'
+import { Route as AdminDossiesIdEtiquetaRouteImport } from './routes/admin.dossies.$id.etiqueta'
 import { Route as AdminProdutosIdEditarRouteImport } from './routes/admin.produtos.$id.editar'
 import { Route as ApiPublicFotoSplatRouteImport } from './routes/api/public/foto.$'
 
@@ -68,6 +70,11 @@ const AdminClientesRoute = AdminClientesRouteImport.update({
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DTokenRoute = DTokenRouteImport.update({
+  id: '/d/$token',
+  path: '/d/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProdutosIndexRoute = ProdutosIndexRouteImport.update({
@@ -122,6 +129,11 @@ const AdminDossiesIdIndexRoute = AdminDossiesIdIndexRouteImport.update({
   path: '/admin/dossies/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminDossiesIdEtiquetaRoute = AdminDossiesIdEtiquetaRouteImport.update({
+  id: '/admin/dossies/$id/etiqueta',
+  path: '/admin/dossies/$id/etiqueta',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminProdutosIdEditarRoute = AdminProdutosIdEditarRouteImport.update({
   id: '/admin/produtos/$id/editar',
   path: '/admin/produtos/$id/editar',
@@ -141,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
   '/admin/clientes': typeof AdminClientesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/d/$token': typeof DTokenRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/produtos/': typeof ProdutosIndexRoute
@@ -150,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/dossies/': typeof AdminDossiesIndexRoute
   '/admin/contratos/$id/preencher': typeof AdminContratosIdPreencherRoute
+  '/admin/dossies/$id/etiqueta': typeof AdminDossiesIdEtiquetaRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
   '/admin/contratos/$id/': typeof AdminContratosIdIndexRoute
@@ -163,6 +177,7 @@ export interface FileRoutesByTo {
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
   '/admin/clientes': typeof AdminClientesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/d/$token': typeof DTokenRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/admin': typeof AdminIndexRoute
   '/produtos': typeof ProdutosIndexRoute
@@ -172,6 +187,7 @@ export interface FileRoutesByTo {
   '/admin/contratos': typeof AdminContratosIndexRoute
   '/admin/dossies': typeof AdminDossiesIndexRoute
   '/admin/contratos/$id/preencher': typeof AdminContratosIdPreencherRoute
+  '/admin/dossies/$id/etiqueta': typeof AdminDossiesIdEtiquetaRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
   '/admin/contratos/$id': typeof AdminContratosIdIndexRoute
@@ -186,6 +202,7 @@ export interface FileRoutesById {
   '/venda-seu-iphone': typeof VendaSeuIphoneRoute
   '/admin/clientes': typeof AdminClientesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/d/$token': typeof DTokenRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/produtos/': typeof ProdutosIndexRoute
@@ -195,6 +212,7 @@ export interface FileRoutesById {
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/dossies/': typeof AdminDossiesIndexRoute
   '/admin/contratos/$id/preencher': typeof AdminContratosIdPreencherRoute
+  '/admin/dossies/$id/etiqueta': typeof AdminDossiesIdEtiquetaRoute
   '/admin/produtos/$id/editar': typeof AdminProdutosIdEditarRoute
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
   '/admin/contratos/$id/': typeof AdminContratosIdIndexRoute
@@ -210,6 +228,7 @@ export interface FileRouteTypes {
     | '/venda-seu-iphone'
     | '/admin/clientes'
     | '/admin/login'
+    | '/d/$token'
     | '/produtos/$slug'
     | '/admin/'
     | '/produtos/'
@@ -219,6 +238,7 @@ export interface FileRouteTypes {
     | '/admin/contratos/'
     | '/admin/dossies/'
     | '/admin/contratos/$id/preencher'
+    | '/admin/dossies/$id/etiqueta'
     | '/admin/produtos/$id/editar'
     | '/api/public/foto/$'
     | '/admin/contratos/$id/'
@@ -232,6 +252,7 @@ export interface FileRouteTypes {
     | '/venda-seu-iphone'
     | '/admin/clientes'
     | '/admin/login'
+    | '/d/$token'
     | '/produtos/$slug'
     | '/admin'
     | '/produtos'
@@ -241,6 +262,7 @@ export interface FileRouteTypes {
     | '/admin/contratos'
     | '/admin/dossies'
     | '/admin/contratos/$id/preencher'
+    | '/admin/dossies/$id/etiqueta'
     | '/admin/produtos/$id/editar'
     | '/api/public/foto/$'
     | '/admin/contratos/$id'
@@ -254,6 +276,7 @@ export interface FileRouteTypes {
     | '/venda-seu-iphone'
     | '/admin/clientes'
     | '/admin/login'
+    | '/d/$token'
     | '/produtos/$slug'
     | '/admin/'
     | '/produtos/'
@@ -263,6 +286,7 @@ export interface FileRouteTypes {
     | '/admin/contratos/'
     | '/admin/dossies/'
     | '/admin/contratos/$id/preencher'
+    | '/admin/dossies/$id/etiqueta'
     | '/admin/produtos/$id/editar'
     | '/api/public/foto/$'
     | '/admin/contratos/$id/'
@@ -277,6 +301,7 @@ export interface RootRouteChildren {
   VendaSeuIphoneRoute: typeof VendaSeuIphoneRoute
   AdminClientesRoute: typeof AdminClientesRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  DTokenRoute: typeof DTokenRoute
   ProdutosSlugRoute: typeof ProdutosSlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
   ProdutosIndexRoute: typeof ProdutosIndexRoute
@@ -286,6 +311,7 @@ export interface RootRouteChildren {
   AdminContratosIndexRoute: typeof AdminContratosIndexRoute
   AdminDossiesIndexRoute: typeof AdminDossiesIndexRoute
   AdminContratosIdPreencherRoute: typeof AdminContratosIdPreencherRoute
+  AdminDossiesIdEtiquetaRoute: typeof AdminDossiesIdEtiquetaRoute
   AdminProdutosIdEditarRoute: typeof AdminProdutosIdEditarRoute
   ApiPublicFotoSplatRoute: typeof ApiPublicFotoSplatRoute
   AdminContratosIdIndexRoute: typeof AdminContratosIdIndexRoute
@@ -348,6 +374,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/login'
       fullPath: '/admin/login'
       preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/d/$token': {
+      id: '/d/$token'
+      path: '/d/$token'
+      fullPath: '/d/$token'
+      preLoaderRoute: typeof DTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/produtos/': {
@@ -420,6 +453,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDossiesIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/dossies/$id/etiqueta': {
+      id: '/admin/dossies/$id/etiqueta'
+      path: '/admin/dossies/$id/etiqueta'
+      fullPath: '/admin/dossies/$id/etiqueta'
+      preLoaderRoute: typeof AdminDossiesIdEtiquetaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/produtos/$id/editar': {
       id: '/admin/produtos/$id/editar'
       path: '/admin/produtos/$id/editar'
@@ -445,6 +485,7 @@ const rootRouteChildren: RootRouteChildren = {
   VendaSeuIphoneRoute: VendaSeuIphoneRoute,
   AdminClientesRoute: AdminClientesRoute,
   AdminLoginRoute: AdminLoginRoute,
+  DTokenRoute: DTokenRoute,
   ProdutosSlugRoute: ProdutosSlugRoute,
   AdminIndexRoute: AdminIndexRoute,
   ProdutosIndexRoute: ProdutosIndexRoute,
@@ -454,6 +495,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminContratosIndexRoute: AdminContratosIndexRoute,
   AdminDossiesIndexRoute: AdminDossiesIndexRoute,
   AdminContratosIdPreencherRoute: AdminContratosIdPreencherRoute,
+  AdminDossiesIdEtiquetaRoute: AdminDossiesIdEtiquetaRoute,
   AdminProdutosIdEditarRoute: AdminProdutosIdEditarRoute,
   ApiPublicFotoSplatRoute: ApiPublicFotoSplatRoute,
   AdminContratosIdIndexRoute: AdminContratosIdIndexRoute,

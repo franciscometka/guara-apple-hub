@@ -17,6 +17,7 @@ import { AdminShell } from "@/components/admin/AdminShell";
 import { exigirSessaoAdmin } from "@/lib/admin-guard";
 import { DossieBadge, StatusBadge } from "@/components/contratos/StatusBadge";
 import { PainelAnexos } from "@/components/contratos/PainelAnexos";
+import { BlocoQrCode } from "@/components/contratos/BlocoQrCode";
 import { listarAnexos, pendenciasDeAnexo } from "@/lib/contratos/anexos";
 import { nomeDoAparelho } from "@/lib/contratos/dossies";
 import {
@@ -245,6 +246,10 @@ function DetalheContrato() {
                 Anexe aqui a nota fiscal de entrada e as fotos do aparelho. Os arquivos ficam no
                 dossiê, não no contrato — valem para todos os contratos deste aparelho.
               </p>
+
+              <div className="mt-4">
+                <BlocoQrCode dossie={data.dossie} />
+              </div>
 
               <div className="mt-4">
                 <PainelAnexos

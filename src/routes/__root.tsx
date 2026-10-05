@@ -131,8 +131,11 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
+  // /d/<token> é a página pública do QR Code do aparelho: sai sem menu, sem
+  // rodapé e sem o botão de WhatsApp, para não parecer uma página de venda.
+  const isDossiePublico = pathname.startsWith("/d/");
 
-  if (isAdmin) {
+  if (isAdmin || isDossiePublico) {
     return (
       <QueryClientProvider client={queryClient}>
         <main id="conteudo">

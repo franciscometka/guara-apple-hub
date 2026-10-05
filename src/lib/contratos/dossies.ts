@@ -7,6 +7,7 @@ import {
   type OrigemDossie,
 } from "./database";
 import { listarAnexos, pendenciasDeAnexo } from "./anexos";
+import { gerarToken } from "./token";
 import { soDigitos } from "./validadores";
 
 /**
@@ -198,3 +199,34 @@ export function pendenciasDoDossie(completo: DossieCompleto): string[] {
 
 export const dossieCompleto = (completo: DossieCompleto): boolean =>
   pendenciasDoDossie(completo).length === 0;
+
+// ---------------------------------------------------------------------------
+// QR Code do aparelho
+// ---------------------------------------------------------------------------
+
+/**
+ * Liga e desliga a página pública sem trocar o token. Desligado, o endereço
+ * da etiqueta passa a responder "Documentação indisponível"; religado, a mesma
+ * etiqueta volta a funcionar.
+ */
+export async function definirQrAtivo(id: string, ativo: boolean): Promise<void> {
+  const { error } = await db.from("dossies").update({ token_ativo: ativo }).eq("id", id);
+  if (error) throw error;
+}
+
+/**
+ * Sorteia um token novo. O endereço antigo morre na hora — toda etiqueta já
+ * colada neste aparelho precisa ser reimpressa. Só faz sentido quando o
+ * endereço antigo vazou.
+ */
+export async function gerarNovoToken(id: string): Promise<string> {
+  const token = gerarToken();
+  const { data, error } = await db
+    .from("dossies")
+    .update({ token, token_ativo: true })
+    .eq("id", id)
+    .select("token")
+    .single();
+  if (error) throw error;
+  return data.token;
+}
