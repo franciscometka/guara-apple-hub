@@ -11,7 +11,6 @@ export interface AnexoPublico {
   id: string;
   /** "Nota fiscal de entrada", "Foto do IMEI"… */
   rotulo: string;
-  nome: string;
   /** Link assinado, válido por MINUTOS_DO_LINK minutos. */
   url: string;
   /** Dá para mostrar como miniatura? (PDF e HEIC não dão.) */

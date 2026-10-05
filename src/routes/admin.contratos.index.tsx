@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { AlertTriangle, Building2, FileText, Plus } from "lucide-react";
+import { Building2, FileText, Plus } from "lucide-react";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { exigirSessaoAdmin } from "@/lib/admin-guard";
 import { DossieBadge, StatusBadge } from "@/components/contratos/StatusBadge";
@@ -98,11 +98,6 @@ function ListaContratos() {
         </div>
       }
     >
-      <p className="flex items-start gap-2 rounded-lg border border-amber-500/40 bg-amber-50 p-3 text-sm text-amber-900">
-        <AlertTriangle size={16} strokeWidth={1.5} aria-hidden="true" className="mt-0.5 shrink-0" />
-        Os textos dos contratos são modelos. Confirme com o advogado da loja antes de usar.
-      </p>
-
       {configIncompleta && (
         <div className="mt-4 rounded-lg border border-border bg-background p-4">
           <p className="text-sm font-medium text-foreground">

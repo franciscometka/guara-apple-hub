@@ -239,7 +239,6 @@ export async function resolverDossiePublico(
       {
         id: anexo.id,
         rotulo: defDoTipo(anexo.tipo).rotulo,
-        nome: anexo.nome_original,
         url,
         imagem: temPrevia(anexo.mime),
       },

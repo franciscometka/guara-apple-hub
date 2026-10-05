@@ -213,7 +213,6 @@ function Documento({ anexo }: { anexo: AnexoPublico }) {
 
       <span className="min-w-0 flex-1">
         <span className="block text-sm font-medium text-foreground">{anexo.rotulo}</span>
-        <span className="mt-0.5 block truncate text-xs text-muted-foreground">{anexo.nome}</span>
       </span>
 
       <ExternalLink

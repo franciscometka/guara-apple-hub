@@ -21,7 +21,7 @@ export const DOCUMENTO: BlocoDoc[] = [
     t: "p",
     prefixo: "EMPRESA RESPONSÁVEL:",
     texto:
-      "[RAZÃO SOCIAL: {{loja_razao_social}}], pessoa jurídica de direito privado, inscrita no " +
+      "{{loja_razao_social}}, pessoa jurídica de direito privado, inscrita no " +
       "CNPJ sob nº {{loja_cnpj}}, com sede na {{loja_endereco}}, neste ato representada na forma " +
       "de seus atos constitutivos, doravante denominada simplesmente EMPRESA.",
   },
@@ -29,9 +29,9 @@ export const DOCUMENTO: BlocoDoc[] = [
     t: "p",
     prefixo: "CLIENTE/CONSUMIDOR:",
     texto:
-      "{{cliente_nome}}, [nacionalidade {{cliente_nacionalidade}}], [estado civil " +
-      "{{cliente_estado_civil}}], [profissão {{cliente_profissao}}], inscrito(a) no CPF sob nº " +
-      "[{{cliente_cpf}}], residente e domiciliado(a) na [ENDEREÇO {{cliente_endereco}}], " +
+      "{{cliente_nome}}, {{cliente_nacionalidade}}, {{cliente_estado_civil}}, " +
+      "{{cliente_profissao}}, inscrito(a) no CPF sob nº " +
+      "{{cliente_cpf}}, residente e domiciliado(a) na {{cliente_endereco}}, " +
       "doravante denominado(a) simplesmente CLIENTE.",
   },
 
@@ -543,7 +543,7 @@ export const DOCUMENTO: BlocoDoc[] = [
   },
   {
     t: "p",
-    texto: "[CIDADE {{cidade}}/UF: {{uf}}], {{dia}} de {{mes_extenso}} de {{ano}}.",
+    texto: "{{cidade}}/{{uf}}, {{dia}} de {{mes_extenso}} de {{ano}}.",
   },
   { t: "espaco", altura: 10 },
 
@@ -568,7 +568,7 @@ export const DOCUMENTO: BlocoDoc[] = [
 
   { t: "espaco", altura: 6 },
   { t: "rotulo", texto: "DECLARAÇÃO DE RECEBIMENTO" },
-  { t: "p", texto: "Data da entrega do termo: [{{data_entrega_termo}}]" },
+  { t: "p", texto: "Data da entrega do termo: {{data_entrega_termo}}" },
   {
     t: "p",
     texto:
