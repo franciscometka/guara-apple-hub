@@ -21,6 +21,10 @@ import { dataParaBR } from "@/lib/contratos/validadores";
 export const Route = createFileRoute("/d/$token")({
   head: () => ({
     meta: [
+      { property: "og:title", content: "Documentação do aparelho — Guara iPhones" },
+      { property: "og:description", content: "Documentação de procedência do aparelho, publicada pela loja." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Documentação do aparelho — Guara iPhones" },
       {
         name: "description",

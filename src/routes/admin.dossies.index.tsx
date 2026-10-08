@@ -20,6 +20,10 @@ export const Route = createFileRoute("/admin/dossies/")({
   beforeLoad: exigirSessaoAdmin,
   head: () => ({
     meta: [
+      { property: "og:title", content: "Dossiês de aparelhos — Painel Guara iPhones" },
+      { property: "og:description", content: "Fichas dos aparelhos: contratos, nota fiscal de entrada e fotos." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Dossiês de aparelhos — Painel Guara iPhones" },
       {
         name: "description",

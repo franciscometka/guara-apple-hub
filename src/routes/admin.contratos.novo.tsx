@@ -19,6 +19,10 @@ export const Route = createFileRoute("/admin/contratos/novo")({
   },
   head: () => ({
     meta: [
+      { property: "og:title", content: "Novo contrato — Painel Guara iPhones" },
+      { property: "og:description", content: "Escolha o modelo de contrato." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Novo contrato — Painel Guara iPhones" },
       { name: "description", content: "Escolha o modelo de contrato." },
       { name: "robots", content: "noindex" },

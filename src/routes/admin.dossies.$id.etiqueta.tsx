@@ -14,6 +14,10 @@ export const Route = createFileRoute("/admin/dossies/$id/etiqueta")({
   beforeLoad: exigirSessaoAdmin,
   head: () => ({
     meta: [
+      { property: "og:title", content: "Etiqueta do aparelho — Painel Guara iPhones" },
+      { property: "og:description", content: "Impressão da etiqueta com QR Code do aparelho." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Etiqueta do aparelho — Painel Guara iPhones" },
       { name: "description", content: "Impressão da etiqueta com QR Code do aparelho." },
       { name: "robots", content: "noindex" },
