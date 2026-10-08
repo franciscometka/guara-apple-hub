@@ -5,11 +5,12 @@ import { MODELO_TERMO_GARANTIA } from "./termo-garantia-novo";
 import { MODELO_PRE_RESERVA } from "./pre-reserva-iphone-18";
 import { MODELO_CHECKLIST } from "./checklist-assistencia";
 import { MODELO_UPGRADE } from "./upgrade-aparelho";
+import { MODELO_COMPRA } from "./compra-iphone";
 
 /**
  * Registro dos modelos disponíveis no motor do assistente.
  *
- * Para acrescentar um quinto modelo basta criar o arquivo de texto em
+ * Para acrescentar um modelo basta criar o arquivo de texto em
  * `modelos/` e o arquivo de passos aqui em `campos/`, e registrá-lo nesta
  * lista — nenhuma tela precisa mudar.
  */
@@ -18,6 +19,7 @@ const REGISTRO: Partial<Record<ModeloSlug, DefModelo>> = {
   "pre-reserva-iphone-18": MODELO_PRE_RESERVA,
   "checklist-assistencia": MODELO_CHECKLIST,
   "upgrade-aparelho": MODELO_UPGRADE,
+  "compra-iphone": MODELO_COMPRA,
 };
 
 export const modeloImplementado = (slug: string): boolean => slug in REGISTRO;

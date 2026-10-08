@@ -7,7 +7,7 @@ import type { EtapaContrato } from "../database";
  */
 
 export type ModeloSlug =
-  "termo-garantia-novo" | "pre-reserva-iphone-18" | "checklist-assistencia" | "upgrade-aparelho";
+  "termo-garantia-novo" | "pre-reserva-iphone-18" | "checklist-assistencia" | "upgrade-aparelho" | "compra-iphone";
 
 export interface ModeloCatalogo {
   slug: ModeloSlug;
@@ -22,6 +22,13 @@ export interface ModeloCatalogo {
 }
 
 export const MODELOS: ModeloCatalogo[] = [
+  {
+    slug: "compra-iphone",
+    nome: "Compra de iPhone (sem upgrade)",
+    titulo: "Contrato de Compra de iPhone",
+    quandoUsar: "Cliente compra um iPhone sem entregar aparelho antigo.",
+    etapas: ["principal"],
+  },
   {
     slug: "termo-garantia-novo",
     nome: "Termo de Garantia (aparelho novo)",
