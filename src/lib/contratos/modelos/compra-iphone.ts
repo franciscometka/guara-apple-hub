@@ -149,7 +149,7 @@ export const DOCUMENTO: BlocoDoc[] = [
   {
     "t": "p",
     "prefixo": "3.3.",
-    "texto": "Se houver resolução desta operação, a restituição das prestações já cumpridas, observará o fundamento da resolução, o estado dos bens e os direitos legais de ambas as partes."
+    "texto": "Se houver resolução desta operação, a restituição das prestações já cumpridas observará o fundamento da resolução, o estado dos bens e os direitos legais de ambas as partes."
   },
   {
     "t": "secao",
@@ -274,5 +274,101 @@ export const DOCUMENTO: BlocoDoc[] = [
   {
     "t": "p",
     "texto": "O preço será pago por {{pagamento_meio}}, da seguinte forma: {{pagamento_forma}} e, se aplicável, {{parcelas_quantidade}} parcelas de R$ {{parcelas_valor}}, com vencimentos em {{parcelas_vencimento}}, total a prazo de R$ {{parcelas_total}}, juros de {{parcelas_juros}} ao {{parcelas_periodicidade}}, demais encargos de {{parcelas_encargos}}, custo efetivo total de {{parcelas_cet}} e agente financiador {{parcelas_financiador}}. Se não houver parcelamento, preencher “não se aplica”."
+  },
+  {
+    "t": "rotulo",
+    "texto": "Aparelho entregue ao consumidor"
+  },
+  {
+    "t": "grade",
+    "linhas": [
+      [
+        "Modelo: {{adquirido_modelo}}",
+        "Capacidade: {{adquirido_capacidade}}"
+      ],
+      [
+        "cor: {{adquirido_cor}}",
+        "condição: {{adquirido_condicao}}"
+      ],
+      [
+        "estado aparente: {{adquirido_estado_aparente}}",
+        ""
+      ],
+      [
+        "IMEI 1: {{adquirido_imei1}}",
+        "IMEI 2: {{adquirido_imei2}}"
+      ],
+      [
+        "número de série: {{adquirido_serie}}",
+        ""
+      ]
+    ]
+  },
+  {
+    "t": "grade",
+    "linhas": [
+      [
+        "Estado e itens — Estado físico: {{anexo_saida_estado}}",
+        "saúde da bateria, se informada: {{anexo_saida_bateria}}"
+      ],
+      [
+        "acessórios: {{anexo_saida_acessorios}}",
+        ""
+      ],
+      [
+        "reparos e limitações informados: {{anexo_saida_limitacoes}}",
+        ""
+      ]
+    ]
+  },
+  {
+    "t": "grade",
+    "linhas": [
+      [
+        "Documentos — Nota fiscal nº {{adquirido_nota_fiscal}}",
+        "emissão: {{anexo_nf_emissao}}"
+      ]
+    ]
+  },
+  {
+    "t": "grade",
+    "linhas": [
+      [
+        "Entrega — Data {{transferencia_data}}",
+        "hora {{transferencia_hora}}"
+      ],
+      [
+        "local: {{transferencia_local}}",
+        ""
+      ],
+      [
+        "valor pago R$ {{pagamento_valor_pago}}",
+        "saldo a pagar R$ {{anexo_saldo_pagar}}"
+      ]
+    ]
+  },
+  {
+    "t": "espaco"
+  },
+  {
+    "t": "p",
+    "texto": "As partes confirmam que receberam cópia deste registro e que as informações preenchidas correspondem aos testes efetivamente realizados e aos bens entregues nesta operação."
+  },
+  {
+    "t": "espaco",
+    "altura": 10
+  },
+  {
+    "t": "assinaturas",
+    "colunas": [
+      {
+        "titulo": "VENDEDOR(A)",
+        "linhas": []
+      },
+      {
+        "titulo": "CONSUMIDOR: {{consumidor_nome}}",
+        "linhas": []
+      }
+    ]
   }
 ];
