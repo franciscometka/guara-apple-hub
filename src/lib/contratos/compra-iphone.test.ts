@@ -1,4 +1,5 @@
-import { describe, expect, test } from "bun:test";
+import { describe, test } from "node:test";
+import assert from "node:assert/strict";
 import { MODELO_COMPRA } from "./campos/compra-iphone";
 import { MODELO_UPGRADE } from "./campos/upgrade-aparelho";
 import { MODELOS } from "./modelos/catalogo";
@@ -6,6 +7,20 @@ import { dadosParaImpressao } from "./gerar-pdf";
 import { passosVisiveis, tudoValido } from "./campos/tipos";
 import { cpfValido, imeiValido } from "./validadores";
 import { dadosCompraFicticia } from "./compra-iphone.fixture";
+
+function expect(actual: unknown) {
+  return {
+    toBe: (expected: unknown) => assert.equal(actual, expected),
+    toEqual: (expected: unknown) => assert.deepEqual(actual, expected),
+    toContain: (expected: unknown) => assert.ok(Array.isArray(actual) && actual.includes(expected)),
+    toBeDefined: () => assert.notEqual(actual, undefined),
+    toMatchObject: (expected: Record<string, unknown>) => {
+      assert.ok(actual && typeof actual === "object");
+      for (const [key, value] of Object.entries(expected)) assert.deepEqual(Reflect.get(actual, key), value);
+    },
+    not: { toBe: (expected: unknown) => assert.notEqual(actual, expected) },
+  };
+}
 
 const etapa = MODELO_COMPRA.etapas[0];
 if (!etapa) throw new Error("Compra sem etapa principal");
@@ -52,8 +67,8 @@ describe("Compra de iPhone sem aparelho de entrada", () => {
     const dados = dadosCompraFicticia();
     for (const campo of etapa.passos.find(p => p.id === "parcelamento")?.campos ?? []) delete dados[campo.nome];
     const impressao = dadosParaImpressao(MODELO_COMPRA, etapa, dados);
-    expect(impressao.parcelas_quantidade).toBe("não se aplica");
-    expect(impressao.parcelas_valor).toBe("não se aplica");
+    expect(impressao["parcelas_quantidade"]).toBe("não se aplica");
+    expect(impressao["parcelas_valor"]).toBe("não se aplica");
     expect(passosVisiveis(etapa.passos, dados).some(p => p.id === "parcelamento")).toBe(false);
   });
   test("aceita os dados fictícios válidos pedidos", () => {
