@@ -42,6 +42,10 @@ export const Route = createFileRoute("/admin/contratos/$id/")({
   beforeLoad: exigirSessaoAdmin,
   head: () => ({
     meta: [
+      { property: "og:title", content: "Contrato — Painel Guara iPhones" },
+      { property: "og:description", content: "Detalhe do contrato e do dossiê." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Contrato — Painel Guara iPhones" },
       { name: "description", content: "Detalhe do contrato e do dossiê." },
       { name: "robots", content: "noindex" },

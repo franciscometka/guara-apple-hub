@@ -34,6 +34,10 @@ export const Route = createFileRoute("/admin/contratos/$id/preencher")({
   },
   head: () => ({
     meta: [
+      { property: "og:title", content: "Preencher contrato — Painel Guara iPhones" },
+      { property: "og:description", content: "Assistente de preenchimento de contrato." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Preencher contrato — Painel Guara iPhones" },
       { name: "description", content: "Assistente de preenchimento de contrato." },
       { name: "robots", content: "noindex" },
