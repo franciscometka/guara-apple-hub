@@ -13,3 +13,4 @@
 - Purchase-only contracts use the existing sale dossier origin and acquired-device identifiers; the shared lifecycle supplies numbering, PDF hashes, and QR links without new schema.
 - Contract file uploads share MIME normalization for missing/generic browser types; signed PDF validation runs before storage writes to prevent silent format failures.
 - Mount the shared notification renderer once in the root shell so upload results and errors remain visible on every layout.
+- Public QR attachments use same-origin file delivery with token and visibility revalidation on every request; HEIC decoding is dynamically loaded in the browser so existing originals remain unchanged and readable without exposing private files.

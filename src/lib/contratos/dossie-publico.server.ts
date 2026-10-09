@@ -3,6 +3,7 @@ import { BUCKET_CONTRATOS, type ClienteContratos, type ResultadoAcesso } from ".
 import { nomeDoAparelho, pendenciasDoDossie } from "./dossies";
 import { sha256 } from "./hash";
 import { MINUTOS_DO_LINK, type AnexoPublico, type RespostaDossiePublico } from "./dossie-publico";
+import { anexoPodeSerPublicado, urlDoAnexoPublico } from "./acesso-anexo-publico";
 
 /**
  * Tudo que a página pública /d/<token> faz do lado do servidor.
@@ -224,22 +225,15 @@ export async function resolverDossiePublico(
   // 4. Só o que a loja marcou como visível — e documento do cliente fica de
   //    fora mesmo que alguém tenha conseguido marcá-lo.
   const publicaveis = (anexos ?? [])
-    .filter((a) => a.visivel_publico && a.tipo !== "documento_pessoal")
+    .filter(anexoPodeSerPublicado)
     .sort((a, b) => ordemDoTipo(a.tipo) - ordemDoTipo(b.tipo));
 
-  const links = await assinarAnexos(
-    admin,
-    publicaveis.map((a) => a.path),
-  );
-
-  const publicados: AnexoPublico[] = publicaveis.flatMap((anexo, i) => {
-    const url = links[i];
-    if (!url) return [];
+  const publicados: AnexoPublico[] = publicaveis.flatMap((anexo) => {
     return [
       {
         id: anexo.id,
         rotulo: defDoTipo(anexo.tipo).rotulo,
-        url,
+        url: urlDoAnexoPublico(token, anexo.id),
         imagem: temPrevia(anexo.mime),
       },
     ];
