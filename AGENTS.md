@@ -11,3 +11,5 @@
 
 - Contract variants own independent document and assistant definitions and register in the shared catalog/registry; this prevents changes to existing models and generated contracts.
 - Purchase-only contracts use the existing sale dossier origin and acquired-device identifiers; the shared lifecycle supplies numbering, PDF hashes, and QR links without new schema.
+- Contract file uploads share MIME normalization for missing/generic browser types; signed PDF validation runs before storage writes to prevent silent format failures.
+- Mount the shared notification renderer once in the root shell so upload results and errors remain visible on every layout.

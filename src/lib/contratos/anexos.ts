@@ -6,6 +6,8 @@ import {
   type TipoAnexo,
 } from "./database";
 import { ERROS } from "./validadores";
+import { mimeDe } from "./arquivo";
+export { mimeDe } from "./arquivo";
 
 /**
  * Anexos do dossiê: nota fiscal de entrada, fotos do aparelho e documentos
@@ -137,26 +139,7 @@ const EXTENSAO_POR_MIME: Record<string, string> = {
   "image/heif": "heif",
 };
 
-const MIME_POR_EXTENSAO: Record<string, string> = {
-  pdf: "application/pdf",
-  jpg: "image/jpeg",
-  jpeg: "image/jpeg",
-  png: "image/png",
-  webp: "image/webp",
-  heic: "image/heic",
-  heif: "image/heif",
-};
-
 const extensaoDoNome = (nome: string): string => (nome.split(".").pop() ?? "").toLowerCase();
-
-/**
- * MIME do arquivo. Alguns navegadores entregam HEIC de iPhone com `type`
- * vazio; nesse caso vale a extensão do nome.
- */
-export function mimeDe(arquivo: File): string {
-  if (arquivo.type) return arquivo.type;
-  return MIME_POR_EXTENSAO[extensaoDoNome(arquivo.name)] ?? "";
-}
 
 /** Extensão a partir do MIME, com o nome original como segunda opção. */
 function extensaoDe(arquivo: File): string {
