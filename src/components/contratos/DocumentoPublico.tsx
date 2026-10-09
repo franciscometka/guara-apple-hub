@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import type { AnexoPublico } from "@/lib/contratos/dossie-publico";
 import { imagemHeic } from "@/lib/contratos/acesso-anexo-publico";
+import { PdfPublico } from "./PdfPublico";
 
 export function DocumentoPublico({ anexo }: { anexo: AnexoPublico }) {
   const [aberto, setAberto] = useState(false);
@@ -63,7 +64,7 @@ export function DocumentoPublico({ anexo }: { anexo: AnexoPublico }) {
             <LoaderCircle className="size-4 animate-spin motion-reduce:animate-none" /> Abrindo arquivo…
           </p> : arquivo.mime.startsWith("image/") ?
             <img src={arquivo.url} alt={anexo.rotulo} className="h-full w-full object-contain" /> :
-            <iframe src={arquivo.url} title={anexo.rotulo} className="h-full w-full border-0" />}
+            <PdfPublico url={arquivo.url} />}
         </div>
         {arquivo && <div className="flex flex-wrap justify-end gap-2">
           <Button asChild variant="outline"><a href={arquivo.url} target="_blank" rel="noopener noreferrer">
