@@ -31,6 +31,7 @@ import { Route as AdminDossiesIdIndexRouteImport } from './routes/admin.dossies.
 import { Route as AdminDossiesIdEtiquetaRouteImport } from './routes/admin.dossies.$id.etiqueta'
 import { Route as AdminProdutosIdEditarRouteImport } from './routes/admin.produtos.$id.editar'
 import { Route as ApiPublicFotoSplatRouteImport } from './routes/api/public/foto.$'
+import { Route as ApiPublicDossieTokenArquivoIdRouteImport } from './routes/api/public/dossie.$token.arquivo.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -144,6 +145,12 @@ const ApiPublicFotoSplatRoute = ApiPublicFotoSplatRouteImport.update({
   path: '/api/public/foto/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicDossieTokenArquivoIdRoute =
+  ApiPublicDossieTokenArquivoIdRouteImport.update({
+    id: '/api/public/dossie/$token/arquivo/$id',
+    path: '/api/public/dossie/$token/arquivo/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -168,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
   '/admin/contratos/$id/': typeof AdminContratosIdIndexRoute
   '/admin/dossies/$id/': typeof AdminDossiesIdIndexRoute
+  '/api/public/dossie/$token/arquivo/$id': typeof ApiPublicDossieTokenArquivoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -192,6 +200,7 @@ export interface FileRoutesByTo {
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
   '/admin/contratos/$id': typeof AdminContratosIdIndexRoute
   '/admin/dossies/$id': typeof AdminDossiesIdIndexRoute
+  '/api/public/dossie/$token/arquivo/$id': typeof ApiPublicDossieTokenArquivoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -217,6 +226,7 @@ export interface FileRoutesById {
   '/api/public/foto/$': typeof ApiPublicFotoSplatRoute
   '/admin/contratos/$id/': typeof AdminContratosIdIndexRoute
   '/admin/dossies/$id/': typeof AdminDossiesIdIndexRoute
+  '/api/public/dossie/$token/arquivo/$id': typeof ApiPublicDossieTokenArquivoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -243,6 +253,7 @@ export interface FileRouteTypes {
     | '/api/public/foto/$'
     | '/admin/contratos/$id/'
     | '/admin/dossies/$id/'
+    | '/api/public/dossie/$token/arquivo/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -267,6 +278,7 @@ export interface FileRouteTypes {
     | '/api/public/foto/$'
     | '/admin/contratos/$id'
     | '/admin/dossies/$id'
+    | '/api/public/dossie/$token/arquivo/$id'
   id:
     | '__root__'
     | '/'
@@ -291,6 +303,7 @@ export interface FileRouteTypes {
     | '/api/public/foto/$'
     | '/admin/contratos/$id/'
     | '/admin/dossies/$id/'
+    | '/api/public/dossie/$token/arquivo/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -316,6 +329,7 @@ export interface RootRouteChildren {
   ApiPublicFotoSplatRoute: typeof ApiPublicFotoSplatRoute
   AdminContratosIdIndexRoute: typeof AdminContratosIdIndexRoute
   AdminDossiesIdIndexRoute: typeof AdminDossiesIdIndexRoute
+  ApiPublicDossieTokenArquivoIdRoute: typeof ApiPublicDossieTokenArquivoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -474,6 +488,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicFotoSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/dossie/$token/arquivo/$id': {
+      id: '/api/public/dossie/$token/arquivo/$id'
+      path: '/api/public/dossie/$token/arquivo/$id'
+      fullPath: '/api/public/dossie/$token/arquivo/$id'
+      preLoaderRoute: typeof ApiPublicDossieTokenArquivoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -500,6 +521,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicFotoSplatRoute: ApiPublicFotoSplatRoute,
   AdminContratosIdIndexRoute: AdminContratosIdIndexRoute,
   AdminDossiesIdIndexRoute: AdminDossiesIdIndexRoute,
+  ApiPublicDossieTokenArquivoIdRoute: ApiPublicDossieTokenArquivoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
