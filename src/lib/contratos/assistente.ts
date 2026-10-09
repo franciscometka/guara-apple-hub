@@ -12,6 +12,7 @@ import { gerarPdf, type PdfGerado } from "./gerar-pdf";
 import { gerarToken } from "./token";
 import type { DadosLoja } from "./loja-config";
 import { soDigitos } from "./validadores";
+import { validarPdfAssinado } from "./arquivo";
 
 /**
  * Ciclo de vida de um contrato: criar o rascunho, salvar o preenchimento a
@@ -271,12 +272,14 @@ export async function enviarAssinado(
 ): Promise<void> {
   // O dossiê nasce na geração do PDF; sem ele o arquivo não tem onde morar.
   if (!contrato.dossie_id) throw new Error("Gere o PDF antes de enviar o assinado.");
+  const recusa = validarPdfAssinado(arquivo);
+  if (recusa) throw new Error(recusa);
 
   const caminho = `dossies/${contrato.dossie_id}/contratos/${contrato.id}-${etapa.etapa}-assinado.pdf`;
 
   const { error: erroUpload } = await db.storage
     .from(BUCKET_CONTRATOS)
-    .upload(caminho, arquivo, { contentType: arquivo.type || "application/pdf", upsert: true });
+    .upload(caminho, arquivo, { contentType: "application/pdf", upsert: true });
   if (erroUpload) throw erroUpload;
 
   const agora = new Date().toISOString();
