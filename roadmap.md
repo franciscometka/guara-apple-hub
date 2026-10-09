@@ -6,3 +6,7 @@
 # Envio de PDFs nos contratos
 - [x] Corrigir rejeição silenciosa de PDFs com tipo genérico e restaurar avisos visíveis de envio/erro.
 - [x] Validar envio, persistência, download e aviso de formato no painel autenticado; arquivos de teste removidos, 13 testes aprovados e build OK.
+
+# Arquivos no QR Code
+- [ ] Identificar e corrigir o acesso aos anexos publicados, preservando documentos privados.
+- [ ] Testar abertura real de fotos e PDFs pela página pública do QR Code.
