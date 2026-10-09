@@ -13,4 +13,4 @@
 
 # Limite dos arquivos de contratos
 - [x] Aumentar para 80 MiB a validação de anexos/PDFs e os limites global e do armazenamento privado de contratos.
-- [ ] Verificar testes de limite e envio de PDF de 60 MiB no painel.
+- [x] Sete testes aprovados; PDF fictício de 60 MiB enviado no painel, persistido após recarregar, baixado com conteúdo idêntico e removido após a conferência.
