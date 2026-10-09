@@ -8,5 +8,5 @@
 - [x] Validar envio, persistência, download e aviso de formato no painel autenticado; arquivos de teste removidos, 13 testes aprovados e build OK.
 
 # Arquivos no QR Code
-- [ ] Identificar e corrigir o acesso aos anexos publicados, preservando documentos privados.
-- [ ] Testar abertura real de fotos e PDFs pela página pública do QR Code.
+- [x] Corrigir acesso com links do próprio site e conversão HEIC no navegador, preservando arquivos privados.
+- [x] Testar fotos existentes, visualização e download de PDF pela página pública; 11 testes aprovados e build OK.
