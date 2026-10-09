@@ -1,8 +1,8 @@
 import { defDoTipo, TIPOS_ANEXO, temPrevia } from "./anexos";
-import { BUCKET_CONTRATOS, type ClienteContratos, type ResultadoAcesso } from "./database";
+import { type ClienteContratos, type ResultadoAcesso } from "./database";
 import { nomeDoAparelho, pendenciasDoDossie } from "./dossies";
 import { sha256 } from "./hash";
-import { MINUTOS_DO_LINK, type AnexoPublico, type RespostaDossiePublico } from "./dossie-publico";
+import { type AnexoPublico, type RespostaDossiePublico } from "./dossie-publico";
 import { anexoPodeSerPublicado, urlDoAnexoPublico } from "./acesso-anexo-publico";
 
 /**
@@ -266,26 +266,3 @@ export async function resolverDossiePublico(
   };
 }
 
-/**
- * Links assinados de 10 minutos, numa chamada só. O navegador recebe apenas
- * estas URLs temporárias: o bucket continua privado e a chave de serviço nunca
- * sai do servidor.
- */
-async function assinarAnexos(
-  admin: ClienteContratos,
-  caminhos: string[],
-): Promise<(string | null)[]> {
-  if (caminhos.length === 0) return [];
-
-  const { data, error } = await admin.storage
-    .from(BUCKET_CONTRATOS)
-    .createSignedUrls(caminhos, MINUTOS_DO_LINK * 60);
-
-  if (error || !data) {
-    console.error("[dossie] falha ao assinar anexos:", error?.message);
-    return caminhos.map(() => null);
-  }
-
-  // A API devolve os itens na mesma ordem dos caminhos, com `error` por item.
-  return data.map((item) => (item.error ? null : (item.signedUrl ?? null)));
-}

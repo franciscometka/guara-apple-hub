@@ -1,12 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ExternalLink, FileText, ShieldCheck, Smartphone } from "lucide-react";
+import { FileText, ShieldCheck, Smartphone } from "lucide-react";
+import { DocumentoPublico } from "@/components/contratos/DocumentoPublico";
 import type { ReactNode } from "react";
 import { consultarDossiePublico } from "@/lib/contratos/dossie-publico.functions";
 import {
   DETALHE_INDISPONIVEL,
   INDISPONIVEL,
-  MINUTOS_DO_LINK,
-  type AnexoPublico,
   type DossiePublico,
 } from "@/lib/contratos/dossie-publico";
 import { dataParaBR } from "@/lib/contratos/validadores";
@@ -132,14 +131,10 @@ function Documentacao({ dossie }: { dossie: DossiePublico }) {
             <ul className="mt-4 space-y-3">
               {dossie.anexos.map((anexo) => (
                 <li key={anexo.id}>
-                  <Documento anexo={anexo} />
+                  <DocumentoPublico anexo={anexo} />
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-xs text-muted-foreground">
-              Os links abrem por {MINUTOS_DO_LINK} minutos. Depois disso, recarregue esta página
-              para abrir de novo.
-            </p>
           </>
         )}
       </section>
@@ -194,37 +189,3 @@ function Linha({ rotulo, valor, mono }: { rotulo: string; valor: string; mono?: 
   );
 }
 
-function Documento({ anexo }: { anexo: AnexoPublico }) {
-  return (
-    <a
-      href={anexo.url}
-      target="_blank"
-      rel="noopener noreferrer nofollow"
-      className="flex items-center gap-3 rounded-lg border border-border p-3 transition-colors hover:border-violet"
-    >
-      {anexo.imagem ? (
-        <img
-          src={anexo.url}
-          alt=""
-          loading="lazy"
-          className="h-14 w-14 shrink-0 rounded-md border border-border object-cover"
-        />
-      ) : (
-        <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-border bg-muted">
-          <FileText size={20} strokeWidth={1.5} aria-hidden="true" className="text-foreground" />
-        </span>
-      )}
-
-      <span className="min-w-0 flex-1">
-        <span className="block text-sm font-medium text-foreground">{anexo.rotulo}</span>
-      </span>
-
-      <ExternalLink
-        size={16}
-        strokeWidth={1.5}
-        aria-hidden="true"
-        className="shrink-0 text-muted-foreground"
-      />
-    </a>
-  );
-}
