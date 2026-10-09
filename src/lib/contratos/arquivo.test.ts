@@ -29,9 +29,16 @@ describe("PDFs selecionados no navegador", () => {
   test("arquivo vazio é recusado", () => {
     expect(validarPdfAssinado(new File([], "assinado.pdf", { type: "application/pdf" }))).not.toBeNull();
   });
-  test("limite permanece em 20 MiB", () => {
-    const limite = 20 * 1024 * 1024;
+  test("PDF assinado aceita até 80 MiB e recusa acima do limite", () => {
+    const limite = 80 * 1024 * 1024;
     expect(validarPdfAssinado(new File([new Uint8Array(limite)], "assinado.pdf", { type: "application/pdf" }))).toBeNull();
     expect(validarPdfAssinado(new File([new Uint8Array(limite + 1)], "assinado.pdf", { type: "application/pdf" }))).not.toBeNull();
+  });
+  test("anexos aceitam PDF de 60 MiB e até 80 MiB, mas recusam acima", () => {
+    const def = defDoTipo("outro");
+    for (const tamanho of [60, 80]) {
+      expect(validarArquivo(def, new File([new Uint8Array(tamanho * 1024 * 1024)], "anexo.pdf", { type: "application/pdf" }))).toBeNull();
+    }
+    expect(validarArquivo(def, new File([new Uint8Array(80 * 1024 * 1024 + 1)], "anexo.pdf", { type: "application/pdf" }))).not.toBeNull();
   });
 });
