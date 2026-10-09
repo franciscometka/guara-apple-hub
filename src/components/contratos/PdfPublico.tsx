@@ -11,7 +11,7 @@ export function PdfPublico({ url }: { url: string }) {
         const pdfjs = await import("pdfjs-dist");
         const worker = await import("pdfjs-dist/build/pdf.worker.min.mjs?url");
         pdfjs.GlobalWorkerOptions.workerSrc = worker.default;
-        const tarefa = pdfjs.getDocument(url);
+        const tarefa = pdfjs.getDocument({ url });
         destruir = () => { void tarefa.destroy(); };
         const pdf = await tarefa.promise;
         const alvo = container.current;
