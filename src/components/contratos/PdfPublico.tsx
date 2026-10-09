@@ -28,7 +28,9 @@ export function PdfPublico({ url }: { url: string }) {
           canvas.setAttribute("role", "img");
           canvas.setAttribute("aria-label", `Página ${i} do PDF`);
           alvo.appendChild(canvas);
-          await pagina.render({ canvas, viewport }).promise;
+          const canvasContext = canvas.getContext("2d");
+          if (!canvasContext) throw new Error("Leitor indisponível");
+          await pagina.render({ canvasContext, viewport }).promise;
         }
       } catch (error) {
         console.error("Falha ao exibir PDF", error);
