@@ -154,4 +154,4 @@ export const db = supabase as unknown as ClienteContratos;
 export const BUCKET_CONTRATOS = "contratos";
 
 /** Limite por arquivo, igual ao configurado no bucket. */
-export const LIMITE_ARQUIVO_BYTES = 20 * 1024 * 1024;
+export const LIMITE_ARQUIVO_BYTES = 80 * 1024 * 1024;

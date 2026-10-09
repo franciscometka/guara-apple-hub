@@ -273,7 +273,7 @@ export const ERROS = {
   valorPositivo: "Informe um valor maior que zero.",
   ultimos4: "Informe exatamente os 4 últimos dígitos.",
   cartaoCompleto: "Nunca digite o número completo do cartão. Informe somente os 4 últimos dígitos.",
-  arquivoGrande: "Esse arquivo é muito grande (máximo 20 MB).",
+  arquivoGrande: "Esse arquivo é muito grande (máximo 80 MB).",
 } as const;
 
 /** "A soma dos valores não fecha com o preço total (faltam R$ 150,00)." */

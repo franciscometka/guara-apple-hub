@@ -10,3 +10,7 @@
 # Arquivos no QR Code
 - [x] Corrigir acesso com links do próprio site e conversão HEIC no navegador, preservando arquivos privados.
 - [x] Testar fotos existentes, visualização e download de PDF pela página pública; 11 testes aprovados e build OK.
+
+# Limite dos arquivos de contratos
+- [x] Aumentar para 80 MiB a validação de anexos/PDFs e os limites global e do armazenamento privado de contratos.
+- [ ] Verificar testes de limite e envio de PDF de 60 MiB no painel.
