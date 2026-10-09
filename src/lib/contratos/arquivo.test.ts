@@ -1,6 +1,15 @@
-import { describe, expect, test } from "bun:test";
+import { describe, test } from "node:test";
+import assert from "node:assert/strict";
 import { mimeDe, validarPdfAssinado } from "./arquivo";
 import { validarArquivo, defDoTipo } from "./anexos";
+
+function expect(actual: unknown) {
+  return {
+    toBe: (expected: unknown) => assert.equal(actual, expected),
+    toBeNull: () => assert.equal(actual, null),
+    not: { toBeNull: () => assert.notEqual(actual, null) },
+  };
+}
 
 describe("PDFs selecionados no navegador", () => {
   test("aceita PDF informado como tipo genérico nos anexos", () => {
