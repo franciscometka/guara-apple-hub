@@ -30,7 +30,8 @@ export function PdfPublico({ url }: { url: string }) {
           alvo.appendChild(canvas);
           await pagina.render({ canvas, viewport }).promise;
         }
-      } catch {
+      } catch (error) {
+        console.error("Falha ao exibir PDF", error);
         if (!cancelado) setErro(true);
       }
     }
