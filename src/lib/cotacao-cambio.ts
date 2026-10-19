@@ -1,6 +1,10 @@
 export type CambioBruto = { bid: number; ask: number; provedor: string; cotado_em: string; consultado_em: string };
 export type CambioAtual = { dolar: number; base: number; acrescimo_pct: number; fonte: "ao_vivo" | "salvo"; provedor: string; horario: string };
 export const cambioNumero = (valor: number) => new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(valor);
+export function horarioCambio(horario: string, provedor: string) {
+  if (provedor.includes("referência diária")) return `referência de ${horario.slice(0, 10).split("-").reverse().join("/")}`;
+  return `atualizado às ${new Intl.DateTimeFormat("pt-BR", { timeZone: "America/Sao_Paulo", hour: "2-digit", minute: "2-digit" }).format(new Date(horario))}`;
+}
 export function cacheCambioValido(cache: CambioBruto, agora = Date.now()) {
   return agora - Date.parse(cache.consultado_em) < 60_000 && agora >= Date.parse(cache.consultado_em);
 }

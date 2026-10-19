@@ -11,7 +11,7 @@ import { exigirSessaoAdmin } from "@/lib/admin-guard";
 import { carregarCotacao, calcularCotacao, salvarDolar, buscarDolarAoVivo } from "@/lib/cotacao.functions";
 import { campoCotacao, decimal, moeda, numero, dataHora, type ResultadoCotacao } from "@/lib/cotacao";
 
-import { cambioNumero, type CambioAtual } from "@/lib/cotacao-cambio";
+import { cambioNumero, horarioCambio, type CambioAtual } from "@/lib/cotacao-cambio";
 
 const cotacaoQuery = { queryKey: ["admin", "cotacao"], queryFn: () => carregarCotacao({ data: {} }) };
 export const Route = createFileRoute("/admin/cotacao/")({
@@ -46,11 +46,11 @@ function Cotacao() {
   const [cambio, setCambio] = useState<CambioAtual | null>(null);
   const [atualizando, setAtualizando] = useState(false);
   const atualizarRef = useRef(false);
-  async function atualizarCambio() {
+  async function atualizarCambio(forcar = false) {
     if (atualizarRef.current) return;
     atualizarRef.current = true; setAtualizando(true);
     try {
-      const atual = await buscarCambio(); setCambio(atual);
+      const atual = await buscarCambio({ data: { forcar } }); setCambio(atual);
       if (modoRef.current === "ao_vivo") setDolar(cambioNumero(atual.dolar));
     } catch {
       const salvo: CambioAtual = { dolar: dados.config.dolar, base: dados.config.dolar, acrescimo_pct: 0, fonte: "salvo", provedor: "Último valor salvo", horario: dados.config.dolar_atualizado_em };
@@ -87,7 +87,9 @@ function Cotacao() {
   async function salvar() {
     setSalvando(true);
     try {
-      await calcular({ data: { categoria_id: categoria, preco_usd: decimal(usd), dolar: decimal(dolar), descricao, dolar_fonte: fonte, salvar: true, ...(dados.gerente && margem !== "" ? { margem_pct: decimal(margem) } : {}) } });
+      const salvo = await calcular({ data: { categoria_id: categoria, preco_usd: decimal(usd), dolar: decimal(dolar), descricao, dolar_fonte: fonte, salvar: true, ...(dados.gerente && margem !== "" ? { margem_pct: decimal(margem) } : {}) } });
+      setResultado(salvo);
+      if (resultado && resultado.preco_venda !== salvo.preco_venda) toast.info(`Câmbio atualizado: preço salvo ${moeda(salvo.preco_venda)}.`);
       await qc.invalidateQueries({ queryKey: ["admin", "cotacao"] });
       toast.success("Cotação salva.");
     } catch (e) { toast.error(e instanceof Error ? e.message : "Não foi possível salvar."); }

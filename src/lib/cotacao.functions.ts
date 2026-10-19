@@ -6,14 +6,15 @@ import { aplicarCambio, cacheCambioValido, consultarCambio, type CambioAtual } f
 
 export const buscarDolarAoVivo = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<CambioAtual> => {
+  .inputValidator((data: { forcar?: boolean }) => ({ forcar: data.forcar === true }))
+  .handler(async ({ context, data }): Promise<CambioAtual> => {
     const acesso = await context.supabase.rpc("cotacao_operar", { acao: "inicial", entrada: {} });
     if (acesso.error) throw new Error("Acesso restrito à equipe.");
     const { config } = acesso.data as unknown as DadosCotacao;
     // Privileged cache access is allowed only after the team RPC authorizes the caller.
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: cache } = await supabaseAdmin.from("cotacao_cambio_cache").select("*").eq("id", true).maybeSingle();
-    let cambio = cache && cacheCambioValido(cache) ? cache : await consultarCambio();
+    let cambio = !data.forcar && cache && cacheCambioValido(cache) ? cache : await consultarCambio();
     if (cambio && cambio !== cache) {
       const { error } = await supabaseAdmin.from("cotacao_cambio_cache").upsert({ ...cambio, id: true });
       if (error) cambio = null;
