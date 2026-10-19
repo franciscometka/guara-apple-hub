@@ -14,3 +14,8 @@
 # Limite dos arquivos de contratos
 - [x] Aumentar para 80 MiB a validação de anexos/PDFs e os limites global e do armazenamento privado de contratos.
 - [x] Sete testes aprovados; PDF fictício de 60 MiB enviado no painel, persistido após recarregar, baixado com conteúdo idêntico e removido após a conferência.
+
+# Cotação interna
+- [ ] Criar configuração, categorias e histórico com acesso separado de gerente e funcionário.
+- [ ] Adicionar calculadora e configuração ao painel, sem mudar site público ou contratos.
+- [ ] Validar cálculo, histórico imutável e proteção de custo/margem; testar fluxo autenticado.
