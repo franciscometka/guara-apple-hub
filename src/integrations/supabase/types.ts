@@ -10,21 +10,24 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.15"
   }
   public: {
     Tables: {
       admins: {
         Row: {
           criado_em: string
+          papel: string
           user_id: string
         }
         Insert: {
           criado_em?: string
+          papel?: string
           user_id: string
         }
         Update: {
           criado_em?: string
+          papel?: string
           user_id?: string
         }
         Relationships: []
@@ -222,6 +225,116 @@ export type Database = {
             columns: ["substitui_contrato_id"]
             isOneToOne: false
             referencedRelation: "contratos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cotacao_categorias: {
+        Row: {
+          ativo: boolean
+          id: string
+          margem_pct: number
+          nome: string
+          ordem: number
+          slug: string
+          taxa_pct: number
+        }
+        Insert: {
+          ativo?: boolean
+          id?: string
+          margem_pct?: number
+          nome: string
+          ordem?: number
+          slug: string
+          taxa_pct?: number
+        }
+        Update: {
+          ativo?: boolean
+          id?: string
+          margem_pct?: number
+          nome?: string
+          ordem?: number
+          slug?: string
+          taxa_pct?: number
+        }
+        Relationships: []
+      }
+      cotacao_config: {
+        Row: {
+          arredondamento: string
+          dolar: number
+          dolar_atualizado_em: string
+          id: boolean
+        }
+        Insert: {
+          arredondamento?: string
+          dolar?: number
+          dolar_atualizado_em?: string
+          id?: boolean
+        }
+        Update: {
+          arredondamento?: string
+          dolar?: number
+          dolar_atualizado_em?: string
+          id?: boolean
+        }
+        Relationships: []
+      }
+      cotacoes: {
+        Row: {
+          arredondamento: string
+          categoria_id: string
+          categoria_nome: string
+          created_at: string
+          criado_por: string
+          criado_por_nome: string
+          custo_brl: number
+          descricao: string
+          dolar: number
+          id: string
+          margem_pct: number
+          preco_usd: number
+          preco_venda: number
+          taxa_pct: number
+        }
+        Insert: {
+          arredondamento: string
+          categoria_id: string
+          categoria_nome: string
+          created_at?: string
+          criado_por: string
+          criado_por_nome: string
+          custo_brl: number
+          descricao?: string
+          dolar: number
+          id?: string
+          margem_pct: number
+          preco_usd: number
+          preco_venda: number
+          taxa_pct: number
+        }
+        Update: {
+          arredondamento?: string
+          categoria_id?: string
+          categoria_nome?: string
+          created_at?: string
+          criado_por?: string
+          criado_por_nome?: string
+          custo_brl?: number
+          descricao?: string
+          dolar?: number
+          id?: string
+          margem_pct?: number
+          preco_usd?: number
+          preco_venda?: number
+          taxa_pct?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cotacoes_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "cotacao_categorias"
             referencedColumns: ["id"]
           },
         ]
@@ -475,7 +588,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cotacao_operar: { Args: { acao: string; entrada?: Json }; Returns: Json }
       eh_admin: { Args: { _user_id: string }; Returns: boolean }
+      eh_gerente: { Args: { _user_id: string }; Returns: boolean }
       proximo_numero: { Args: { _escopo: string }; Returns: string }
     }
     Enums: {
