@@ -19,3 +19,8 @@
 - [x] Criar configuração, categorias e histórico com acesso separado de gerente e funcionário; admins atuais mantidos como gerentes.
 - [x] Adicionar calculadora e configuração ao painel, sem mudar site público ou contratos.
 - [x] Validar cálculo de R$ 4.752,00, histórico imutável, proteção de custo/margem e fluxo autenticado com gerente e funcionário; 7 testes aprovados e dados fictícios removidos.
+
+# Dólar ao vivo
+- [ ] Integrar fontes no servidor com cache compartilhado de 60 segundos e fallback ao dólar salvo.
+- [ ] Adicionar modo ao vivo/manual, atualização automática, configuração de câmbio e origem no histórico.
+- [ ] Testar API real, falhas, preservação manual e cálculo com acréscimo.
