@@ -14,3 +14,5 @@
 - Contract file uploads share MIME normalization for missing/generic browser types; signed PDF validation runs before storage writes to prevent silent format failures.
 - Mount the shared notification renderer once in the root shell so upload results and errors remain visible on every layout.
 - Public QR attachments use same-origin file delivery with token and visibility revalidation on every request; HEIC decoding is dynamically loaded in the browser so existing originals remain unchanged and readable without exposing private files.
+- Internal quotations use an authenticated SECURITY DEFINER RPC for calculation, role checks, configuration and immutable snapshots; employee responses omit sensitive fields and employee direct table reads cannot reach margins or costs. Roles remain in the separate admins table, never profiles.
+- Quotation pages follow the existing client-only admin route guard and shared shell; server authorization remains the security boundary, preserving public pages and contract behavior.

@@ -35,7 +35,7 @@ export function AdminShell({
               <Package size={18} strokeWidth={1.5} aria-hidden="true" />
               Painel Guara iPhones
             </Link>
-            <nav aria-label="Seções do painel" className="flex items-center gap-4">
+            <nav aria-label="Seções do painel" className="flex flex-wrap items-center gap-4">
               <Link
                 to="/admin"
                 activeOptions={{ exact: true }}
@@ -64,6 +64,13 @@ export function AdminShell({
                 activeProps={{ className: "text-foreground" }}
               >
                 Dossiês
+              </Link>
+              <Link
+                to="/admin/cotacao"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                activeProps={{ className: "text-foreground" }}
+              >
+                Cotação
               </Link>
             </nav>
           </div>
