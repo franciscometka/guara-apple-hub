@@ -8,6 +8,13 @@
       "when": 1792451929183,
       "tag": "0000_cotacao_interna",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792452669196,
+      "tag": "0001_cotacao_dolar_ao_vivo",
+      "breakpoints": true
     }
   ]
 }

@@ -229,6 +229,33 @@ export type Database = {
           },
         ]
       }
+      cotacao_cambio_cache: {
+        Row: {
+          ask: number
+          bid: number
+          consultado_em: string
+          cotado_em: string
+          id: boolean
+          provedor: string
+        }
+        Insert: {
+          ask: number
+          bid: number
+          consultado_em?: string
+          cotado_em: string
+          id?: boolean
+          provedor: string
+        }
+        Update: {
+          ask?: number
+          bid?: number
+          consultado_em?: string
+          cotado_em?: string
+          id?: boolean
+          provedor?: string
+        }
+        Relationships: []
+      }
       cotacao_categorias: {
         Row: {
           ativo: boolean
@@ -263,19 +290,25 @@ export type Database = {
         Row: {
           arredondamento: string
           dolar: number
+          dolar_acrescimo_pct: number
           dolar_atualizado_em: string
+          dolar_tipo: string
           id: boolean
         }
         Insert: {
           arredondamento?: string
           dolar?: number
+          dolar_acrescimo_pct?: number
           dolar_atualizado_em?: string
+          dolar_tipo?: string
           id?: boolean
         }
         Update: {
           arredondamento?: string
           dolar?: number
+          dolar_acrescimo_pct?: number
           dolar_atualizado_em?: string
+          dolar_tipo?: string
           id?: boolean
         }
         Relationships: []
@@ -291,6 +324,11 @@ export type Database = {
           custo_brl: number
           descricao: string
           dolar: number
+          dolar_acrescimo_pct: number
+          dolar_base: number | null
+          dolar_cotado_em: string | null
+          dolar_fonte: string
+          dolar_provedor: string
           id: string
           margem_pct: number
           preco_usd: number
@@ -307,6 +345,11 @@ export type Database = {
           custo_brl: number
           descricao?: string
           dolar: number
+          dolar_acrescimo_pct?: number
+          dolar_base?: number | null
+          dolar_cotado_em?: string | null
+          dolar_fonte?: string
+          dolar_provedor?: string
           id?: string
           margem_pct: number
           preco_usd: number
@@ -323,6 +366,11 @@ export type Database = {
           custo_brl?: number
           descricao?: string
           dolar?: number
+          dolar_acrescimo_pct?: number
+          dolar_base?: number | null
+          dolar_cotado_em?: string | null
+          dolar_fonte?: string
+          dolar_provedor?: string
           id?: string
           margem_pct?: number
           preco_usd?: number
