@@ -23,6 +23,8 @@ import { Route as ProdutosSlugRouteImport } from './routes/produtos.$slug'
 import { Route as AdminContratosIndexRouteImport } from './routes/admin.contratos.index'
 import { Route as AdminContratosConfiguracaoRouteImport } from './routes/admin.contratos.configuracao'
 import { Route as AdminContratosNovoRouteImport } from './routes/admin.contratos.novo'
+import { Route as AdminCotacaoIndexRouteImport } from './routes/admin.cotacao.index'
+import { Route as AdminCotacaoConfiguracaoRouteImport } from './routes/admin.cotacao.configuracao'
 import { Route as AdminDossiesIndexRouteImport } from './routes/admin.dossies.index'
 import { Route as AdminProdutosNovoRouteImport } from './routes/admin.produtos.novo'
 import { Route as AdminContratosIdIndexRouteImport } from './routes/admin.contratos.$id.index'
@@ -104,6 +106,17 @@ const AdminContratosNovoRoute = AdminContratosNovoRouteImport.update({
   path: '/admin/contratos/novo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminCotacaoIndexRoute = AdminCotacaoIndexRouteImport.update({
+  id: '/admin/cotacao/',
+  path: '/admin/cotacao/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCotacaoConfiguracaoRoute =
+  AdminCotacaoConfiguracaoRouteImport.update({
+    id: '/admin/cotacao/configuracao',
+    path: '/admin/cotacao/configuracao',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AdminDossiesIndexRoute = AdminDossiesIndexRouteImport.update({
   id: '/admin/dossies/',
   path: '/admin/dossies/',
@@ -166,8 +179,10 @@ export interface FileRoutesByFullPath {
   '/produtos/': typeof ProdutosIndexRoute
   '/admin/contratos/configuracao': typeof AdminContratosConfiguracaoRoute
   '/admin/contratos/novo': typeof AdminContratosNovoRoute
+  '/admin/cotacao/configuracao': typeof AdminCotacaoConfiguracaoRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
+  '/admin/cotacao/': typeof AdminCotacaoIndexRoute
   '/admin/dossies/': typeof AdminDossiesIndexRoute
   '/admin/contratos/$id/preencher': typeof AdminContratosIdPreencherRoute
   '/admin/dossies/$id/etiqueta': typeof AdminDossiesIdEtiquetaRoute
@@ -191,8 +206,10 @@ export interface FileRoutesByTo {
   '/produtos': typeof ProdutosIndexRoute
   '/admin/contratos/configuracao': typeof AdminContratosConfiguracaoRoute
   '/admin/contratos/novo': typeof AdminContratosNovoRoute
+  '/admin/cotacao/configuracao': typeof AdminCotacaoConfiguracaoRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/contratos': typeof AdminContratosIndexRoute
+  '/admin/cotacao': typeof AdminCotacaoIndexRoute
   '/admin/dossies': typeof AdminDossiesIndexRoute
   '/admin/contratos/$id/preencher': typeof AdminContratosIdPreencherRoute
   '/admin/dossies/$id/etiqueta': typeof AdminDossiesIdEtiquetaRoute
@@ -217,8 +234,10 @@ export interface FileRoutesById {
   '/produtos/': typeof ProdutosIndexRoute
   '/admin/contratos/configuracao': typeof AdminContratosConfiguracaoRoute
   '/admin/contratos/novo': typeof AdminContratosNovoRoute
+  '/admin/cotacao/configuracao': typeof AdminCotacaoConfiguracaoRoute
   '/admin/produtos/novo': typeof AdminProdutosNovoRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
+  '/admin/cotacao/': typeof AdminCotacaoIndexRoute
   '/admin/dossies/': typeof AdminDossiesIndexRoute
   '/admin/contratos/$id/preencher': typeof AdminContratosIdPreencherRoute
   '/admin/dossies/$id/etiqueta': typeof AdminDossiesIdEtiquetaRoute
@@ -244,8 +263,10 @@ export interface FileRouteTypes {
     | '/produtos/'
     | '/admin/contratos/configuracao'
     | '/admin/contratos/novo'
+    | '/admin/cotacao/configuracao'
     | '/admin/produtos/novo'
     | '/admin/contratos/'
+    | '/admin/cotacao/'
     | '/admin/dossies/'
     | '/admin/contratos/$id/preencher'
     | '/admin/dossies/$id/etiqueta'
@@ -269,8 +290,10 @@ export interface FileRouteTypes {
     | '/produtos'
     | '/admin/contratos/configuracao'
     | '/admin/contratos/novo'
+    | '/admin/cotacao/configuracao'
     | '/admin/produtos/novo'
     | '/admin/contratos'
+    | '/admin/cotacao'
     | '/admin/dossies'
     | '/admin/contratos/$id/preencher'
     | '/admin/dossies/$id/etiqueta'
@@ -294,8 +317,10 @@ export interface FileRouteTypes {
     | '/produtos/'
     | '/admin/contratos/configuracao'
     | '/admin/contratos/novo'
+    | '/admin/cotacao/configuracao'
     | '/admin/produtos/novo'
     | '/admin/contratos/'
+    | '/admin/cotacao/'
     | '/admin/dossies/'
     | '/admin/contratos/$id/preencher'
     | '/admin/dossies/$id/etiqueta'
@@ -320,8 +345,10 @@ export interface RootRouteChildren {
   ProdutosIndexRoute: typeof ProdutosIndexRoute
   AdminContratosConfiguracaoRoute: typeof AdminContratosConfiguracaoRoute
   AdminContratosNovoRoute: typeof AdminContratosNovoRoute
+  AdminCotacaoConfiguracaoRoute: typeof AdminCotacaoConfiguracaoRoute
   AdminProdutosNovoRoute: typeof AdminProdutosNovoRoute
   AdminContratosIndexRoute: typeof AdminContratosIndexRoute
+  AdminCotacaoIndexRoute: typeof AdminCotacaoIndexRoute
   AdminDossiesIndexRoute: typeof AdminDossiesIndexRoute
   AdminContratosIdPreencherRoute: typeof AdminContratosIdPreencherRoute
   AdminDossiesIdEtiquetaRoute: typeof AdminDossiesIdEtiquetaRoute
@@ -432,6 +459,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminContratosNovoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/cotacao/': {
+      id: '/admin/cotacao/'
+      path: '/admin/cotacao'
+      fullPath: '/admin/cotacao/'
+      preLoaderRoute: typeof AdminCotacaoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/cotacao/configuracao': {
+      id: '/admin/cotacao/configuracao'
+      path: '/admin/cotacao/configuracao'
+      fullPath: '/admin/cotacao/configuracao'
+      preLoaderRoute: typeof AdminCotacaoConfiguracaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/dossies/': {
       id: '/admin/dossies/'
       path: '/admin/dossies'
@@ -512,8 +553,10 @@ const rootRouteChildren: RootRouteChildren = {
   ProdutosIndexRoute: ProdutosIndexRoute,
   AdminContratosConfiguracaoRoute: AdminContratosConfiguracaoRoute,
   AdminContratosNovoRoute: AdminContratosNovoRoute,
+  AdminCotacaoConfiguracaoRoute: AdminCotacaoConfiguracaoRoute,
   AdminProdutosNovoRoute: AdminProdutosNovoRoute,
   AdminContratosIndexRoute: AdminContratosIndexRoute,
+  AdminCotacaoIndexRoute: AdminCotacaoIndexRoute,
   AdminDossiesIndexRoute: AdminDossiesIndexRoute,
   AdminContratosIdPreencherRoute: AdminContratosIdPreencherRoute,
   AdminDossiesIdEtiquetaRoute: AdminDossiesIdEtiquetaRoute,
