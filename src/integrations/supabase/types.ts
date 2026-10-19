@@ -286,6 +286,47 @@ export type Database = {
         }
         Relationships: []
       }
+      cotacao_itens: {
+        Row: {
+          categoria_id: string
+          created_at: string
+          criado_por: string | null
+          descricao: string
+          id: string
+          ordem: number
+          preco_usd: number
+          updated_at: string
+        }
+        Insert: {
+          categoria_id: string
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string
+          id?: string
+          ordem?: number
+          preco_usd?: number
+          updated_at?: string
+        }
+        Update: {
+          categoria_id?: string
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string
+          id?: string
+          ordem?: number
+          preco_usd?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cotacao_itens_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "cotacao_categorias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cotacao_config: {
         Row: {
           arredondamento: string
@@ -636,6 +677,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cotacao_categoria_margem: { Args: { p_categoria: string; p_margem: number }; Returns: undefined }
+      cotacao_itens_listar: { Args: { p_dolar: number }; Returns: Json }
       cotacao_operar: { Args: { acao: string; entrada?: Json }; Returns: Json }
       eh_admin: { Args: { _user_id: string }; Returns: boolean }
       eh_gerente: { Args: { _user_id: string }; Returns: boolean }
