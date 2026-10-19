@@ -1,9 +1,9 @@
 export type Arredondamento = "nenhum" | "inteiro" | "90" | "00";
 export type CategoriaCotacao = { id: string; nome: string; slug?: string; ativo: boolean; ordem: number; margem_pct?: number; taxa_pct?: number };
-export type ResultadoCotacao = { preco_venda: number; custo_brl?: number; margem_pct?: number; taxa_pct?: number; preco_sem_taxa?: number; preco_bruto?: number; arredondamento?: Arredondamento };
+export type ResultadoCotacao = { preco_venda: number; dolar?: number; dolar_base?: number; dolar_fonte?: "ao_vivo" | "manual" | "salvo"; dolar_provedor?: string; dolar_cotado_em?: string; dolar_acrescimo_pct?: number; custo_brl?: number; margem_pct?: number; taxa_pct?: number; preco_sem_taxa?: number; preco_bruto?: number; arredondamento?: Arredondamento };
 export type HistoricoCotacao = ResultadoCotacao & { id: string; categoria_id: string; categoria_nome: string; descricao: string; preco_usd: number; dolar: number; criado_por_nome: string; created_at: string };
-export type DadosCotacao = { gerente: boolean; config: { dolar: number; dolar_atualizado_em: string; arredondamento: Arredondamento }; categorias: CategoriaCotacao[]; historico: HistoricoCotacao[] };
-export type EntradaCotacao = { categoria_id: string; preco_usd: number; dolar: number; descricao: string; margem_pct?: number };
+export type DadosCotacao = { gerente: boolean; config: { dolar: number; dolar_atualizado_em: string; arredondamento: Arredondamento; dolar_tipo: "ask" | "bid"; dolar_acrescimo_pct: number }; categorias: CategoriaCotacao[]; historico: HistoricoCotacao[] };
+export type EntradaCotacao = { categoria_id: string; preco_usd: number; dolar: number; descricao: string; margem_pct?: number; dolar_fonte?: "ao_vivo" | "manual" | "salvo" };
 
 export function decimal(valor: string): number {
   const texto = valor.trim().replace(/\s/g, "");
