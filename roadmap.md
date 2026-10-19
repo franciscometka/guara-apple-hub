@@ -16,6 +16,6 @@
 - [x] Sete testes aprovados; PDF fictício de 60 MiB enviado no painel, persistido após recarregar, baixado com conteúdo idêntico e removido após a conferência.
 
 # Cotação interna
-- [ ] Criar configuração, categorias e histórico com acesso separado de gerente e funcionário.
-- [ ] Adicionar calculadora e configuração ao painel, sem mudar site público ou contratos.
-- [ ] Validar cálculo, histórico imutável e proteção de custo/margem; testar fluxo autenticado.
+- [x] Criar configuração, categorias e histórico com acesso separado de gerente e funcionário; admins atuais mantidos como gerentes.
+- [x] Adicionar calculadora e configuração ao painel, sem mudar site público ou contratos.
+- [x] Validar cálculo de R$ 4.752,00, histórico imutável, proteção de custo/margem e fluxo autenticado com gerente e funcionário; 7 testes aprovados e dados fictícios removidos.
