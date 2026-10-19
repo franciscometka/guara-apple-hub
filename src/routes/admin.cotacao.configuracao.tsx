@@ -27,7 +27,7 @@ function Configuracao() {
   function alterar(index: number, campo: "nome" | "margem" | "taxa" | "ativo", valor: string | boolean) { setCategorias(atual => atual.map((c, i) => i === index ? { ...c, [campo]: valor } : c)); }
   async function enviar() {
     setSalvando(true);
-    try { await salvar({ data: { dolar: decimal(dolar), arredondamento, categorias: categorias.map((c, i) => ({ id: c.id, nome: c.nome, slug: c.slug, ativo: c.ativo, ordem: i, margem_pct: decimal(c.margem), taxa_pct: decimal(c.taxa) })) } }); await qc.invalidateQueries({ queryKey: ["admin", "cotacao"] }); toast.success("Configuração salva."); }
+    try { await salvar({ data: { dolar: decimal(dolar), arredondamento, categorias: categorias.map((c, i) => ({ id: c.id, nome: c.nome, ...(c.slug ? { slug: c.slug } : {}), ativo: c.ativo, ordem: i, margem_pct: decimal(c.margem), taxa_pct: decimal(c.taxa) })) } }); await qc.invalidateQueries({ queryKey: ["admin", "cotacao"] }); toast.success("Configuração salva."); }
     catch (e) { toast.error(e instanceof Error ? e.message : "Não foi possível salvar."); }
     finally { setSalvando(false); }
   }
