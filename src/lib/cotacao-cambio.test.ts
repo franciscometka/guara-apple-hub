@@ -28,3 +28,8 @@ test("falha das duas fontes retorna fallback sem lançar erro", async () => {
   const fake = (async () => { throw new Error("Sem rede"); }) as typeof fetch;
   assert.equal(await consultarCambio(fake), null);
 });
+test("Frankfurter é marcada como referência diária, nunca como ao vivo", () => {
+  const ref = { bid: 5.0453, ask: 5.0453, provedor: "Frankfurter · referência diária BCE", cotado_em: "2026-10-19T00:00:00Z", consultado_em: "2026-10-19T17:32:00Z" };
+  assert.equal(aplicarCambio(ref, "ask", 0).fonte, "referencia");
+  assert.equal(aplicarCambio(cache, "ask", 0).fonte, "ao_vivo");
+});

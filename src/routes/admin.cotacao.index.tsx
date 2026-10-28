@@ -11,14 +11,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { exigirSessaoAdmin } from "@/lib/admin-guard";
 import { carregarCotacao, salvarDolar, buscarDolarAoVivo } from "@/lib/cotacao.functions";
 import {
-  ajustarMargemCategoria,
+  ajustarCategoriaCotacao,
   criarItemCotacao,
   excluirItemCotacao,
   listarItensCotacao,
   salvarItemCotacao,
 } from "@/lib/cotacao-itens.functions";
 import { campoCotacao, decimal, moeda, numero, dataHora } from "@/lib/cotacao";
-import { cambioNumero, type CambioAtual } from "@/lib/cotacao-cambio";
+import { cambioNumero, horarioCambio, type CambioAtual } from "@/lib/cotacao-cambio";
 import type { ItemLista, ListaCotacao } from "@/lib/cotacao-lista";
 
 const cotacaoQuery = {
@@ -54,7 +54,7 @@ function Cotacao() {
   const criar = useServerFn(criarItemCotacao);
   const salvarItem = useServerFn(salvarItemCotacao);
   const excluir = useServerFn(excluirItemCotacao);
-  const ajustarMargem = useServerFn(ajustarMargemCategoria);
+  const ajustarCategoria = useServerFn(ajustarCategoriaCotacao);
 
   // ---- Dólar (3.1) ----
   const [dolar, setDolar] = useState(numero(dados.config.dolar));
@@ -133,6 +133,7 @@ function Cotacao() {
   const [novaId, setNovaId] = useState<string | null>(null);
   const timers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
   const revisao = useRef(0);
+  const gerenteRef = useRef(false);
   const dolarRef = useRef(dolarNum);
   dolarRef.current = dolarNum;
 
@@ -153,6 +154,7 @@ function Cotacao() {
           categoria_id: i.categoria_id,
           descricao: i.descricao,
           usd: i.preco_usd ? numero(i.preco_usd) : "",
+          lucro: i.lucro_item != null ? numero(i.lucro_item) : "",
           ordem: i.ordem,
         }));
         linhasRef.current = inicial;
@@ -208,8 +210,26 @@ function Cotacao() {
       toast.error("Custo em US$ inválido.");
       return;
     }
+    // Lucro por linha só existe para gerente; em branco = usa o lucro padrão da aba.
+    let lucro: number | null | undefined;
+    if (gerenteRef.current) {
+      lucro = linha.lucro.trim() === "" ? null : decimal(linha.lucro);
+      if (lucro !== null && (!Number.isFinite(lucro) || lucro < 0)) {
+        limparPendente(id);
+        setStatus("erro");
+        toast.error("Lucro (R$) inválido.");
+        return;
+      }
+    }
     try {
-      await salvarItem({ data: { id, descricao: linha.descricao, preco_usd: usd } });
+      await salvarItem({
+        data: {
+          id,
+          descricao: linha.descricao,
+          preco_usd: usd,
+          ...(lucro !== undefined ? { lucro_brl: lucro } : {}),
+        },
+      });
       if (!timers.current.has(id)) {
         await recarregar();
         limparPendente(id);
@@ -228,7 +248,7 @@ function Cotacao() {
       return n;
     });
   }
-  function editar(id: string, patch: Partial<Pick<LinhaCotacao, "descricao" | "usd">>) {
+  function editar(id: string, patch: Partial<Pick<LinhaCotacao, "descricao" | "usd" | "lucro">>) {
     const novas = linhasRef.current.map((l) => (l.id === id ? { ...l, ...patch } : l));
     linhasRef.current = novas;
     setLinhas(novas);
@@ -242,7 +262,7 @@ function Cotacao() {
       const { id } = await criar({ data: { categoria_id: abaAtiva, ordem } });
       const novas = [
         ...linhasRef.current,
-        { id, categoria_id: abaAtiva, descricao: "", usd: "", ordem },
+        { id, categoria_id: abaAtiva, descricao: "", usd: "", lucro: "", ordem },
       ];
       linhasRef.current = novas;
       setLinhas(novas);
@@ -275,21 +295,30 @@ function Cotacao() {
       toast.error(e instanceof Error ? e.message : "Não foi possível excluir a linha.");
     }
   }
-  async function mudarMargem(categoriaId: string, margem: number) {
-    await ajustarMargem({ data: { categoria_id: categoriaId, margem_pct: margem } });
+  async function ajustar(categoriaId: string, patch: { taxa_pct?: number; lucro_brl?: number }) {
+    await ajustarCategoria({ data: { categoria_id: categoriaId, ...patch } });
     await recarregar();
   }
 
   const gerente = lista?.gerente ?? dados.gerente;
+  gerenteRef.current = gerente;
   const aguardandoDolar = modo === "ao_vivo" && cambio === null;
+  const base = cambio ? cambioNumero(cambio.dolar) : "";
+  const detalheAcrescimo =
+    cambio && gerente && cambio.acrescimo_pct > 0
+      ? ` (${cambioNumero(cambio.base)} + ${cambio.acrescimo_pct}%)`
+      : "";
   const textoFonte =
     modo === "manual"
       ? "Valor manual · só nesta cotação"
       : atualizando && !cambio
-        ? "Consultando dólar ao vivo…"
+        ? "Consultando o dólar…"
         : cambio?.fonte === "ao_vivo"
-          ? `Dólar ao vivo: R$ ${cambioNumero(cambio.dolar)}${gerente && cambio.acrescimo_pct > 0 ? ` (${cambioNumero(cambio.base)} + ${cambio.acrescimo_pct}%)` : ""} · ${dataHora(cambio.horario)} · ${cambio.provedor}`
-          : `Dólar ao vivo indisponível. Usando o último valor salvo (${dataHora(cambio?.horario ?? dados.config.dolar_atualizado_em)})`;
+          ? `Dólar ao vivo: R$ ${base}${detalheAcrescimo} · ${dataHora(cambio.horario)} · ${cambio.provedor}`
+          : cambio?.fonte === "referencia"
+            ? `Referência diária BCE: R$ ${base}${detalheAcrescimo} · ${horarioCambio(cambio.horario, cambio.provedor)} · Frankfurter. Não é cotação em tempo real (a fonte ao vivo não respondeu).`
+            : `Dólar ao vivo indisponível. Usando o último valor salvo (${dataHora(cambio?.horario ?? dados.config.dolar_atualizado_em)})`;
+  const rotuloAutomatico = cambio?.fonte === "referencia" ? "Referência diária" : "Ao vivo";
 
   return (
     <AdminShell
@@ -340,7 +369,7 @@ function Cotacao() {
               variant={modo === "ao_vivo" ? "default" : "outline"}
               onClick={() => mudarModo("ao_vivo")}
             >
-              Ao vivo
+              {rotuloAutomatico}
             </Button>
             <Button
               variant={modo === "manual" ? "default" : "outline"}
@@ -408,12 +437,12 @@ function Cotacao() {
                 precos={precos}
                 pendentes={pendentes}
                 desatualizado={aguardandoDolar}
-                dolar={dolarNum}
+                dolar={lista.dolar}
                 novaId={novaId}
                 onAdicionar={() => void adicionar()}
                 onEditar={editar}
                 onExcluir={(id) => void remover(id)}
-                onMargem={(m) => mudarMargem(c.id, m)}
+                onAjustar={(patch) => ajustar(c.id, patch)}
               />
             </TabsContent>
           ))}

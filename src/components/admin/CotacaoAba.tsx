@@ -2,15 +2,21 @@ import { useState } from "react";
 import { Calculator, Copy, Plus, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { campoCotacao, moeda, numero } from "@/lib/cotacao";
-import { cambioNumero } from "@/lib/cotacao-cambio";
-import { textoListaWhatsapp, type CategoriaAba, type ItemLista } from "@/lib/cotacao-lista";
+import { campoCotacao, decimal, moeda, numero } from "@/lib/cotacao";
+import {
+  passosConta,
+  textoListaWhatsapp,
+  type CategoriaAba,
+  type ItemLista,
+} from "@/lib/cotacao-lista";
 
 export type LinhaCotacao = {
   id: string;
   categoria_id: string;
   descricao: string;
   usd: string;
+  /** Lucro próprio da linha (R$); vazio = usa o lucro padrão da aba. Só gerente. */
+  lucro: string;
   ordem: number;
 };
 
@@ -24,9 +30,9 @@ type Props = {
   dolar: number;
   novaId: string | null;
   onAdicionar: () => void;
-  onEditar: (id: string, patch: Partial<Pick<LinhaCotacao, "descricao" | "usd">>) => void;
+  onEditar: (id: string, patch: Partial<Pick<LinhaCotacao, "descricao" | "usd" | "lucro">>) => void;
   onExcluir: (id: string) => void;
-  onMargem: (margem: number) => Promise<void>;
+  onAjustar: (patch: { taxa_pct?: number; lucro_brl?: number }) => Promise<void>;
 };
 
 export function CotacaoAba({
@@ -41,29 +47,16 @@ export function CotacaoAba({
   onAdicionar,
   onEditar,
   onExcluir,
-  onMargem,
+  onAjustar,
 }: Props) {
   const [busca, setBusca] = useState("");
   const [conta, setConta] = useState<string | null>(null);
-  const [editandoMargem, setEditandoMargem] = useState(false);
-  const [margemTexto, setMargemTexto] = useState("");
+  const colunas = gerente
+    ? "sm:grid-cols-[minmax(0,1fr)_9rem_9rem_13rem_6rem]"
+    : "sm:grid-cols-[minmax(0,1fr)_9rem_13rem_6rem]";
   const termo = busca.trim().toLowerCase();
   const visiveis = termo ? linhas.filter((l) => l.descricao.toLowerCase().includes(termo)) : linhas;
 
-  async function confirmarMargem() {
-    const valor = Number(margemTexto.replace(",", "."));
-    setEditandoMargem(false);
-    if (!Number.isFinite(valor) || valor < 0 || valor > 100) {
-      toast.error("Margem deve estar entre 0 e 100%.");
-      return;
-    }
-    if (valor === categoria.margem_pct) return;
-    try {
-      await onMargem(valor);
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Não foi possível alterar a margem.");
-    }
-  }
   async function copiarLista() {
     const texto = textoListaWhatsapp(
       linhas.map((l) => ({
@@ -118,38 +111,23 @@ export function CotacaoAba({
           </label>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          {gerente &&
-            categoria.margem_pct !== undefined &&
-            (editandoMargem ? (
-              <label className="flex items-center gap-2 text-sm font-medium">
-                Margem desta aba (%)
-                <input
-                  autoFocus
-                  inputMode="decimal"
-                  aria-label="Margem desta aba (%)"
-                  className={`${campoCotacao} min-h-11 w-24`}
-                  value={margemTexto}
-                  onChange={(e) => setMargemTexto(e.target.value)}
-                  onBlur={() => void confirmarMargem()}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") e.currentTarget.blur();
-                    if (e.key === "Escape") setEditandoMargem(false);
-                  }}
-                />
-              </label>
-            ) : (
-              <button
-                type="button"
-                className="rounded-md px-2 py-1 text-sm font-medium underline decoration-dotted underline-offset-4 hover:bg-muted"
-                title="Clique para editar a margem"
-                onClick={() => {
-                  setMargemTexto(String(categoria.margem_pct).replace(".", ","));
-                  setEditandoMargem(true);
-                }}
-              >
-                Margem desta aba: {String(categoria.margem_pct).replace(".", ",")}%
-              </button>
-            ))}
+          {gerente && categoria.taxa_pct !== undefined && (
+            <CampoRapido
+              rotulo="Frete (%)"
+              exibicao={`Frete: ${numero(categoria.taxa_pct)}%`}
+              inicial={String(categoria.taxa_pct).replace(".", ",")}
+              max={100}
+              onSalvar={(v) => onAjustar({ taxa_pct: v })}
+            />
+          )}
+          {gerente && categoria.lucro_brl !== undefined && (
+            <CampoRapido
+              rotulo="Lucro padrão (R$)"
+              exibicao={`Lucro padrão: ${moeda(categoria.lucro_brl)}`}
+              inicial={String(categoria.lucro_brl).replace(".", ",")}
+              onSalvar={(v) => onAjustar({ lucro_brl: v })}
+            />
+          )}
           <Button variant="outline" className="min-h-11" onClick={() => void copiarLista()}>
             <Copy />
             Copiar lista
@@ -158,9 +136,12 @@ export function CotacaoAba({
       </div>
 
       <div className="mt-4 overflow-hidden rounded-lg border border-border bg-background">
-        <div className="hidden grid-cols-[minmax(0,1fr)_9rem_13rem_6rem] gap-3 border-b border-border bg-muted/50 px-4 py-2 text-xs font-semibold uppercase text-muted-foreground sm:grid">
+        <div
+          className={`hidden gap-3 border-b border-border bg-muted/50 px-4 py-2 text-xs font-semibold uppercase text-muted-foreground sm:grid ${colunas}`}
+        >
           <span>Descrição</span>
           <span>Custo (US$)</span>
+          {gerente && <span>Lucro (R$)</span>}
           <span>Preço de venda</span>
           <span className="text-right">Ações</span>
         </div>
@@ -171,7 +152,7 @@ export function CotacaoAba({
             const tem = Boolean(p) && Number(p?.preco_usd) > 0;
             return (
               <li key={l.id} className="border-b border-border last:border-b-0">
-                <div className="grid items-center gap-3 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_9rem_13rem_6rem]">
+                <div className={`grid items-center gap-3 px-4 py-3 ${colunas}`}>
                   <input
                     aria-label="Descrição do produto"
                     autoFocus={l.id === novaId}
@@ -189,6 +170,17 @@ export function CotacaoAba({
                     value={l.usd}
                     onChange={(e) => onEditar(l.id, { usd: e.target.value })}
                   />
+                  {gerente && (
+                    <input
+                      aria-label="Lucro (R$)"
+                      inputMode="decimal"
+                      placeholder={numero(categoria.lucro_brl ?? 0)}
+                      title="Em branco usa o lucro padrão da aba"
+                      className={campoCotacao}
+                      value={l.lucro}
+                      onChange={(e) => onEditar(l.id, { lucro: e.target.value })}
+                    />
+                  )}
                   <p
                     aria-live="polite"
                     className={`break-words font-display text-2xl font-semibold text-primary transition-opacity ${sujo ? "opacity-50" : ""}`}
@@ -228,19 +220,9 @@ export function CotacaoAba({
                   </div>
                 </div>
                 {gerente && conta === l.id && p && tem && (
-                  <div className="space-y-1 border-l-2 border-primary bg-muted/30 px-4 py-3 text-sm">
-                    <p>
-                      US$ {numero(p.preco_usd)} × {cambioNumero(dolar)} ={" "}
-                      {moeda(p.preco_sem_taxa ?? 0)}
-                    </p>
-                    <p>
-                      + {p.taxa_pct}% de taxa = {moeda(p.custo_brl ?? 0)}
-                    </p>
-                    <p>
-                      + {p.margem_pct}% de margem = {moeda(p.preco_bruto ?? 0)}
-                    </p>
-                    <p className="font-semibold">Arredondado: {moeda(p.preco_venda)}</p>
-                  </div>
+                  <p className="border-l-2 border-primary bg-muted/30 px-4 py-3 text-sm leading-relaxed">
+                    {passosConta(p, dolar)}
+                  </p>
                 )}
               </li>
             );
@@ -255,5 +237,72 @@ export function CotacaoAba({
         )}
       </div>
     </div>
+  );
+}
+
+/** Valor da aba editável em um clique (só gerente). Enter salva, Esc cancela. */
+function CampoRapido({
+  rotulo,
+  exibicao,
+  inicial,
+  max,
+  onSalvar,
+}: {
+  rotulo: string;
+  exibicao: string;
+  inicial: string;
+  max?: number;
+  onSalvar: (valor: number) => Promise<void>;
+}) {
+  const [editando, setEditando] = useState(false);
+  const [texto, setTexto] = useState(inicial);
+
+  async function confirmar() {
+    setEditando(false);
+    const valor = decimal(texto);
+    if (!Number.isFinite(valor) || valor < 0 || (max !== undefined && valor > max)) {
+      toast.error(`${rotulo}: valor inválido.`);
+      return;
+    }
+    if (valor === decimal(inicial)) return;
+    try {
+      await onSalvar(valor);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Não foi possível salvar.");
+    }
+  }
+
+  if (editando) {
+    return (
+      <label className="flex items-center gap-2 text-sm font-medium">
+        {rotulo}
+        <input
+          autoFocus
+          inputMode="decimal"
+          aria-label={rotulo}
+          className={`${campoCotacao} min-h-11 w-28`}
+          value={texto}
+          onChange={(e) => setTexto(e.target.value)}
+          onBlur={() => void confirmar()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") e.currentTarget.blur();
+            if (e.key === "Escape") setEditando(false);
+          }}
+        />
+      </label>
+    );
+  }
+  return (
+    <button
+      type="button"
+      className="rounded-md px-2 py-1 text-sm font-medium underline decoration-dotted underline-offset-4 hover:bg-muted"
+      title={`Clique para editar: ${rotulo}`}
+      onClick={() => {
+        setTexto(inicial);
+        setEditando(true);
+      }}
+    >
+      {exibicao}
+    </button>
   );
 }

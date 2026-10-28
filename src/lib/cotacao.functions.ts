@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { validarEntradaCotacao, type DadosCotacao, type EntradaCotacao, type ResultadoCotacao, type CategoriaCotacao, type Arredondamento } from "./cotacao";
+import type { DadosCotacao, CategoriaCotacao, Arredondamento } from "./cotacao";
 import type { Json } from "@/integrations/supabase/types";
 import { aplicarCambio, cacheCambioValido, consultarCambio, type CambioAtual } from "./cotacao-cambio";
 
@@ -30,15 +30,6 @@ export const carregarCotacao = createServerFn({ method: "POST" })
     const resposta = await context.supabase.rpc("cotacao_operar", { acao: "inicial", entrada: data });
     if (resposta.error) throw new Error("Não foi possível carregar a cotação. Acesso restrito à equipe.");
     return resposta.data as unknown as DadosCotacao;
-  });
-
-export const calcularCotacao = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((data: EntradaCotacao & { salvar?: boolean }) => ({ ...validarEntradaCotacao(data), salvar: Boolean(data.salvar) }))
-  .handler(async ({ data, context }) => {
-    const resposta = await context.supabase.rpc("cotacao_operar", { acao: data.salvar ? "salvar" : "calcular", entrada: data as unknown as Json });
-    if (resposta.error) throw new Error("Não foi possível calcular. Confira os valores e seu acesso.");
-    return resposta.data as unknown as ResultadoCotacao;
   });
 
 export const salvarDolar = createServerFn({ method: "POST" })

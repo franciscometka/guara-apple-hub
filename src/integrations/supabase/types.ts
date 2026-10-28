@@ -260,6 +260,7 @@ export type Database = {
         Row: {
           ativo: boolean
           id: string
+          lucro_brl: number
           margem_pct: number
           nome: string
           ordem: number
@@ -269,6 +270,7 @@ export type Database = {
         Insert: {
           ativo?: boolean
           id?: string
+          lucro_brl?: number
           margem_pct?: number
           nome: string
           ordem?: number
@@ -278,6 +280,7 @@ export type Database = {
         Update: {
           ativo?: boolean
           id?: string
+          lucro_brl?: number
           margem_pct?: number
           nome?: string
           ordem?: number
@@ -293,6 +296,7 @@ export type Database = {
           criado_por: string | null
           descricao: string
           id: string
+          lucro_brl: number | null
           ordem: number
           preco_usd: number
           updated_at: string
@@ -303,6 +307,7 @@ export type Database = {
           criado_por?: string | null
           descricao?: string
           id?: string
+          lucro_brl?: number | null
           ordem?: number
           preco_usd?: number
           updated_at?: string
@@ -313,6 +318,7 @@ export type Database = {
           criado_por?: string | null
           descricao?: string
           id?: string
+          lucro_brl?: number | null
           ordem?: number
           preco_usd?: number
           updated_at?: string
@@ -677,7 +683,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      cotacao_categoria_margem: { Args: { p_categoria: string; p_margem: number }; Returns: undefined }
+      cotacao_categoria_ajustar: { Args: { p_categoria: string; p_frete?: number; p_lucro?: number }; Returns: undefined }
+      cotacao_item_lucro: { Args: { p_item: string; p_lucro?: number }; Returns: undefined }
       cotacao_itens_listar: { Args: { p_dolar: number }; Returns: Json }
       cotacao_operar: { Args: { acao: string; entrada?: Json }; Returns: Json }
       eh_admin: { Args: { _user_id: string }; Returns: boolean }
